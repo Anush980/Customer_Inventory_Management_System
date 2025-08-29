@@ -1,32 +1,35 @@
 import React, { useState } from "react";
-import AuthForm from "../../components/auth/AuthForm";
-import AuthInput from "../../components/auth/authInput";
+import AuthForm from "../../components/auth/Form/AuthForm";
+import AuthInput from "../../components/auth/Input/authInput";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error ,setError]= useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login with:", email, password);
+   setError("User not Found !");
     // API call
   };
 
   return (
-    <AuthForm type="login" onSubmit={handleSubmit}>
+    <AuthForm type="login" onSubmit={handleSubmit} error={error}>
       <AuthInput
         label="Email"
         type="email"
         placeholder="Enter your email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onchange={(e) => setEmail(e.target.value)}
+        autocomplete="email"
       />
       <AuthInput
         label="Password"
         type="password"
         placeholder="Enter your password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onchange={(e) => setPassword(e.target.value)}
+        autocomplete="current-password"
       />
     </AuthForm>
   );
