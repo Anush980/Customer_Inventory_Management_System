@@ -1,0 +1,44 @@
+body {
+  background: linear-gradient(135deg, #415194, #6e4593);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.auth-container {
+  width: 500px;
+  max-width: 600px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 1.5rem;
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    width: 90%;
+    padding: 0.8rem;
+    margin: 0 auto;
+    min-height: 300px;
+  }
+
+  .auth-body {
+    padding: 0.5rem 0;
+    gap: 0.75rem;
+  }
+}

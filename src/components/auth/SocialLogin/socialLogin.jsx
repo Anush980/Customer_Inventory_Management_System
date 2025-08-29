@@ -1,8 +1,8 @@
 import React from "react";
 import "./socialLogin.css";
-import GoogleLogo from "../../assets/Google.png";
-import FacebookLogo from "../../assets/Facebook.png";
-import GithubLogo from "../../assets/Github.png";
+import GoogleLogo from "../../../assets/Google.png";
+import FacebookLogo from "../../../assets/Facebook.png";
+import GithubLogo from "../../../assets/Github.png";
 
 function SocialLogin() {
   return (

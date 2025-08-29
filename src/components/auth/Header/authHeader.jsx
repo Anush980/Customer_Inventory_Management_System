@@ -1,6 +1,6 @@
 import React from 'react'
 import "./authHeader.css";
-import WebLogo from "../../assets/CIMS_logo.png"
+import WebLogo from "../../../assets/CIMS_logo.png";
 
 function AuthHeader({title,subtitle}) {
   return (

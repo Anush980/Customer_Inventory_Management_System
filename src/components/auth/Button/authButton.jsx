@@ -1,7 +1,7 @@
 import React from 'react'
-import './button.css';
+import './authButton.css';
 
-const Button = ({label, type}) => {
+const AuthButton = ({label, type}) => {
   return (
     <button type="submit" className="btn">
               {label}
@@ -9,4 +9,4 @@ const Button = ({label, type}) => {
   )
 }
 
-export default Button
+export default AuthButton;

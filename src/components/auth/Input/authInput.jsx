@@ -1,0 +1,27 @@
+import React from "react";
+import "./authInput.css";
+function AuthInput({
+  label,
+  type,
+  placeholder,
+  autocomplete,
+  value,
+  onchange,
+}) {
+  return (
+    <div className="input">
+      <label htmlFor={type}>{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onchange}
+        className="form-control"
+        autoComplete={autocomplete}
+        required
+      />
+    </div>
+  );
+}
+
+export default AuthInput;

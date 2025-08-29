@@ -7,7 +7,7 @@ function RememberForgot() {
     <div className="remember-forgot">
     <div className="remember-me">
         <input type='checkbox' id="remember"/>
-        <label for="remember">Remember me</label>
+        <label htmlFor="remember">Remember me</label>
     </div>
     <Link className="forgot-password" to="/reset">Forgot password?</Link>
 </div>

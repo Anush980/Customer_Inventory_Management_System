@@ -1,15 +1,15 @@
 import React from "react";
 import "./authform.css";
-import authConfigs from "./authConfigs";
-import AuthHeader from "./authHeader";
-import RememberForgot from "./rememberForgot";
-import Divider from "./divider";
-import SocialLogin from "./socialLogin";
-import AuthFooter from "./authFooter";
-import Button from "../ui/button";
-import Agreement from "./agreement";
+import authConfigs from "../authConfigs";
+import AuthHeader from "../Header/authHeader";
+import RememberForgot from "../RememberForget/rememberForgot";
+import Divider from "../Divider/divider";
+import SocialLogin from "../SocialLogin/socialLogin";
+import AuthFooter from "../Footer/authFooter";
+import Button from "../Button/authButton";
+import Agreement from "../Agreement/agreement";
 
-const AuthForm = ({ type, onSubmit, children }) => {
+const AuthForm = ({ type, onSubmit, children ,error}) => {
   const config = authConfigs[type];
   if (!config) return <p>Unknown type.</p>;
 
@@ -21,11 +21,11 @@ const AuthForm = ({ type, onSubmit, children }) => {
         <form onSubmit={onSubmit}>
          
           {children}
-
+{error && <p className="error-text">{error}</p>}
           {type === "login" && <RememberForgot />}
           {type === "register" && <Agreement />}
 
-          <Button label={config.buttonText} />
+          <Button label={config.buttonText}  />
         </form>
 
         {(type === "login" || type === "register") && (
