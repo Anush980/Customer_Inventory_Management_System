@@ -1,35 +1,58 @@
-  .social-login {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
 
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
+.social-login {
+  display: flex;
+  flex-direction: row;       /* row layout */
+  justify-content: center;   /* center horizontally */
+  gap: 1rem;                 /* space between buttons */
+  margin-top: 1rem;
+  flex-wrap: nowrap;         /* stay in one row on larger screens */
+}
 
-        .social-btn.google {
-            background-color: #db4437;
-        }
 
-        .social-btn.facebook {
-            background-color: #4267B2;
-        }
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;              /* space between logo/icon and text */
+  padding:1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s;
+  width: 30%;
+  background-color: white;
+}
 
-        .social-btn.github {
-            background-color: #000;
-        }
 
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
+.social-btn:hover {
+  background-color: #e8e8e8;
+}
+
+/* Logo images */
+.social-logo {
+  width: 32px;     
+  height: auto;     
+}
+
+/* Font icons */
+.social-icon {
+  font-size: 24px;  
+}
+
+.social-btn.google {
+  border-color: #db4437;
+
+}
+
+.social-btn.facebook {
+  border-color: #1877f2;
+  
+}
+
+.social-btn.github {
+  border-color: #333;
+}
+
+

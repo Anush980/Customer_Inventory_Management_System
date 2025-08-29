@@ -1,5 +1,6 @@
 import React from 'react'
 import "./rememberForgot.css";
+import { Link } from "react-router-dom";
 
 function RememberForgot() {
   return (
@@ -8,7 +9,7 @@ function RememberForgot() {
         <input type='checkbox' id="remember"/>
         <label for="remember">Remember me</label>
     </div>
-    <a href="/src/college/ForgotPassword.jsx" className="forgot-password">Forgot password?</a>
+    <Link className="forgot-password" to="/reset">Forgot password?</Link>
 </div>
   )
 }

@@ -1,12 +1,14 @@
-import React from 'react'
+import React from 'react';
 import "./authFooter.css";
+import { Link } from "react-router-dom";
 
-function AuthFooter() {
+function AuthFooter({ footerText, destination, text }) {
   return (
-   <div className="auth-footer">
-        Don't have an account? <a href="register.html">Sign up</a>
+    <div className="auth-footer">
+      <span>{footerText} </span>
+      <Link to={destination}>{text}</Link>
     </div>
-  )
+  );
 }
 
-export default AuthFooter
+export default AuthFooter;

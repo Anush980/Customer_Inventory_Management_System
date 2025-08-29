@@ -1,5 +1,6 @@
 .input {
             margin-bottom: 1.5rem;
+            padding-right: 2rem;
         }
 
         .input label {
@@ -21,4 +22,18 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+        }
+        @media (max-width:720px)
+        {
+
+            .input{
+               padding-right: 0;
+            }
+        }
+        @media (max-width:480px)
+        {
+
+            .input{
+               padding-right: 1rem;
+            }
         }
