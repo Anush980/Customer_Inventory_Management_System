@@ -1,0 +1,26 @@
+.remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            padding-right:40px;
+        }
+
+        .remember-me input {
+            margin-right: 0.5rem;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
