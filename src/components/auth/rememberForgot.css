@@ -3,15 +3,18 @@
             justify-content: space-between;
             align-items: center;
             margin: 1.5rem;
+    
         }
 
         .remember-me {
             display: flex;
             align-items: center;
-            padding-right:40px;
+            padding-right:100px;
+            
         }
 
         .remember-me input {
+            
             margin-right: 0.5rem;
         }
 

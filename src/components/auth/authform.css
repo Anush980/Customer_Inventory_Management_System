@@ -1,19 +1,21 @@
 body {
-            background-color: #f5f7fa;
+              background: linear-gradient(135deg, #415194, #6e4593);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
+
 .auth-container {
             width: 500px;
             max-width: 600px;
-            background-color: white;
+            background-color: rgb(255, 255, 255);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
+        
 @media (max-width: 768px) {
   .auth-container {
     padding: 1.5rem;
@@ -26,7 +28,8 @@ body {
 @media (max-width: 480px) {
   .auth-container {
     width: 90%;
-    padding: 1rem;
+    padding: 0.8rem;
+    margin:0 auto;
     min-height: 300px;
   }
 
