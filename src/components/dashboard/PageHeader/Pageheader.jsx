@@ -8,7 +8,7 @@ const Pageheader = ({title,btnTitle}) => {
             <h2>Dashboard </h2>
             <button className="btn">
               <FontAwesomeIcon icon="plus" />
-              <span>New Order</span>
+              <span> New Sales</span>
             </button>
           </div>
   )

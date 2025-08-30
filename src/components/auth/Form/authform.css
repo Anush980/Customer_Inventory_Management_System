@@ -2,19 +2,20 @@
  .auth-wrapper{
    min-height: 100vh;  
    min-width: 100vw;       
-  background: linear-gradient(135deg, #415194, #6e4593);
+  background: rgba(42, 49, 57, 0.94);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 3%;
  }
 
 .auth-container {
-  width: 500px;
+  width: 480px;
   max-width: 600px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .error-text {
@@ -32,7 +33,7 @@
 
 @media (max-width: 768px) {
   .auth-container {
-    padding: 1.5rem;
+   
     min-height: 350px;
   }
 }
@@ -40,7 +41,7 @@
 @media (max-width: 480px) {
   .auth-container {
     width: 90%;
-    padding: 0.8rem;
+    
     margin: 0 auto;
     min-height: 300px;
   }

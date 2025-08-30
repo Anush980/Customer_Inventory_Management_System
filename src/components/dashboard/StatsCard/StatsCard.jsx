@@ -18,11 +18,11 @@ let classType= type.toLowerCase();
       title="Today's Sales"
       break;
     case "customer":
-      periodText = "customers";
+      periodText = "in customers";
       title="Total Customer" 
       break;
     case "inventory":
-      periodText = "stocks ";
+      periodText = "in stocks ";
       title="Low Stock Items" 
       break;
     default:

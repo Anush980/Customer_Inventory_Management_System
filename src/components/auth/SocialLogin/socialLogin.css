@@ -1,11 +1,11 @@
 
 .social-login {
   display: flex;
-  flex-direction: row;       /* row layout */
-  justify-content: center;   /* center horizontally */
-  gap: 1rem;                 /* space between buttons */
+  flex-direction: row;     
+  justify-content: center;  
+  gap: 1rem;                
   margin-top: 1rem;
-  flex-wrap: nowrap;         /* stay in one row on larger screens */
+  flex-wrap: nowrap;         
 }
 
 
@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;              /* space between logo/icon and text */
+  gap: 0.5rem;              
   padding:1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
