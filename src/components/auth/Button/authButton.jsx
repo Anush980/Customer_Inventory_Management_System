@@ -3,7 +3,7 @@ import './authButton.css';
 
 const AuthButton = ({label, type}) => {
   return (
-    <button type="submit" className="btn">
+    <button type="submit" className="auth-btn">
               {label}
             </button>
   )

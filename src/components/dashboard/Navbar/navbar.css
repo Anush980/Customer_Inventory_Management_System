@@ -2,7 +2,7 @@
   width: calc(100vw - min(max(70px, calc(100vw * 0.25)), 240px));
   position: fixed; 
   top: 0;
-  left: min(max(70px, calc(100vw * 0.25)), 240px);
+  /* left: min(max(70px, calc(100vw * 0.25)), 200px); */
   transition: all 0.3s ease;
   z-index: 500;
 }
@@ -19,6 +19,7 @@
   z-index: 500;
   width: 100%;
   transition: all 0.3s ease;
+  height: 70px;
 }
 
 
@@ -96,7 +97,7 @@
     width: 300px;
   }
    .navbar-wrapper {
-    left: 80px; 
+    
     width: calc(100vw - 80px);
   }
   .navbar {
@@ -108,7 +109,7 @@
     width: 200px;
   }
    .navbar-wrapper {
-    left: 0; 
+     
     width: 100vw;
   }
   .navbar {

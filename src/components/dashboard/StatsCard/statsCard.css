@@ -1,0 +1,62 @@
+
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary);
+        }
+        
+        .stat-card.sales::before {
+            background-color: var(--success);
+        }
+        
+        .stat-card.customer::before {
+            background-color: var(--info);
+        }
+        
+        .stat-card.inventory::before {
+            background-color: var(--warning);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .change {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .change.positive {
+            color: var(--success);
+        }
+        
+        .change.negative {
+            color: var(--danger);
+        }
+        
+        .change icon {
+            margin-right: 5px;
+        }

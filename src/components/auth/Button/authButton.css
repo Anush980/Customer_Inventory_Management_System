@@ -1,4 +1,4 @@
- .btn {
+ .auth-btn {
             display: inline-block;
             background-color: var(--primary);
             color: white;
@@ -17,17 +17,17 @@
             padding: 2rem;
         }
 
-         .btn:hover {
+         .auth-btn:hover {
             background-color: #2980b9;
         }
 
-        .btn-outline {
+        .auth-btn-outline {
             background-color: transparent;
             border: 1px solid var(--primary);
             color: var(--primary);
         }
 
-        .btn-outline:hover {
+        .auth-btn-outline:hover {
             background-color: var(--primary);
             color: white;
         }

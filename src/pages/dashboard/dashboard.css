@@ -1,5 +1,34 @@
 .dashboard-wrapper {
+    background-color:aliceblue;
   display: flex;
   width: 100vw;
   height: 100vh;
+}
+.main-area {
+  left: min(max(70px, calc(100vw * 0.25)), 240px);
+  position: fixed;
+  top: 80px;
+}
+.main-content {
+  margin-left: 4%;
+  padding-top: 1.5rem;
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+
+@media (max-width: 768px) {
+  .main-area {
+    left: 80px;
+  }
+}
+@media (max-width: 480px) {
+  .main-area {
+    left: 0;
+  }
 }

@@ -16,7 +16,7 @@
 }
 
 .sidebar-header {
-  padding: 0 1.5rem 1.5rem;
+  padding: 0 1.5rem 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -25,8 +25,8 @@
   align-items: center;
 }
 .sidebar-logo p {
-  padding-left: 2rem;
-  font-size: 0.7rem;
+ padding-left: 15%;
+  font-size: 0.55rem;
   text-align: center;
   font-weight: 400;
 }
