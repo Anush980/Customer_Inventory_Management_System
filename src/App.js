@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import './App.css';
+import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
 import Reset from './pages/reset';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./components/ui/icon";
 
 function App() {
   return (
@@ -13,8 +16,12 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<Reset />} />
 
-        {/* Optional: default redirect to login */}
-        <Route path="*" element={<Login />} />
+        {/* Default page */}
+        <Route path="*" element={<Login/>} />
+
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard/>}/>
+
       </Routes>
   );
 }

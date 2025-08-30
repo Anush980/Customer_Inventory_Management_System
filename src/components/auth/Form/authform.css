@@ -1,10 +1,12 @@
-body {
+
+ .auth-wrapper{
+   min-height: 100vh;  
+   min-width: 100vw;       
   background: linear-gradient(135deg, #415194, #6e4593);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-}
+ }
 
 .auth-container {
   width: 500px;
@@ -17,6 +19,12 @@ body {
 
 .error-text {
   color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+.success-text {
+  color: rgb(47, 255, 0);
   font-size: 0.9rem;
   margin-top: 0.5rem;
   text-align: center;

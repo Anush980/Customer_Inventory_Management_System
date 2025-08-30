@@ -23,14 +23,14 @@ function Reset() {
         type="password"
         placeholder="Enter your password"
         value={password}
-        onchange={(e) => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
         />
         <AuthInput
         label="Confirm Password"
         type="password"
         placeholder="Confirm your password"
         value={confirmPassword}
-        onchange={(e) => setConfirmPassword(e.target.value)}
+        onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </AuthForm>
     

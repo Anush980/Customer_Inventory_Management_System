@@ -5,22 +5,41 @@ import AuthInput from "../../components/auth/Input/authInput";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error ,setError]= useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-   setError("User not Found !");
-    // API call
+
+    const res = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setSuccess("Login successful!");
+      setEmail("");
+      setPassword("");
+      setError("");
+    } else {
+      setError(data.message || "Login failed");
+    }
   };
 
   return (
-    <AuthForm type="login" onSubmit={handleSubmit} error={error}>
+    <AuthForm
+      type="login"
+      onSubmit={handleSubmit}
+      error={error}
+      success={success}
+    >
       <AuthInput
         label="Email"
         type="email"
         placeholder="Enter your email"
         value={email}
-        onchange={(e) => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
         autocomplete="email"
       />
       <AuthInput
@@ -28,7 +47,7 @@ function Login() {
         type="password"
         placeholder="Enter your password"
         value={password}
-        onchange={(e) => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value)}
         autocomplete="current-password"
       />
     </AuthForm>

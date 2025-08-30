@@ -9,11 +9,12 @@ import AuthFooter from "../Footer/authFooter";
 import Button from "../Button/authButton";
 import Agreement from "../Agreement/agreement";
 
-const AuthForm = ({ type, onSubmit, children ,error}) => {
+const AuthForm = ({ type, onSubmit, children ,error,success}) => {
   const config = authConfigs[type];
   if (!config) return <p>Unknown type.</p>;
 
   return (
+    <div className="auth-wrapper">
     <div className="auth-container">
       <AuthHeader title={config.title} subtitle={config.subTitle} />
 
@@ -22,6 +23,7 @@ const AuthForm = ({ type, onSubmit, children ,error}) => {
          
           {children}
 {error && <p className="error-text">{error}</p>}
+{success && <p className="success-text">{success}</p>}
           {type === "login" && <RememberForgot />}
           {type === "register" && <Agreement />}
 
@@ -40,6 +42,7 @@ const AuthForm = ({ type, onSubmit, children ,error}) => {
         destination={config.switchLink.to}
         text={config.switchLink.text}
       />
+    </div>
     </div>
   );
 };

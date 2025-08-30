@@ -6,7 +6,7 @@ function AuthInput({
   placeholder,
   autocomplete,
   value,
-  onchange,
+  onChange,
 }) {
   return (
     <div className="input">
@@ -15,7 +15,7 @@ function AuthInput({
         type={type}
         placeholder={placeholder}
         value={value}
-        onChange={onchange}
+        onChange={onChange}
         className="form-control"
         autoComplete={autocomplete}
         required
