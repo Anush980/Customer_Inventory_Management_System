@@ -6,8 +6,8 @@
 }
 .main-area {
   left: min(max(70px, calc(100vw * 0.25)), 240px);
-  position: fixed;
-  top: 80px;
+  position: sticky;
+padding-top:6%
 }
 .main-content {
   margin-left: 4%;
@@ -21,14 +21,20 @@
   margin-top: 2rem;
 }
 
-
+@media(max-width:1000px){
+    .main-area {
+padding-top:8%
+}
+}
 @media (max-width: 768px) {
   .main-area {
     left: 80px;
+    padding-top:10%;
   }
 }
 @media (max-width: 480px) {
   .main-area {
     left: 0;
+    padding-top:15%;
   }
 }
