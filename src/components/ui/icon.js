@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 
 import {
   faTachometerAlt,
+  faBook,
   faBoxes,
   faUsers,
   faShoppingCart,
@@ -43,6 +44,7 @@ library.add(
 
 
     //solid icons
+faBook,
 faTachometerAltAverage,
  faTachometerAlt,
   faBoxes,
