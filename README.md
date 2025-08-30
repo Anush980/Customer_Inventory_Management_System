@@ -1,4 +1,4 @@
-# Customer Inventory Management System (Frontend)
+# Customer Inventory Management System
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Anush980/Customer_Inventory_Management_System?style=flat-square)
 ![GitHub language count](https://img.shields.io/github/languages/count/Anush980/Customer_Inventory_Management_System?style=flat-square)
