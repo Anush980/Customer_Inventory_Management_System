@@ -106,11 +106,22 @@
   }
 }
 @media (max-width: 480px) {
-  .sidebar.closed {
-    display: none;
-  }
-  .sidebar.open{
-    width: 70px;
+
+  .sidebar {
+    transform: translateX(-100%);
+    width: 90px; 
     overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+
+  .sidebar.open {
+    transform: translateX(0); 
+  }
+
+ 
+  .sidebar.closed {
+    transform: translateX(-100%); 
   }
 }
+
