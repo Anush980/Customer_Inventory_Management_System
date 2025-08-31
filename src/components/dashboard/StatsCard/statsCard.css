@@ -61,3 +61,9 @@
         .change icon {
             margin-right: 5px;
         }
+        @media (max-width: 480px) {
+            .stat-card {
+           padding: 1rem;
+           width: 86vw;
+            }
+        }

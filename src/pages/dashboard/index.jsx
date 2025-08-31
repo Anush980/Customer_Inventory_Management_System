@@ -2,33 +2,41 @@ import { React, useState } from "react";
 import Navbar from "../../components/dashboard/Navbar/Navbar";
 import SideBar from "../../components/dashboard/Sidebar/SideBar";
 import "./dashboard.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StatsCard from "../../components/dashboard/StatsCard/StatsCard";
 import Pageheader from "../../components/dashboard/PageHeader/Pageheader";
 import Table from "../../components/table/table";
+import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
+
   return (
-    <div className="dashboard-wrapper">
+    <div className="dashboard">
       <SideBar isOpen={isOpen} closeSidebar={closeSidebar} />
-      <div className="main-area">
+      <div className="main">
         <Navbar toggleSidebar={toggleSidebar} />
-        <div className="main-content">
+        <div className="content">
           <Pageheader title="Dashboard" btnTitle="New Order" />
-          <div className="stats-cards">
+          
+          <div className="stats">
             <StatsCard value="&#8377; 25000" change={-12.5} type="revenue" />
             <StatsCard value="&#8377; 5000" change={12.5} type="sales" />
             <StatsCard value="200" change={12.5} type="customer" />
             <StatsCard value="25" change={-12.5} type="inventory" />
           </div>
-          <Table />
-          <Table variant="inventory" editable="true" />
+
+          <div className="data">
+            <div className="data-left">
+              <Table />
+              <Table variant="inventory" editable />
+            </div>
+            <div className="data-right">
+              <QuickStats />
+            </div>
+          </div>
         </div>
       </div>
     </div>

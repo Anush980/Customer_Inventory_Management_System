@@ -5,8 +5,10 @@ import {
   faTrashCan,
   faBook,
   faBoxes,
+  faBox,
   faUsers,
   faShoppingCart,
+  faDollarSign,
   faCog,
   faUser,
   faSignOutAlt,
@@ -27,7 +29,10 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 
-import { faEnvelope, faCalendar } from "@fortawesome/free-regular-svg-icons";
+import {
+   faEnvelope,
+    faCalendar
+   } from "@fortawesome/free-regular-svg-icons";
 
 library.add(
   //solid icons
@@ -46,6 +51,8 @@ library.add(
   faArrowUp,
   faArrowDown,
   faPenToSquare,
+  faDollarSign,
+  faBox,
 
   //brand icons
   faFacebook,
