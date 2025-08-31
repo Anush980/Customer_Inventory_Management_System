@@ -60,21 +60,21 @@ export const tableVariants = {
         id: "WH-1001",
         item: "Wireless Headphones",
         stock: 50,
-        price: "$1000",
+        price: "Rs. 1000",
         category:"Electronics"
       },
       {
         id: "SW-2005",
         item: "Smart Watch",
         stock: 200,
-        price: "$25",
+        price: "Rs. 2500",
         category:"Electronics"
       },
       {
         id: "BS-3012",
         item: "Bluetooth Speaker",
         stock: 150,
-        price: "$45",   
+        price: "Rs. 450",   
         category:"Electronics"
       },
     ],
