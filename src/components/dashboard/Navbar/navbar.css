@@ -1,6 +1,6 @@
 .navbar-wrapper {
   width: calc(100vw - min(max(70px, calc(100vw * 0.25)), 240px));
-  position: fixed; 
+  position: fixed;
   top: 0;
   /* left: min(max(70px, calc(100vw * 0.25)), 200px); */
   transition: all 0.3s ease;
@@ -21,14 +21,12 @@
   transition: all 0.3s ease;
   height: 70px;
 }
-.navbar-logo img{
+.navbar-logo img {
   display: none;
   border-radius: 50%;
   width: 50px;
   height: 50px;
-
 }
-
 
 .search-bar {
   display: flex;
@@ -61,12 +59,15 @@
   display: flex;
   align-items: center;
 }
-
 .user-menu .notification {
   position: relative;
   margin-right: 1.5rem;
+  /* display: inline-block; */
+  /* cursor: pointer; */
+  /* border-radius: 50%; */
+  /* box-sizing: border-box; */
+  /* transition: all 0.2s; */
 }
-
 .notification .badge {
   position: absolute;
   top: -5px;
@@ -82,17 +83,64 @@
   justify-content: center;
 }
 
-.user-profile {
-  display: flex;
-  align-items: center;
+ .notification .notification-panel {
+  position: absolute;
+  top: 0;
+  right: 28px;
+  border-radius: 4px;
+  background-color: var(--gray);
+  width: 280px;
+  height: max-content;
+  color: var(--light);
+  text-align: center;
+  padding: 10px;
+} 
+
+.notification-header {
+  padding: 10px 15px;
 }
 
-.user-profile img {
-  width: 40px;
-  height: 40px;
+.notification-header h3 {
+  padding-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
+.notification-item {
+ text-align: start;
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.109); 
+}
+.notification-item:last-child {
+  border-bottom: none; 
+}
+
+.notification-item p {
+  margin: 0;
+  font-size: 14px;
+color:var(--light);
+  width: 100%;
+}
+
+
+
+.user-menu .user-profile {
+  position: relative;
+}
+
+.user-menu .icon {
+  display: inline-block;
+  cursor: pointer;
+
   border-radius: 50%;
-  margin-right: 10px;
-  object-fit: cover;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+.user-menu .icon:hover {
+  box-shadow: 0 0 1px 8.5px rgba(0, 0, 0, 0.061);
+  background-color: rgba(0, 0, 0, 0.061);
 }
 
 .hamburger {
@@ -103,8 +151,7 @@
   .search-bar {
     width: 300px;
   }
-   .navbar-wrapper {
-    
+  .navbar-wrapper {
     width: calc(100vw - 80px);
   }
   .navbar {
@@ -112,14 +159,13 @@
   }
 }
 @media (max-width: 480px) {
-  .navbar-logo img{
-    display:flex;
+  .navbar-logo img {
+    display: flex;
   }
   .search-bar {
     width: 150px;
   }
-   .navbar-wrapper {
-     
+  .navbar-wrapper {
     width: 100vw;
   }
   .navbar {

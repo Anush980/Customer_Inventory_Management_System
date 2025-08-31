@@ -6,10 +6,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3%;
+  padding: 1%;
  }
 
 .auth-container {
+
   width: 480px;
   max-width: 600px;
   background-color: rgb(255, 255, 255);

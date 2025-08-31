@@ -1,10 +1,10 @@
 
         
         .stat-card {
-            background-color: white;
+            background-color: rgb(255, 255, 255);
             border-radius: 8px;
             padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
         }
@@ -38,6 +38,7 @@
         }
         
         .stat-card .value {
+            color: rgb(28, 28, 28);
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;

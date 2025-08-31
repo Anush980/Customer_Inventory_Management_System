@@ -1,6 +1,7 @@
  .auth-footer {
             text-align: center;
-            padding: 1rem 2rem 2rem;
+            
+            margin-bottom: 1rem;
             color: var(--dark);
             font-size: 0.9rem;
         }
