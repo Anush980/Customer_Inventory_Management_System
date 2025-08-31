@@ -1,16 +1,12 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
-
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 import {
   faTachometerAlt,
+  faTrashCan,
   faBook,
   faBoxes,
   faUsers,
   faShoppingCart,
-  faChartLine,
-  faTruck,
-  faTags,
-  faBarcode,
   faCog,
   faUser,
   faSignOutAlt,
@@ -19,11 +15,8 @@ import {
   faPlus,
   faArrowUp,
   faArrowDown,
-  faDollarSign,
-  faBoxOpen,
-  faTachometerAltAverage
-} from '@fortawesome/free-solid-svg-icons';
-
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   faFacebook,
@@ -31,29 +24,19 @@ import {
   faInstagram,
   faLinkedin,
   faGithub,
-  faYoutube
-} from '@fortawesome/free-brands-svg-icons';
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
 
-
-import {
-  faEnvelope,
-  faCalendar
-} from '@fortawesome/free-regular-svg-icons';
+import { faEnvelope, faCalendar } from "@fortawesome/free-regular-svg-icons";
 
 library.add(
-
-
-    //solid icons
-faBook,
-faTachometerAltAverage,
- faTachometerAlt,
+  //solid icons
+  faBook,
+  faTrashCan,
+  faTachometerAlt,
   faBoxes,
   faUsers,
   faShoppingCart,
-  faChartLine,
-  faTruck,
-  faTags,
-  faBarcode,
   faCog,
   faUser,
   faSignOutAlt,
@@ -62,22 +45,17 @@ faTachometerAltAverage,
   faPlus,
   faArrowUp,
   faArrowDown,
-  faDollarSign,
-  faBoxOpen,
-
+  faPenToSquare,
 
   //brand icons
- faFacebook,
+  faFacebook,
   faTwitter,
   faInstagram,
   faLinkedin,
   faGithub,
   faYoutube,
 
-
   //regular icons
   faEnvelope,
   faCalendar
-
-
 );

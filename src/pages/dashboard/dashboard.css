@@ -2,7 +2,8 @@
     background-color:aliceblue;
   display: flex;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: max-content;
 }
 .main-area {
   left: min(max(70px, calc(100vw * 0.25)), 240px);

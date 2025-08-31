@@ -1,0 +1,151 @@
+.card {
+  margin-top: 25px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+  color: var(--secondary);
+}
+.card-header .viewbtn{
+    text-decoration: none;
+    color:var(--secondary);
+    cursor: pointer;
+    font-weight: 500;
+    transition: transform 0.15s ;
+}
+.card-header .viewbtn:hover{
+transform: scale(1.05);
+
+}
+
+/* Table container */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table layout */
+table {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+/* Table header */
+th {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  color: var(--secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+/* Table cells */
+td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+.status {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Status badges */
+.status.completed {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: var(--success);
+}
+
+.status.pending {
+  background-color: rgba(241, 196, 15, 0.1);
+  color: var(--warning);
+}
+
+.status.cancelled {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+}
+
+/* Buttons */
+   .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light);
+            color: var(--dark);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .action-btn.edit {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary);
+        }
+        
+        .action-btn.edit:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .action-btn.delete {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        .action-btn.delete:hover {
+            background-color: var(--danger);
+            color: white;
+        }
+
+
+
+/* Mobile-friendly tweaks */
+@media (max-width: 600px) {
+  table {
+    min-width: 100%;
+  }
+
+  th,
+  td {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+}

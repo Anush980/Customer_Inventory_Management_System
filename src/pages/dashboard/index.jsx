@@ -5,6 +5,7 @@ import "./dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StatsCard from "../../components/dashboard/StatsCard/StatsCard";
 import Pageheader from "../../components/dashboard/PageHeader/Pageheader";
+import Table from "../../components/table/table";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +27,8 @@ const Dashboard = () => {
             <StatsCard value="200" change={12.5} type="customer" />
             <StatsCard value="25" change={-12.5} type="inventory" />
           </div>
+          <Table />
+          <Table variant="inventory" editable="true" />
         </div>
       </div>
     </div>

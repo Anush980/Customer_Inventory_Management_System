@@ -43,6 +43,7 @@
   width: 100%;
   padding: 0.3rem;
   outline: none;
+
 }
 
 .search-bar .search-icon {
@@ -62,11 +63,7 @@
 .user-menu .notification {
   position: relative;
   margin-right: 1.5rem;
-  /* display: inline-block; */
-  /* cursor: pointer; */
-  /* border-radius: 50%; */
-  /* box-sizing: border-box; */
-  /* transition: all 0.2s; */
+
 }
 .notification .badge {
   position: absolute;
