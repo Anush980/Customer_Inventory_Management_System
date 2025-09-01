@@ -7,7 +7,9 @@ import Reset from './pages/reset';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./components/ui/icon";
 
+
 function App() {
+  
   return (
    
       <Routes>

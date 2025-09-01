@@ -6,14 +6,16 @@ import StatsCard from "../../components/dashboard/StatsCard/StatsCard";
 import Pageheader from "../../components/dashboard/PageHeader/Pageheader";
 import Table from "../../components/table/table";
 import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
+import WindowSize from "../../components/ui/WindowSize/WindowSize";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+ const { width, height } = WindowSize();
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
 
   return (
+    <>
     <div className="dashboard">
       <SideBar isOpen={isOpen} closeSidebar={closeSidebar} />
       <div className="main">
@@ -34,12 +36,22 @@ const Dashboard = () => {
               <Table variant="inventory" editable />
             </div>
             <div className="data-right">
+              <p>
+        Width: {width}px, Height: {height}px
+      </p>
               <QuickStats />
+              <QuickStats />
+              
             </div>
           </div>
         </div>
       </div>
+      
     </div>
+    <footer className="footer">
+
+      </footer>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
 }
 
 .card-header {
@@ -20,7 +20,7 @@
   color: var(--secondary);
 }
 
-.card-header .viewbtn {
+ .viewbtn {
   text-decoration: none;
   color: var(--secondary);
   cursor: pointer;
@@ -28,7 +28,7 @@
   transition: transform 0.15s;
 }
 
-.card-header .viewbtn:hover {
+ .viewbtn:hover {
   transform: scale(1.05);
 }
 
@@ -45,7 +45,7 @@ table {
   border-radius: 12px;
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px; /* for larger screens */
+  min-width: 600px;
 }
 
 /* Table header */
@@ -143,7 +143,7 @@ td {
 
   th,
   td {
-    padding: 0.5rem; 
+    padding: 0.7rem; 
     font-size: 0.8rem; 
   }
 
@@ -153,6 +153,8 @@ td {
   }
 }
 
+
+
 @media (max-width: 768px) {
   table {
     min-width: 100%;
@@ -160,8 +162,8 @@ td {
 
   th,
   td {
-    padding: 0.5rem;
-    font-size: 0.8rem; 
+    padding: 0.25rem;
+    font-size: 0.75rem; 
   }
 
   .action-btn {

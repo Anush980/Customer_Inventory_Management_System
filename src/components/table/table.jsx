@@ -24,8 +24,8 @@ const Table = ({ variant = "sales", limit = 5, editable = false }) => {
   };
 
   return (
-    <div class="card">
-                        <div class="card-header">
+    <div className="card">
+                        <div className="card-header">
                             <h3>{tableInfo.title}</h3>
                             <Link to='/sales' className="viewbtn">View All</Link>
                         </div>
