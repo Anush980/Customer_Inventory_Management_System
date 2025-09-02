@@ -71,6 +71,12 @@
     grid-template-columns: 1fr;
   }
 }
+@media (max-width: 1000px) {
+  .main {
+    left: 24%;
+    padding-top: 10%;
+  }
+}
 
 @media (max-width: 768px) {
   .main {
