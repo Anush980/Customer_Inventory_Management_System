@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
-
-import useState from 'react'
+import React, { useState } from "react";
 
 const ProtectedRoute = ({children}) => {
     const [message, setMessage] = useState("");
