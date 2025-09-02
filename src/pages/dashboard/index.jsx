@@ -7,6 +7,7 @@ import Pageheader from "../../components/dashboard/PageHeader/Pageheader";
 import Table from "../../components/table/table";
 import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
 import WindowSize from "../../components/ui/WindowSize/WindowSize";
+import CrudTable from "../../components/ui/CrudTable/CrudTable";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,6 +35,7 @@ const Dashboard = () => {
             <div className="data-left">
               <Table />
               <Table variant="inventory" editable />
+              {/* <CrudTable/> */}
             </div>
             <div className="data-right">
               {/* <p>

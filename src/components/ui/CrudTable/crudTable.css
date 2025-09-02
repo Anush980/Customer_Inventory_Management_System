@@ -1,0 +1,110 @@
+.crud-table-wrapper{
+    display: flex;
+            position: fixed;
+            top: 0;
+              left: min(max(70px, calc(100vw * 0.25)), 100px);
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            
+            margin: 0 auto;
+            align-items: center;
+}
+.crud-table-content{
+    background-color:white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 580px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s;
+}
+.crud-table-header{
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+         
+}
+.crud-table-header h3{
+    font-size: 1.3rem;
+            color: var(--secondary);
+}
+
+.crud-table-header .close-table{
+    background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            
+}
+
+.crud-table-body{
+     padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+}
+
+.crud-table-footer{
+     padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+}
+.form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+          .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+         .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        @media (max-width: 768px) {
+            .crud-table-wrapper{
+                left:min(max(70px, calc(100vw * 0.25)), 50px);
+                padding: 14%;
+            }
+            .form-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        }
+         @media (max-width: 520px){
+            .crud-table-wrapper{
+                left:0;
+                padding: 8%;
+            }
+              .form-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+         }
