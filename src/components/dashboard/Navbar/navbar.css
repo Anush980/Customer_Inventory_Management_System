@@ -91,6 +91,7 @@
   color: var(--light);
   text-align: center;
   padding: 10px;
+ 
 } 
 
 .notification-header {
@@ -173,4 +174,10 @@ color:var(--light);
   .hamburger {
     display: flex;
   }
+   .notification .notification-panel {
+  top:48px;
+  right: 1px;
+  padding: 10px;
+} 
+
 }

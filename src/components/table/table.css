@@ -172,14 +172,15 @@ td {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   table {
     min-width: 100%;
+   
   }
 
   th,
   td {
-    padding: 0.35rem;
+    padding: 0.3rem;
     font-size: 0.6rem;
   }
   .status {
