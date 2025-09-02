@@ -2,7 +2,9 @@
  .auth-wrapper{
    min-height: 100vh;  
    min-width: 100vw;       
-  background: rgba(42, 49, 57, 0.94);
+   background:linear-gradient(-45deg, #0e131e, #2d4e88, #102b5e, #1f60d1);
+  background-size: 400% 400%;
+  animation: gradientBG 60s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,4 +53,9 @@
     padding: 0.5rem 0;
     gap: 0.75rem;
   }
+}
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
