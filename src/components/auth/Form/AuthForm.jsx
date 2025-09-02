@@ -9,7 +9,7 @@ import AuthFooter from "../Footer/authFooter";
 import Button from "../Button/authButton";
 import Agreement from "../Agreement/agreement";
 
-const AuthForm = ({ type, onSubmit, children ,error,success}) => {
+const AuthForm = ({ type, onSubmit, children ,error,success,fadeError,fadeSuccess}) => {
   const config = authConfigs[type];
   if (!config) return <p>Unknown type.</p>;
 
@@ -22,8 +22,8 @@ const AuthForm = ({ type, onSubmit, children ,error,success}) => {
         <form onSubmit={onSubmit}>
          
           {children}
-{error && <p className="error-text">{error}</p>}
-{success && <p className="success-text">{success}</p>}
+            {error && <p className={`error-text ${fadeError ? "fade" : ""}`}>{error}</p>}
+            {success && <p className={`success-text ${fadeSuccess ? "fade" : ""}`}>{success}</p>}
           {type === "login" && <RememberForgot />}
           {type === "register" && <Agreement />}
 
