@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import AuthForm from "../../components/auth/Form/AuthForm";
 import AuthInput from "../../components/auth/Input/authInput";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+    const [fadeError, setFadeError] = useState(false);
+  const [fadeSuccess, setFadeSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,12 +22,20 @@ function Login() {
     });
     const data = await res.json();
     if (res.ok) {
+      localStorage.setItem("token",data.token);
       setSuccess("Login successful!");
+      setFadeSuccess(false);
       setEmail("");
       setPassword("");
       setError("");
+       setTimeout(() => setFadeSuccess(true), 5000);
+      navigate("/dashboard")
+      
     } else {
       setError(data.message || "Login failed");
+      setTimeout(() => setFadeError(true), 5000);
+      setFadeError(false);
+      
     }
   };
 
@@ -33,6 +45,8 @@ function Login() {
       onSubmit={handleSubmit}
       error={error}
       success={success}
+      fadeError={fadeError}
+  fadeSuccess={fadeSuccess}
     >
       <AuthInput
         label="Email"

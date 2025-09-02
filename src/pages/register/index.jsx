@@ -2,13 +2,17 @@ import React from "react";
 import { useState } from "react";
 import AuthForm from "../../components/auth/Form/AuthForm";
 import AuthInput from "../../components/auth/Input/authInput";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+    const navigate = useNavigate();
   const [success, setSuccess] = useState("");
+    const [fadeError, setFadeError] = useState(false);
+    const [fadeSuccess, setFadeSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,8 +34,13 @@ const Register = () => {
       setPassword("");
       setConfirmPassword("");
       setError("");
+      setTimeout(() => setFadeSuccess(true), 5000);
+      navigate("/dashboard")
+      
     } else {
       setError(data.message || "Signup failed");
+       setTimeout(() => setFadeError(true), 5000);
+      setFadeError(false);
     }
   };
   return (
@@ -40,6 +49,8 @@ const Register = () => {
       onSubmit={handleSubmit}
       error={error}
       success={success}
+      fadeError={fadeError}
+  fadeSuccess={fadeSuccess}
     >
       <AuthInput
         label="Email"
