@@ -38,9 +38,9 @@ const Dashboard = () => {
               {/* <CrudTable/> */}
             </div>
             <div className="data-right">
-              {/* <p>
+              <p>
         Width: {width}px, Height: {height}px
-      </p> */}
+      </p>
               <QuickStats />
               <QuickStats />
               

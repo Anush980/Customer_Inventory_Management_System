@@ -39,7 +39,7 @@ export const tableVariants = {
       },
       {
         id: "#ORD-1005",
-        customer: "ching chag",
+        customer: "ching chang",
         time: "May 10, 2024",
         amount: "Rs. 459",
         status: "Cancelled",
