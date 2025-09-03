@@ -41,6 +41,7 @@ You can check it out [here](https://github.com/Anush980/CIMS_Backend)
 ---
 ## 📸 Screenshots
 ![Dashboard](./src/assets/Preview/DashboardPreview.png)
+![Inventory](./src/assets/Preview/InventoryPreview.png)
 ---
 
 ## 🚀 Installation (Frontend)
