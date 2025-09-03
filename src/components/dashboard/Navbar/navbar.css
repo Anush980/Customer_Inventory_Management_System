@@ -126,6 +126,8 @@ color:var(--light);
 
 .user-menu .user-profile {
   position: relative;
+  color:black;
+  
 }
 
 .user-menu .icon {

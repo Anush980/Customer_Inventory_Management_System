@@ -1,75 +1,104 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./table.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { tableVariants } from "../../data/tableData";
+import tableColumns from "../../data/tableColumns";
 
-const Table = ({ variant = "sales", limit = 5, editable = false }) => {
+const Table = ({ variant = "sales", limit, editable = false,onEdit,onDelete}) => {
   const tableInfo = tableVariants[variant];
-  const displayData = limit ? tableInfo.data.slice(0, limit) : tableInfo.data;
+  const columns = tableColumns[variant] || [];
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Display only limited data if needed
+  const displayData = limit ? data.slice(0, limit) : data;
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${process.env.REACT_APP_API_URL}/api/${variant}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch data");
+        return res.json();
+      })
+      .then((items) => {
+        setData(items);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, [variant]);
 
   const getStatusClass = (status) => {
-    switch ((status || "").toLowerCase()) {
-      case "completed":
-      case "available":
+    switch (status || "") {
+      case "Completed":
+      case "Available":
         return "status completed";
-      case "pending":
-      case "low-stock":
+      case "Pending":
+      case "Limited":
         return "status pending";
-      case "cancelled":
+      case "Cancelled":
+      case "No Stock":
         return "status cancelled";
       default:
         return "status";
     }
   };
 
+  if (loading) return <p>Loading...</p>;
+
   return (
     <div className="card">
-                        <div className="card-header">
-                            <h3>{tableInfo.title}</h3>
-                            <Link to='/sales' className="viewbtn">View All</Link>
-                        </div>
-    <div className="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            {tableInfo.columns.map((col) => (
-              <th key={col.key}>{col.label}</th>
-            ))}
-            {editable && <th>Action</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {displayData.map((row) => (
-            <tr key={row.id}>
-              {tableInfo.columns.map((col) => (
-                <td key={col.key}>
-                  {col.key === "status" ? (
-                    <span className={getStatusClass(row[col.key])}>
-                      {row[col.key] || "Null"}
-                    </span>
-                  ) : (
-                    row[col.key] || "Null"
-                  )}
-                </td>
+      <div className="card-header">
+        <h3>{tableInfo.title}</h3>
+        <Link to={`/${variant}`} className="viewbtn">
+          View All
+        </Link>
+      </div>
+      <div className="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              {columns.map((col) => (
+                <th key={col.key}>{col.label}</th>
               ))}
-              {editable && (
-                <td>
-                 <div className="action-btns">
-                                        <button className="action-btn edit">
-                                           <FontAwesomeIcon icon="pen-to-square"/>
-                                        </button>
-                                        <button className="action-btn delete">
-                                            <FontAwesomeIcon icon="trash-can"/>
-                                        </button>
-                                    </div>
-                </td>
-              )}
+              {editable && <th>Action</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {displayData.map((row, index) => (
+              <tr key={row._id || index}>
+                {columns.map((col) => (
+                  <td key={col.key}>
+                    {col.key === "status" ? (
+                      <span className={getStatusClass(row[col.key])}>
+                        {row[col.key] || "Null"}
+                      </span>
+                    ) : (
+                      row[col.key] ?? "Null"
+                    )}
+                  </td>
+                ))}
+                {editable && (
+                  <td>
+                    <div className="action-btns">
+                      <button className="action-btn edit"onClick={() => onEdit && onEdit(row)}>
+                        <FontAwesomeIcon icon="pen-to-square" />
+                      </button>
+                      <button className="action-btn delete" onClick={() => onDelete && onDelete(row)}>
+                        <FontAwesomeIcon icon="trash-can" />
+                      </button>
+                    </div>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

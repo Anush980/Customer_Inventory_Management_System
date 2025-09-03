@@ -8,6 +8,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./components/ui/icon";
 import Inventory from './pages/inventory';
 import ProtectedRoute from './ProtectedRoutes';
+import CustomerPage from './pages/customer';
+import SalesBookPage from './pages/salesbook';
+import SettingPage from './pages/setting';
+import ProfilePage from './pages/profile';
 
 
 function App() {
@@ -24,13 +28,19 @@ function App() {
         <Route path="*" element={<Login/>} />
 {/*protected routes for testing*/}
 <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
+<Route path="/inventory" element={<ProtectedRoute><Inventory/></ProtectedRoute>}/>
+<Route path="/customer" element={<ProtectedRoute><CustomerPage/></ProtectedRoute>}/>
+<Route path="/sales" element={<ProtectedRoute><SalesBookPage/></ProtectedRoute>}/>
+<Route path="/settings" element={<ProtectedRoute><SettingPage/></ProtectedRoute>}/>
+<Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
+
         
 
 {/*Unprotected routes for testing*/}
         {/* Dashboard */}
          {/* <Route path="/dashboard" element={<Dashboard/>}/> */}
         {/*Inventory page*/}
-        <Route path="/inventory" element={<Inventory/>}/>
+        {/* <Route path="/inventory" element={<Inventory/>}/> */}
 
 
       </Routes>

@@ -25,6 +25,10 @@ let classType= type.toLowerCase();
       periodText = "in stocks ";
       title="Low Stock Items" 
       break;
+    case "allinventory":
+      periodText = "in stocks ";
+      title="Total Stock Items" 
+      break;
     default:
       periodText = "";
   }
