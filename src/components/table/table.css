@@ -151,32 +151,23 @@ td {
     width: 25px;
     height: 25px;
   }
+  .card {
+  padding: 1rem;
 }
+}
+@media (max-width: 900px) {
+   th,
+  td {
+    padding: 0.4rem; 
+    font-size: 0.8rem; 
+  }
+}
+
 
 
 
 @media (max-width: 768px) {
-  table {
-    min-width: 100%;
-  }
 
-  th,
-  td {
-    padding: 0.25rem;
-    font-size: 0.75rem; 
-  }
-
-  .action-btn {
-    width: 25px;
-    height: 25px;
-  }
-}
-
-@media (max-width: 520px) {
-  table {
-    min-width: 100%;
-   
-  }
 
   th,
   td {
@@ -191,8 +182,5 @@ td {
   }
 
 
-  .action-btn {
-    width: 22px;
-    height: 22px;
-  }
+
 }

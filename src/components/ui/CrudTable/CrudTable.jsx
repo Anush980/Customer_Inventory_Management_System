@@ -1,66 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
+import crudTableVarient from "../../../data/crudTableVarient";
 import "./crudTable.css";
 
-const CrudTable = () => {
-  const handleSumbit = async (e) => {};
+const CrudTable = ({ variant, itemToEdit, closeWindow, handleSubmit }) => {
+  const config = crudTableVarient[variant][0];
+  const fields = Object.keys(config).filter((key) => key !== "heading");
+
+  const [formData, setFormData] = useState(itemToEdit || {});
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
   return (
     <div className="crud-table-wrapper">
       <div className="crud-table-content">
         <div className="crud-table-header">
-          <h3>Add New Inventory Item</h3>
-          <button className="close-table">&times;</button>
+          <h3>{itemToEdit ? `Edit ${config.heading}` : `Add ${config.heading}`}</h3>
+          <button className="close-table" onClick={closeWindow}>
+            &times;
+          </button>
         </div>
         <div className="crud-table-body">
-          <form onSubmit={handleSumbit}>
-            
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="product-name">Product Name</label>
-                <input type="text" class="form-control" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="product-sku">SKU</label>
-                <input type="text" class="form-control" required />
-              </div>
+          <form onSubmit={onSubmit}>
+            {fields.map((fieldkey) => {
+              const fieldConfig = config[fieldkey];
+              const { label, type, options } = fieldConfig;
+              return (
+                <div className="form-row" key={fieldkey}>
+                  <div className="form-group">
+                    <label>{label}</label>
+                    {type === "select" ? (
+                      <select
+                        name={fieldkey}
+                        value={formData[fieldkey] || ""}
+                        onChange={onChange}
+                        className="form-control"
+                        required
+                      >
+                        <option value="">Select..</option>
+                        {options.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <input
+                        type={type}
+                        name={fieldkey}
+                        value={formData[fieldkey] || ""}
+                        onChange={onChange}
+                        className="form-control"
+                        required
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+            <div className="crud-table-footer">
+              <button type="button" className="btn-outline" onClick={closeWindow}>
+                Cancel
+              </button>
+              <button type="submit" className="btn">Save</button>
             </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="product-category">Category</label>
-                <select class="form-control" required>
-                  <option value="Null">Select Category</option>
-                  <option value="computer">Computers & Accessories</option>
-                  <option value="mobile">Mobile & Tablets</option>
-                  <option value="home-goods">Home Goods</option>
-                  <option value="office-supplies">Office Supplies</option>
-                  <option value="Others">Others</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="product-stock">Stock</label>
-                <input type="number" class="form-control" required />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="product-cost">Cost</label>
-                <input type="number" class="form-control" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="product-price">Price</label>
-                <input type="number" class="form-control" required />
-              </div>
-            </div>
-            
           </form>
-        </div>
-        <div className="crud-table-footer">
-          <button class="btn-outline">Cancel</button>
-          <button class="btn">Save</button>
         </div>
       </div>
     </div>
   );
 };
-
 export default CrudTable;

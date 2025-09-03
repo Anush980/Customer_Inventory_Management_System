@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WebLogo from "../../../assets/CIMS_logo.png";
 import notificationsData from "../../../data/notificationData";
 import "./navbar.css";
+import { NavLink } from "react-router-dom";
 import notifications from "../../../data/notificationData";
 
 const Navbar = ({ toggleSidebar }) => {
@@ -45,9 +46,9 @@ const Navbar = ({ toggleSidebar }) => {
                 </div>
               )}
             </div>
-            <div className="user-profile">
-              <FontAwesomeIcon icon="user" className="icon" />
-            </div>
+            <NavLink to="/profile" className="user-profile">
+  <FontAwesomeIcon icon="user" className="icon" />
+</NavLink>
           </div>
           <div className="hamburger" onClick={toggleSidebar}>
             <svg

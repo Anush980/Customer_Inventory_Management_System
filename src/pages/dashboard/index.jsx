@@ -15,7 +15,7 @@ const Dashboard = () => {
   return (
     <>
    <Layout>
-          <Pageheader title="Dashboard" btnTitle="New Order" />
+         <Pageheader title="Dashboard" btnTitle="Add Sales" variant="sales" />
           
           <div className="stats">
             <StatsCard value="&#8377; 25000" change={-12.5} type="revenue" />
@@ -26,8 +26,8 @@ const Dashboard = () => {
 
           <div className="data">
             <div className="data-left">
-              <Table />
-              <Table variant="inventory" editable />
+              <Table limit = "5"/>
+              <Table variant="inventory" limit = "5"/>
               {/* <CrudTable/> */}
             </div>
             <div className="data-right">

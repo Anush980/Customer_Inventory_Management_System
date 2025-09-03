@@ -54,6 +54,7 @@ export const tableVariants = {
       { label: "Category", key: "category" },
       { label: "Stock", key: "stock" },
       { label: "Price", key: "price" },
+      { label: "Status", key: "status" },
     ],
     data: [
       {
@@ -61,21 +62,25 @@ export const tableVariants = {
         item: "Wireless Headphones",
         stock: 50,
         price: "Rs. 1000",
-        category:"Electronics"
+        category:"Electronics",
+         status: "Limited",
       },
       {
         id: "SW-2005",
         item: "Smart Watch",
         stock: 200,
         price: "Rs. 2500",
-        category:"Electronics"
+        category:"Electronics",
+        status: "Available",
+        
       },
       {
         id: "BS-3012",
         item: "Bluetooth Speaker",
         stock: 150,
         price: "Rs. 450",   
-        category:"Electronics"
+        category:"Electronics",
+        status: "No Stock",
       },
     ],
   },
