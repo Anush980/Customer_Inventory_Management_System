@@ -9,6 +9,7 @@ function AuthInput({
   onChange,
 }) {
   return (
+    <div className="input-wrapper">
     <div className="input">
       <label htmlFor={type}>{label}</label>
       <input
@@ -20,6 +21,7 @@ function AuthInput({
         autoComplete={autocomplete}
         required
       />
+    </div>
     </div>
   );
 }

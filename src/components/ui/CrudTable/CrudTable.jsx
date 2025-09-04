@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import crudTableVarient from "../../../data/crudTableVarient";
+import Button from "../Button/Button";
 import "./crudTable.css";
 
 const CrudTable = ({ variant, itemToEdit, closeWindow, handleSubmit }) => {
   const config = crudTableVarient[variant][0];
   const fields = Object.keys(config).filter((key) => key !== "heading");
-
   const [formData, setFormData] = useState(itemToEdit || {});
+  const [loading,setLoading] = useState(false);
 
+  
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -66,10 +68,13 @@ const CrudTable = ({ variant, itemToEdit, closeWindow, handleSubmit }) => {
               );
             })}
             <div className="crud-table-footer">
-              <button type="button" className="btn-outline" onClick={closeWindow}>
+              <Button variant="text" onClick={closeWindow}>
                 Cancel
-              </button>
-              <button type="submit" className="btn">Save</button>
+              </Button>
+              <Button variant="primary" type="submit" onClick={closeWindow} isLoading={loading}>
+                Save
+              </Button>
+             
             </div>
           </form>
         </div>

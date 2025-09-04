@@ -13,6 +13,7 @@ const Register = () => {
   const [success, setSuccess] = useState("");
     const [fadeError, setFadeError] = useState(false);
     const [fadeSuccess, setFadeSuccess] = useState(false);
+      const [loading,setLoading]=useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,26 +22,32 @@ const Register = () => {
       return;
     }
     setError("");
-
+    setLoading(true);
+try{
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
+    
     const data = await res.json();
     if (res.ok) {
-      setSuccess("Signup successful!");
+      setTimeout(() => setSuccess("Signup successful!"), 1000);
       setEmail("");
       setPassword("");
       setConfirmPassword("");
       setError("");
       setTimeout(() => setFadeSuccess(true), 5000);
-      navigate("/dashboard")
+      setTimeout(()=>{navigate("/dashboard")},1500);
       
     } else {
       setError(data.message || "Signup failed");
        setTimeout(() => setFadeError(true), 5000);
       setFadeError(false);
+    }}
+    catch(err){
+      setError("Something went wrong !")
+      setLoading(false);
     }
   };
   return (
@@ -51,6 +58,7 @@ const Register = () => {
       success={success}
       fadeError={fadeError}
   fadeSuccess={fadeSuccess}
+  loading={loading}
     >
       <AuthInput
         label="Email"

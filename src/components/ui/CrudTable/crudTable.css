@@ -17,7 +17,7 @@
   background-color: white;
   border-radius: 8px;
   width: 100%;
-  max-width: 580px;
+  max-width: 450px;
   overflow: hidden;
   animation: modalFadeIn 0.3s;
 }

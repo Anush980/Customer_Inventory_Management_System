@@ -1,0 +1,95 @@
+/* Base button styles (shared by all variants) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  margin-inline: 10px;
+}
+
+/* ----------------- Variants ----------------- */
+
+/* Primary */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #329ee6;
+  transform: translateY(-2px);
+}
+
+/* Success */
+.btn-success {
+  background-color: var(--success);
+  color: white;
+}
+.btn-success:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+
+/* Danger */
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+}
+.btn-danger:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Text */
+.btn-text {
+  background-color: transparent;
+  color: var(--dark);
+  padding: 0.6rem 1rem;
+  box-shadow: none;
+}
+.btn-text:hover {
+  background-color: transparent;
+  transform: scale(1.05);
+}
+.btn-auth {
+      width: 60%;
+      background-color: var(--primary);
+      color: white;
+      /* margin-inline: 30px; */
+}
+/* ----------------- States ----------------- */
+
+/* Disabled */
+.btn:disabled {
+  background-color: rgb(120, 120, 120);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading */
+.btn.loading {
+  cursor: wait;
+}
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(252, 252, 252, 0.6);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1.3s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -11,8 +11,12 @@
   padding: 1%;
  }
 
-.auth-container {
+ .button-wrapper{
+  display: flex;
+  justify-content: center;
+ }
 
+.auth-container {
   width: 480px;
   max-width: 600px;
   background-color: rgb(255, 255, 255);
@@ -20,6 +24,11 @@
   box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
+   .auth-body {
+    
+            padding: 2rem;
+        }
+
 
 .error-text {
   color: red;
@@ -53,7 +62,7 @@
 
 @media (max-width: 480px) {
   .auth-container {
-    width: 90%;
+    width: 100%;
     
     margin: 0 auto;
     min-height: 300px;

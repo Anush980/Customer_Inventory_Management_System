@@ -6,10 +6,10 @@ import RememberForgot from "../RememberForget/rememberForgot";
 import Divider from "../Divider/divider";
 import SocialLogin from "../SocialLogin/socialLogin";
 import AuthFooter from "../Footer/authFooter";
-import Button from "../Button/authButton";
+import Button from "../../ui/Button/Button";
 import Agreement from "../Agreement/agreement";
 
-const AuthForm = ({ type, onSubmit, children ,error,success,fadeError,fadeSuccess}) => {
+const AuthForm = ({ type, onSubmit, children ,error,success,fadeError,fadeSuccess,loading}) => {
   const config = authConfigs[type];
   if (!config) return <p>Unknown type.</p>;
 
@@ -27,7 +27,7 @@ const AuthForm = ({ type, onSubmit, children ,error,success,fadeError,fadeSucces
           {type === "login" && <RememberForgot />}
           {type === "register" && <Agreement />}
 
-          <Button label={config.buttonText}  />
+          <div className="button-wrapper"><Button variant="auth" isLoading={loading}>{config.buttonText} </Button></div>
         </form>
 
         {(type === "login" || type === "register") && (

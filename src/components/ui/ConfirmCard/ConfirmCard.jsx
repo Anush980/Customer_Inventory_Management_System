@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import Button from "../Button/Button";
 import "./confirmCard.css";
 
 const ConfirmCard = ({closeWindow,onConfirm}) => {
+  const [loading,setLoading]=useState(false);
 
   return (
     <div className="confirm-card-wrapper">
@@ -14,12 +16,12 @@ const ConfirmCard = ({closeWindow,onConfirm}) => {
         </div>
 
         <div className="btn-wrapper">
-          <button className="btn-outline" onClick={closeWindow}>
-            <span>Cancel</span>
-          </button>
-          <button className="btn-danger" onClick={onConfirm}>
-            <span>OK</span>
-          </button>
+          <Button variant="text" onClick={closeWindow}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={onConfirm} isLoading={loading}>
+            OK
+          </Button>
         </div>
       </div>
     </div>
