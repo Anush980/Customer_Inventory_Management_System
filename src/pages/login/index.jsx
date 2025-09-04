@@ -10,16 +10,19 @@ function Login() {
   const [success, setSuccess] = useState("");
     const [fadeError, setFadeError] = useState(false);
   const [fadeSuccess, setFadeSuccess] = useState(false);
+  const [loading,setLoading]=useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
+    
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
+    try{
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem("token",data.token);
@@ -37,6 +40,13 @@ function Login() {
       setFadeError(false);
       
     }
+  }
+  catch (err) {
+      setError("Something went wrong. Please try again.");
+  }
+    finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +57,7 @@ function Login() {
       success={success}
       fadeError={fadeError}
   fadeSuccess={fadeSuccess}
+  loading={loading}
     >
       <AuthInput
         label="Email"
