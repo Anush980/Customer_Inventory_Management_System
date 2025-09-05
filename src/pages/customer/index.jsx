@@ -14,8 +14,6 @@ const CustomerPage = () => {
       <FilterBar/>
       <div className="customer-cards">
 <CustomerCard/>
-<CustomerCard/>
-<CustomerCard/>
       </div>
       </Layout>
   )

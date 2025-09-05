@@ -1,0 +1,34 @@
+[
+  {
+    "customerId": "C101",
+    "name": "Anush Shrestha",
+    "email": "anush.stha232@gmail.com",
+    "phone": "+977 9826999469",
+    "location": "Damak-7, Nepal",
+    "creditBalance": 1500
+  },
+  {
+    "customerId": "C102",
+    "name": "Bikash Rai",
+    "email": "bikash.rai@gmail.com",
+    "phone": "+977 9812345678",
+    "location": "Itahari, Nepal",
+    "creditBalance": -800
+  },
+  {
+    "customerId": "C103",
+    "name": "Sita Sharma",
+    "email": "sita.sharma@gmail.com",
+    "phone": "+977 9841123456",
+    "location": "Biratnagar, Nepal",
+    "creditBalance": 0
+  },
+  {
+    "customerId": "C104",
+    "name": "Kiran Tamang",
+    "email": "kiran.tamang@gmail.com",
+    "phone": "+977 9865112233",
+    "location": "Dharan, Nepal",
+    "creditBalance": 250
+  }
+]

@@ -1,60 +1,71 @@
- .customer-card {
-   
-           
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-        
-        .customer-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .customer-card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .customer-card-header img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 1rem;
-        }
-        
-        .customer-card-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.2rem;
-        }
-        
-        .customer-card-info p {
-            font-size: 0.9rem;
-            color: #777;
-        }
-        
-        .customer-card-details {
-            margin-bottom: 1rem;
-        }
-        
-        .customer-card-details p {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .customer-card-details .logo {
-            margin-right: 0.5rem;
-            color: var(--primary);
-            width: 16px;
-        }
-        
-        .customer-card-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
+.customer-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+}
+
+.customer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.customer-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.customer-card-header img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.customer-card-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+  color: rgb(44, 44, 44);
+}
+
+.customer-card-info p {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.customer-card-details {
+  margin-bottom: 1rem;
+}
+
+.customer-card-details p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.customer-card-details .icon {
+  margin-right: 0.8rem;
+  color: var(--primary);
+  width: 16px;
+}
+
+.positive {
+  color: green;
+  font-weight: bold;
+}
+
+.negative {
+  color: red;
+  font-weight: bold;
+}
+
+
+.customer-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+

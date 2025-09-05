@@ -1,6 +1,8 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-import {
+import { 
+  faMoneyBill,
+  faEnvelope,
   faTachometerAlt,
   faTrashCan,
   faBook,
@@ -18,6 +20,8 @@ import {
   faArrowUp,
   faArrowDown,
   faPenToSquare,
+  faPhone,
+ faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -30,12 +34,17 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import {
-   faEnvelope,
+   
+  
     faCalendar
    } from "@fortawesome/free-regular-svg-icons";
 
 library.add(
   //solid icons
+  faMoneyBill,
+  faEnvelope,
+  faPhone,
+  faMapMarkerAlt,
   faBook,
   faTrashCan,
   faTachometerAlt,
@@ -63,6 +72,6 @@ library.add(
   faYoutube,
 
   //regular icons
-  faEnvelope,
+  
   faCalendar
 );
