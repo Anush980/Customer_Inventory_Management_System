@@ -1,32 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./customerCard.css";
 import logo from "../../../assets/CIMS_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../../components/ui/Button/Button";
 
+
 const CustomerCard = () => {
+const [customers,setCustomers]=useState([]);
+const [loading,setLoading]=useState(true);
+
+
+useEffect(() => {
+  fetch(`${process.env.REACT_APP_API_URL}/api/customer`)
+  .then((res)=>res.json())
+  .then((data)=>{
+    setCustomers(data);
+    setLoading(false);
+  })
+  .catch((err)=>{
+    console.log("Error fetching data",err);
+    setLoading(false)
+  })
+}, []);
+
+if(loading) return <p>Loading...</p>
   return (
-    <div className="customer-card">
+    <>
+    {customers.map((customer)=>(
+<div className="customer-card" key={customer._Id}>
       <div className="customer-card-header">
         <img src={logo} alt="photo" />
-       
+
         <div className="customer-card-info">
-          <h3>Anush Shrestha</h3>
-          <p>C1001</p>
+          <h3>{customer.customerName}</h3>
         </div>
-         </div>
-        <div className="customer-card-details">
-          <p><FontAwesomeIcon icon="faEnvelope" className="icon"/> anush.stha232@gmail.com</p>
-          <p><FontAwesomeIcon icon="faPhone" className="icon"/>+977 9826999469</p>
-          <p><FontAwesomeIcon icon="faMapMarker" className="icon"/> Damak-7,Nepal</p>
-        </div>
-        <div className="customer-card-actions">
-          <Button variant="primary">Edit</Button>
-          <Button variant="primary">Delete</Button>
-        </div>
-      
+      </div>
+      <div className="customer-card-details">
+        <p>
+          <FontAwesomeIcon icon="envelope" className="icon" />
+          {customer.customerEmail}
+        </p>
+        <p>
+          <FontAwesomeIcon icon="phone" className="icon" />{customer.customerPhone}
+        </p>
+        <p>
+          <FontAwesomeIcon icon="map-marker-alt" className="icon" />
+          {customer.customerAddress}
+        </p>
+         <p className={customer.creditBalance >= 0 ? "positive" : "negative"}>
+          <FontAwesomeIcon icon="money-bill" className="icon"/>
+    Credit Balance: {customer.creditBalance}</p>
+      </div>
+      <div className="customer-card-actions">
+        <Button variant="primary">Edit</Button>
+        <Button variant="danger">Delete</Button>
+      </div>
     </div>
+    ))}
+    </>
   );
+
 };
 
 export default CustomerCard;
