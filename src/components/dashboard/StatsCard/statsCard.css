@@ -7,6 +7,10 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            max-width: 300px;
+            margin-bottom: 30px;
+            /* text-wrap: nowrap; */
+            
         }
         
         .stat-card::before {
@@ -34,6 +38,7 @@
         .stat-card h3 {
             font-size: 0.9rem;
             color: var(--gray);
+           
             margin-bottom: 0.5rem;
         }
         
@@ -63,6 +68,8 @@
         }
         @media (max-width: 480px) {
             .stat-card {
+                margin-bottom: 30px;
+                 max-width: 95%;
            padding: 1rem;
            
             }

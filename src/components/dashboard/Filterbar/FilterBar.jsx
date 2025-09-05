@@ -25,7 +25,7 @@ const FilterBar = () => {
     <input
       type="text"
       className="filter-control"
-      placeholder="Search by SKU or name..."
+      placeholder="Search Customers"
     />
   </div>
 </div>
