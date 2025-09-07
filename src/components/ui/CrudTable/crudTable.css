@@ -17,9 +17,10 @@
   background-color: white;
   border-radius: 8px;
   width: 100%;
-  max-width: 450px;
+  max-width: 400px;
   overflow: hidden;
   animation: modalFadeIn 0.3s;
+ 
 }
 .crud-table-header {
   padding: 1.5rem;
@@ -94,7 +95,7 @@
 @media (max-width: 768px) {
   .crud-table-wrapper {
     left: min(max(70px, calc(100vw * 0.25)), 50px);
-    padding: 14%;
+   
   }
   .form-row {
     display: flex;
@@ -105,9 +106,5 @@
   .crud-table-wrapper {
     left: 0;
     padding: 8%;
-  }
-  .form-row {
-    display: flex;
-    flex-direction: column;
   }
 }

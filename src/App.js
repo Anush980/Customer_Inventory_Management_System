@@ -12,6 +12,7 @@ import CustomerPage from './pages/customer';
 import SalesBookPage from './pages/salesbook';
 import SettingPage from './pages/setting';
 import ProfilePage from './pages/profile';
+import LandingPage from './pages/landingPage';
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
         <Route path="/reset" element={<Reset />} />
 
         {/* Default page */}
-        <Route path="*" element={<Login/>} />
+        <Route path="*" element={<LandingPage/>} />
 {/*protected routes for testing*/}
 <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
 <Route path="/inventory" element={<ProtectedRoute><Inventory/></ProtectedRoute>}/>

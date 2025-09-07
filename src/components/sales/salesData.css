@@ -1,0 +1,66 @@
+ .sales-date {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+              overflow-x: auto;
+              max-width: 85vw;
+              padding-top: 5px;
+          
+        }
+
+.date-card {
+  
+            background-color: white;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding-inline: 20px;
+           
+        }
+        
+        .date-card:hover, .date-card.active{
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .date-card.active {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .date-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .date-card p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        @media (max-width: 1200px){
+             .sales-date{
+                max-width: 70vw;
+                padding-bottom: 1rem;
+            }
+
+        }
+
+        @media (max-width: 768px){
+             .sales-date{
+                 max-width: 85vw;
+                padding-bottom: 1rem;
+            }
+            
+            .sales-date::-webkit-scrollbar {
+                height: 5px;
+            }
+            
+            .sales-date::-webkit-scrollbar-thumb {
+                background-color: rgba(0,0,0,0.1);
+                border-radius: 5px;
+            }
+        }

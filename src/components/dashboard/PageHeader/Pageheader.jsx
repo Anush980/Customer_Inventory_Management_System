@@ -8,6 +8,7 @@ import './pageHeader.css';
 const Pageheader = ({ title, btnTitle, variant }) => {
   const [crudTable, setCrudTable] = useState(false);
    const [loading, setLoading] = useState(false);
+   const editItem = "34"
 
   return (
     <div className="page-header">
@@ -19,8 +20,10 @@ const Pageheader = ({ title, btnTitle, variant }) => {
 
       {crudTable && (
         <CrudTable
+          itemToEdit={editItem}
           closeWindow={() => setCrudTable(false)}
           variant={variant}  
+          handleSubmit
         />
       )}
     </div>
