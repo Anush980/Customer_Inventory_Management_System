@@ -1,11 +1,12 @@
 import React from 'react'
 import preview from "../../assets/Preview/DashboardPreview.png"
-
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button/Button"
 import LandingNavbar from '../../components/landing/navbar/LandingNavbar';
 import "./landingPage.css";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   return (
     
     <div className="landing-page-wrapper">
@@ -18,7 +19,7 @@ const LandingPage = () => {
                      platform. Save time and manage your business in smart way.</p>
                 <div className="hero-buttons">
 
-                    <Button variant='primary'>Login</Button>
+                    <Button variant='primary' onClick={()=>{navigate("/login")}}>Login</Button>
                 </div>
     </div>
     <div className="hero-right">

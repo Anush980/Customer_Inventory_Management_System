@@ -1,6 +1,5 @@
 .navbar{
-  
-       width: 100vw;
+       min-width: 100vw;
    color:var(--primary);
     background-color:rgb(243, 243, 243);
     box-shadow:0 2px 10px rgba(0, 0, 0, 0.16);
@@ -10,8 +9,9 @@
     
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 100vw;
 }
+
 
 .logo{
     display: flex;
@@ -57,4 +57,40 @@ color:var(--primary)
 .nav-buttons{
     display: flex;
     justify-content: center;
+}
+
+.hamburger {
+  display: none;
+  padding-right: 7px;
+}
+
+
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 60px; 
+    left: 0;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    padding: 1rem;
+  }
+
+  .nav-links.open {
+    margin-top: 13px;
+    max-width: 50%;
+    display: flex; 
+  }
+
+  .nav-links li {
+    margin: 1rem 0;
+  }
 }

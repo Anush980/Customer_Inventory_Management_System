@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/CIMS_logo.png";
 import Button from "../../ui/Button/Button";
 import "./landingNavbar.css";
+import { useNavigate } from "react-router-dom";
 
 const LandingNavbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="navbar">
       <div className="navbar-content">
         <div className="logo">
+          <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              className="size-7"
+            >
+              <path
+                stroke="#0A090B"
+                strokeLinecap="round"
+                strokeWidth="2"
+                d="M10.5 18H20M4 12h16M4 6h16"
+              />
+            </svg>
+          </div>
           <img src={logo} alt="photo" />
           <div className="logo-title">
             <h1>
@@ -17,7 +36,7 @@ const LandingNavbar = () => {
           </div>
         </div>
 
-        <ul className="nav-links">
+        <ul className={`nav-links ${isOpen? "open": ""}`}>
           <li>
             <a href="#home">Home</a>
           </li>
@@ -27,12 +46,20 @@ const LandingNavbar = () => {
           <li>
             <a href="#usuage">How to use </a>
           </li>
+
           <li>
             <a href="#contact">Contact</a>
           </li>
         </ul>
         <div className="nav-buttons">
-          <Button type="primary">Get Started</Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            Get Started
+          </Button>
         </div>
       </div>
     </div>
