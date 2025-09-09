@@ -6,7 +6,6 @@
     z-index: 100;
 } 
 .navbar-content{
-    
     display: flex;
     justify-content: space-between;
     width: 100vw;
