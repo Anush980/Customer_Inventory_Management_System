@@ -1,6 +1,7 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 import { 
+  faChartLine,
   faMoneyBill,
   faEnvelope,
   faTachometerAlt,
@@ -41,6 +42,7 @@ import {
 
 library.add(
   //solid icons
+  faChartLine,
   faMoneyBill,
   faEnvelope,
   faPhone,

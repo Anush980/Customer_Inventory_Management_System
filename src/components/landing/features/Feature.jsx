@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './feature.css';
+import featuresData from '../../../data/landingPageData/featureData';
 
 const Feature = () => {
   return (
@@ -13,16 +14,13 @@ const Feature = () => {
           </p>
         </div>
         <div className="features-grid">
-          <div className="feature-card">
-            <FontAwesomeIcon icon="boxes" className='feature-icon' />
-            <h3>Inventory Tracking</h3>
-            <p>Real-time inventory mangaement with low stock alert system.</p>
-          </div>
-          <div className="feature-card">
-            <FontAwesomeIcon icon="boxes" className='feature-icon' />
-            <h3>Customer Management</h3>
-            <p>Track customer purchases, preferences, and history to build better relationships.</p>
-          </div>
+          {featuresData.map((feature)=>(
+            <div className="feature-card" key={feature.id}>
+                <FontAwesomeIcon icon={feature.iconName} className='feature-icon'/>
+                <h3>{feature.title}</h3>
+                <p>{feature.desc}</p>
+            </div>
+        ))}
         </div>
       </section>
   )

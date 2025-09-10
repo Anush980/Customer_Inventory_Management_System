@@ -1,5 +1,5 @@
     .features-wrapper {
-            padding: 15rem 5%;
+            padding: 5rem 5%;
             background-color: white;
 
         }
@@ -54,5 +54,11 @@
             font-size: 1.3rem;
             margin-bottom: 1rem;
             color: var(--dark);
+        }
+        @media (max-width:720px){
+            .features-wrapper {
+            padding: 18rem 5%;
+
+        }
         }
        
