@@ -5,6 +5,7 @@ import Button from "../../components/ui/Button/Button";
 import LandingNavbar from "../../components/landing/navbar/LandingNavbar";
 import "./landingPage.css";
 import Feature from "../../components/landing/features/Feature";
+import LandingFooter from "../../components/landing/LandingFooter/LandingFooter";
 
 
 const LandingPage = () => {
@@ -41,6 +42,7 @@ const LandingPage = () => {
         </div>
       </section>
       <Feature/>
+      <LandingFooter/>
     </div>
   );
 };

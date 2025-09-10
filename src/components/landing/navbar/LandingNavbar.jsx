@@ -30,7 +30,7 @@ const LandingNavbar = () => {
           <img src={logo} alt="photo" />
           <div className="logo-title">
             <h1>
-              <a href="#home">StockMate</a>
+              <a href="/">StockMate</a>
             </h1>
             <p>Manage Smarter, Not harder</p>
           </div>
@@ -38,17 +38,15 @@ const LandingNavbar = () => {
 
         <ul className={`nav-links ${isOpen? "open": ""}`}>
           <li>
-            <a href="#home">Home</a>
+            <a href="#">Home</a>
           </li>
           <li>
             <a href="#features">Features</a>
           </li>
-          <li>
-            <a href="#usuage">How to use </a>
-          </li>
+         
 
           <li>
-            <a href="#contact">Contact</a>
+            <a href="#footer">Contact</a>
           </li>
         </ul>
         <div className="nav-buttons">
