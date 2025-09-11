@@ -1,10 +1,10 @@
-.navbar{
+.landing-navbar{
        min-width: 100vw;
    color:var(--primary);
     background-color:rgb(243, 243, 243);
     box-shadow:0 2px 10px rgba(0, 0, 0, 0.16);
     z-index: 100;
-} 
+}  
 .navbar-content{
     display: flex;
     justify-content: space-between;
@@ -58,7 +58,7 @@ color:var(--primary)
     justify-content: center;
 }
 
-.hamburger {
+.landing-hamburger {
   display: none;
   padding-right: 7px;
 }
@@ -66,7 +66,7 @@ color:var(--primary)
 
 
 @media (max-width: 768px) {
-  .hamburger {
+  .landing-hamburger {
     display: flex;
     cursor: pointer;
   }

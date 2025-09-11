@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./table.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { tableVariants } from "../../data/tableData";
-import tableColumns from "../../data/tableColumns";
+import { tableVariants } from "../../../data/tableVarientData/tableData";
+import tableColumns from "../../../data/tableVarientData/tableColumns";
 
 const Table = ({ variant = "sales", limit, editable = false,onEdit,onDelete}) => {
   const tableInfo = tableVariants[variant];

@@ -1,16 +1,16 @@
 import React from 'react'
 import Layout from '../../components/ui/Layout/Layout';
-import StatsCard from '../../components/dashboard/StatsCard/StatsCard';
-import Pageheader from '../../components/dashboard/PageHeader/Pageheader';
+import StatsCard from '../../components/ui/StatsCard/StatsCard';
+import Pageheader from '../../components/ui/PageHeader/Pageheader';
 
-import FilterBar from "../../components/dashboard/Filterbar/FilterBar"; 
+import FilterBar from "../../components/ui/Filterbar/FilterBar";
 import CustomerCard from '../../components/customer/CustomerCard/CustomerCard';
 import './customer.css';
 
 const CustomerPage = () => {
   return (
       <Layout>
-        <Pageheader title="Customer Management" btnTitle="Add"/>
+        <Pageheader title="Customer Management" btnTitle="Add" variant="customer"/>
       <StatsCard value="9" change='1' type="customer"/>
       <FilterBar/>
       <div className="customer-cards">

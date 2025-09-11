@@ -12,7 +12,8 @@ import CustomerPage from './pages/customer';
 import SalesBookPage from './pages/salesbook';
 import SettingPage from './pages/setting';
 import ProfilePage from './pages/profile';
-import LandingPage from './pages/landingPage';
+import LandingPage from './pages/landing';
+import DummyTable from './components/ui/DummyTable/DummyTable';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/test" element={<DummyTable/>} />
 
         {/* Default page */}
         <Route path="*" element={<LandingPage/>} />

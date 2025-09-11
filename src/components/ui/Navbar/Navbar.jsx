@@ -2,10 +2,10 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WebLogo from "../../../assets/CIMS_logo.png";
-import notificationsData from "../../../data/notificationData";
+import notificationsData from "../../../data/dummyNotifications/notificationData";
 import "./navbar.css";
 import { NavLink } from "react-router-dom";
-import notifications from "../../../data/notificationData";
+import notifications from "../../../data/dummyNotifications/notificationData";
 
 const Navbar = ({ toggleSidebar }) => {
   const [notifications, setNotifications] = useState(notificationsData);

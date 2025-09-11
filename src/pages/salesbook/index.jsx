@@ -1,9 +1,9 @@
 import React from 'react'
 import Layout from '../../components/ui/Layout/Layout'
-import Pageheader from '../../components/dashboard/PageHeader/Pageheader';
-import StatsCard from '../../components/dashboard/StatsCard/StatsCard';
+import Pageheader from '../../components/ui/PageHeader/Pageheader';
+import StatsCard from '../../components/ui/StatsCard/StatsCard';
 import './salesbookPage.css';
-import Table from "../../components/table/table";
+import Table from "../../components/ui/table/table";
 import SalesDate from '../../components/sales/SalesDate';
 
 const SalesBookPage = () => {

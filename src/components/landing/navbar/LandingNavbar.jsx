@@ -8,10 +8,10 @@ const LandingNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <div className="navbar">
+    <div className="landing-navbar">
       <div className="navbar-content">
         <div className="logo">
-          <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+          <div className="landing-hamburger" onClick={() => setIsOpen(!isOpen)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
