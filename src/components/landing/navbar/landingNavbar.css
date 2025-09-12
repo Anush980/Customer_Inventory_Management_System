@@ -5,10 +5,11 @@
     box-shadow:0 2px 10px rgba(0, 0, 0, 0.16);
     z-index: 100;
 }  
-.navbar-content{
+.landing-navbar-content{
     display: flex;
     justify-content: space-between;
     width: 100vw;
+    padding:10px;
 }
 
 

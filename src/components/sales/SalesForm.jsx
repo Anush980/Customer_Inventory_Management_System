@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import Button from "../../ui/Button/Button";
-import "../../ui/CrudTable/crudTable.css";
-import Snackbar from "../../ui/Snackbar/Snackbar";
+import Button from "../ui/Button/Button";
+import "../ui/CrudTable/crudTable.css";
+import Snackbar from "../ui/Snackbar/Snackbar";
 
-const CustomerForm = ({ editMode, closeWindow }) => {
+const SalesForm = ({ editMode, closeWindow }) => {
   const [formData, setFormData] = useState( editMode || {
-      customerName: "",
-      customerPhone: "",
-      customerEmail: "",
-      customerAddress: "",
-      creditBalance: "",
+      customer: "",
+      item: "",
+      price: "",
+      sku: "",
+      stock: "1",
+      restock:"5",
     }
   );
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ const CustomerForm = ({ editMode, closeWindow }) => {
     try {
       setLoading(true);
       const method =editMode ? "PUT" : "POST";
-      const url =editMode ? `${process.env.REACT_APP_API_URL}/api/customer/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/customer`
+      const url =editMode ? `${process.env.REACT_APP_API_URL}/api/inventory/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/inventory`
       const response = await fetch(
         url,
         {
@@ -40,7 +41,7 @@ const CustomerForm = ({ editMode, closeWindow }) => {
       );
 
       if (!response.ok) {
-        throw new Error("Error saving customer");
+        throw new Error("Error saving item");
         
       }
 
@@ -62,7 +63,7 @@ const CustomerForm = ({ editMode, closeWindow }) => {
     <div className="crud-table-wrapper">
       <div className="crud-table-content">
         <div className="crud-table-header">
-          <h3>{editMode ? "Edit Customer" : "Add Customer"}</h3>
+          <h3>{editMode ? "Edit Item" : "Add Item"}</h3>
           <button className="close-table" onClick={closeWindow}>
             &times;
           </button>
@@ -72,69 +73,81 @@ const CustomerForm = ({ editMode, closeWindow }) => {
           <form onSubmit={onSubmit}>
             <div className="form-column">
               <div className="form-group">
-                <label htmlFor="customerName">Customer Name:</label>
+                <label htmlFor="productName"><span style={{ color: "red" }}>*</span> Product Name:</label>
                 <input
                   type="text"
-                  id="customerName"
-                  name="customerName"
+                  id="itemName"
+                  name="itemName"
                   onChange={onChange}
-                  value={formData.customerName}
-                  placeholder="Enter Customer Name"
+                  value={formData.itemName}
+                  placeholder="Enter item Name"
                   required
                   className="form-control"
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="customerPhone">Phone Number:</label>
-                <input
-                  type="number"
-                  id="customerPhone"
-                  name="customerPhone"
-                  onChange={onChange}
-                  value={formData.customerPhone}
-                  placeholder="Enter Phone Number"
-                  required
-                  className="form-control"
-                />
+               
+                <label htmlFor="category"><span style={{ color: "red" }}>*</span> Category: </label>
+                <select id="category" name="category" onChange={onChange} value={formData.category} className="form-control" required>
+                    <option value="">Select Category</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="home-goods">Home Goods</option>
+                    <option value="kitchen-appliances">kitchen appliances</option>
+                    <option value="others">others</option>
+                </select>
               </div>
 
               <div className="form-group">
-                <label htmlFor="customerEmail">Customer Email:</label>
-                <input
-                  type="email"
-                  id="customerEmail"
-                  name="customerEmail"
-                  onChange={onChange}
-                  value={formData.customerEmail}
-                  placeholder="Enter Customer Email"
-                  className="form-control"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="customerAddress">Customer Address:</label>
+                <label htmlFor="sku">SKU</label>
                 <input
                   type="text"
-                  id="customerAddress"
-                  name="customerAddress"
+                  id="sku"
+                  name="sku"
                   onChange={onChange}
-                  value={formData.customerAddress}
-                  placeholder="Enter Customer Address"
+                  value={formData.sku}
+                  placeholder="Enter Model name or SKU"
                   className="form-control"
                 />
               </div>
 
+             
+
               <div className="form-group">
-                <label htmlFor="creditBalance">Customer Credit Balance:</label>
+                <label htmlFor="stock">Total Stock:</label>
                 <input
                   type="number"
-                  id="creditBalance"
-                  name="creditBalance"
+                  id="stock"
+                  name="stock"
                   onChange={onChange}
-                  value={formData.creditBalance}
-                  placeholder="Enter Credit Balance"
+                  value={formData.stock }
+                  placeholder="Enter Total stock"
                   className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="restock">Reorder stock level:</label>
+                <input
+                  type="number"
+                  id="restock"
+                  name="restock"
+                  onChange={onChange}
+                  value={formData.restock}
+                  placeholder="Enter Reorder stock level"
+                  className="form-control"
+                />
+              </div>
+               <div className="form-group">
+                <label htmlFor="price"><span style={{ color: "red" }}>*</span> Item Price:</label>
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  onChange={onChange}
+                  value={formData.price}
+                  placeholder="Enter price"
+                  className="form-control"
+                  required
                 />
               </div>
             </div>
@@ -156,4 +169,4 @@ const CustomerForm = ({ editMode, closeWindow }) => {
   );
 };
 
-export default CustomerForm;
+export default SalesForm;

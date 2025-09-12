@@ -4,15 +4,18 @@ import logo from "../../../assets/CIMS_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../../components/ui/Button/Button";
 import ConfirmCard from "../../ui/ConfirmCard/ConfirmCard";
+import CustomerForm from "../CustomerForm/CustomerForm";
 
 
 const CustomerCard = ({onEdit}) => {
 const [customers,setCustomers]=useState([]);
 const [loading,setLoading]=useState(true);
+
 const [showConfirm,setShowConfirm]= useState(false);
 const [deleteCustomer,setDeleteCustomer]=useState(null);
 
-
+  const [showForm, setShowForm] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
 
 useEffect(() => {
   fetch(`${process.env.REACT_APP_API_URL}/api/customer`)
@@ -52,7 +55,11 @@ catch(error){
   setShowConfirm(false);
 }
   };
-  
+
+  const handleEdit =(customer)=>{
+setSelectedCustomer(customer);
+setShowForm(true);
+  }
 
 if(loading) return <p>Loading...</p>
  if (customers.length === 0) return <p>No customers found.</p>;
@@ -85,7 +92,7 @@ if(loading) return <p>Loading...</p>
     Credit Balance: {customer.creditBalance}</p>
       </div>
       <div className="customer-card-actions">
-        <Button variant="primary" onClick={() => onEdit(customer)} >Edit</Button>
+        <Button variant="primary" onClick={() => handleEdit(customer)} >Edit</Button>
         <Button variant="danger" onClick={() => handleDelete(customer._id)}>Delete</Button>
       </div>
     </div>
@@ -96,6 +103,14 @@ if(loading) return <p>Loading...</p>
           onConfirm={confirmDelete}
         />
       )}
+
+      {showForm && (
+  <CustomerForm
+    editMode={selectedCustomer}  
+    closeWindow={() => setShowForm(false)} 
+  />
+)}
+
     </>
   );
 

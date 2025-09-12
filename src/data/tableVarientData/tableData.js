@@ -49,7 +49,7 @@ export const tableVariants = {
   inventory: {
     title: "Inventory",
     columns: [
-      { label: "Product", key: "item" },
+      { label: "Product", key: "itemName" },
       { label: "SKU", key: "id" },
       { label: "Category", key: "category" },
       { label: "Stock", key: "stock" },

@@ -8,6 +8,7 @@ import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import "./inventory.css";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
+import InventoryTable from "../../components/inventory/InventoryTable";
 
 const InventoryPage = () => {
   const [editItem, setEditItem] = useState(null);
@@ -63,17 +64,15 @@ const InventoryPage = () => {
         <StatsCard type="allInventory" value="120" change="10" />
       </div>
       <FilterBar />
-      <Table
-        variant="inventory"
-        editable={true}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      
+      <InventoryTable editable={true}
+        editMode={handleEdit}
+        onDelete={handleDelete} />
 
       {showModal && (
         <CrudTable
           closeWindow={() => setShowModal(false)}
-          itemToEdit={editItem}
+          editMode={editItem}
           variant="inventory"
         />
       )}

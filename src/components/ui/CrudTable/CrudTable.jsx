@@ -1,6 +1,7 @@
 import React from "react";
 import "./crudTable.css";
 import CustomerForm from "../../customer/CustomerForm/CustomerForm";
+import InventoryForm from "../../inventory/InventoryForm";
 
 
 const CrudTable = ({ variant, editMode, closeWindow }) => {
@@ -12,10 +13,10 @@ const CrudTable = ({ variant, editMode, closeWindow }) => {
       )}
       {/* {variant === "sales" && (
         <SalesForm editMode={editMode} closeWindow={closeWindow} />
-      )}
+      )}  */}
       {variant === "inventory" && (
         <InventoryForm editMode={editMode} closeWindow={closeWindow} />
-      )} */}
+      )}
     </div>
   );
 };
