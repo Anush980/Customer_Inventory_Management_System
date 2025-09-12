@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import Button from "../ui/Button/Button";
 import "../ui/CrudTable/crudTable.css";
 import Snackbar from "../ui/Snackbar/Snackbar";
+import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 
 const SalesForm = ({ editMode, closeWindow }) => {
   const [formData, setFormData] = useState( editMode || {
       customer: "",
-      item: "",
-      price: "",
-      sku: "",
-      stock: "1",
-      restock:"5",
+      item:[
+        {
+            product:"",
+            quantity:1,
+            price:0
+        }
+      ],
+      discount:"",
+      total:"",
+      paymentType:"cash",
     }
   );
   const [loading, setLoading] = useState(false);
@@ -63,7 +69,7 @@ const SalesForm = ({ editMode, closeWindow }) => {
     <div className="crud-table-wrapper">
       <div className="crud-table-content">
         <div className="crud-table-header">
-          <h3>{editMode ? "Edit Item" : "Add Item"}</h3>
+          <h3>{editMode ? "Edit Sales" : "Add Sales"}</h3>
           <button className="close-table" onClick={closeWindow}>
             &times;
           </button>
@@ -73,14 +79,14 @@ const SalesForm = ({ editMode, closeWindow }) => {
           <form onSubmit={onSubmit}>
             <div className="form-column">
               <div className="form-group">
-                <label htmlFor="productName"><span style={{ color: "red" }}>*</span> Product Name:</label>
+                <label htmlFor="productName"> Customer Name:</label>
                 <input
                   type="text"
                   id="itemName"
                   name="itemName"
                   onChange={onChange}
                   value={formData.itemName}
-                  placeholder="Enter item Name"
+                  placeholder="Enter Customer Name"
                   required
                   className="form-control"
                 />

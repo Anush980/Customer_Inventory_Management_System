@@ -4,6 +4,7 @@ import Button from "../../ui/Button/Button";
 import "./landingNavbar.css";
 import { useNavigate } from "react-router-dom";
 
+
 const LandingNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const LandingNavbar = () => {
               navigate("/register");
             }}
           >
-            Get Started
+           Get Started
           </Button>
         </div>
       </div>
