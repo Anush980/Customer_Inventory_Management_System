@@ -3,7 +3,9 @@ import Layout from '../../components/ui/Layout/Layout'
 
 const SettingPage = () => {
   return (
-    <Layout/>
+    <Layout>
+      <h4>Not ready yet!!</h4>
+      </Layout>
   )
 }
 

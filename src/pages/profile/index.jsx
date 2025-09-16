@@ -3,7 +3,9 @@ import Layout from '../../components/ui/Layout/Layout'
 
 const ProfilePage = () => {
   return (
-    <Layout/>
+    <Layout>
+     <h4>Not ready yet!!</h4>
+      </Layout>
   )
 }
 

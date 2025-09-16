@@ -9,6 +9,7 @@ import "./inventory.css";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import InventoryTable from "../../components/inventory/InventoryTable";
+import { statusOptions,categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
 
 const InventoryPage = () => {
   const [editItem, setEditItem] = useState(null);
@@ -16,6 +17,11 @@ const InventoryPage = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteItem, setDeleteItem] = useState(null);
   const [snackbar, setSnackbar] = useState(null);
+
+  const [status, setStatus] = useState("");      
+const [category, setCategory] = useState("");  
+const [searchText, setSearchText] = useState(""); 
+
 
   const handleEdit = (row) => {
     setEditItem(row);
@@ -63,7 +69,18 @@ const InventoryPage = () => {
         <StatsCard type="inventory" value="12" change="5" />
         <StatsCard type="allInventory" value="120" change="10" />
       </div>
-      <FilterBar />
+     <FilterBar
+        filters={[
+          { value: category, onChange: setCategory, options: categoryOptions },
+          { value: status, onChange: setStatus, options: statusOptions },
+        ]}
+        search={{
+          value: searchText,
+          onChange: setSearchText,
+          placeholder: "Search inventory...",
+        }}
+      />
+
       
       <InventoryTable editable={true}
         editMode={handleEdit}
