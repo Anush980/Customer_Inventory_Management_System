@@ -5,6 +5,7 @@ import Snackbar from "../ui/Snackbar/Snackbar";
 import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 
 const SalesForm = ({ editMode, closeWindow }) => {
+
   const [formData, setFormData] = useState( editMode || {
       customer: "",
       item:[
@@ -21,13 +22,29 @@ const SalesForm = ({ editMode, closeWindow }) => {
   );
   const [loading, setLoading] = useState(false);
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
+const onChange = (e) => {
+  const { name, value } = e.target;
+
+  if (name === "product" || name === "quantity" || name === "price") {
+    
+    setFormData((prev) => ({
+      ...prev,
+      item: [
+        {
+          ...prev.item[0],
+          [name]: value,
+        },
+      ],
+    }));
+  } else {
+    
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }
+};
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -82,10 +99,10 @@ const SalesForm = ({ editMode, closeWindow }) => {
                 <label htmlFor="productName"> Customer Name:</label>
                 <input
                   type="text"
-                  id="itemName"
-                  name="itemName"
+                  id="customer"
+                  name="customer"
                   onChange={onChange}
-                  value={formData.itemName}
+                  value={formData.customer}
                   placeholder="Enter Customer Name"
                   required
                   className="form-control"
@@ -93,69 +110,75 @@ const SalesForm = ({ editMode, closeWindow }) => {
               </div>
 
               <div className="form-group">
-               
-                <label htmlFor="category"><span style={{ color: "red" }}>*</span> Category: </label>
-                <select id="category" name="category" onChange={onChange} value={formData.category} className="form-control" required>
-                    <option value="">Select Category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="home-goods">Home Goods</option>
-                    <option value="kitchen-appliances">kitchen appliances</option>
-                    <option value="others">others</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="sku">SKU</label>
+                <label htmlFor="price"><span style={{ color: "red" }}>*</span> Search Item:</label>
                 <input
                   type="text"
-                  id="sku"
-                  name="sku"
+                  id="product"
+                  name="product"
                   onChange={onChange}
-                  value={formData.sku}
-                  placeholder="Enter Model name or SKU"
+                  value={formData.item[0].product}
+                  placeholder="Enter keywords"
+                  className="form-control"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="quantity">Quantity</label>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  onChange={onChange}
+                  value={formData.item[0].quantity}
+                  placeholder="Enter No. of items"
                   className="form-control"
                 />
               </div>
 
-             
-
-              <div className="form-group">
-                <label htmlFor="stock">Total Stock:</label>
-                <input
-                  type="number"
-                  id="stock"
-                  name="stock"
-                  onChange={onChange}
-                  value={formData.stock }
-                  placeholder="Enter Total stock"
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="restock">Reorder stock level:</label>
-                <input
-                  type="number"
-                  id="restock"
-                  name="restock"
-                  onChange={onChange}
-                  value={formData.restock}
-                  placeholder="Enter Reorder stock level"
-                  className="form-control"
-                />
-              </div>
                <div className="form-group">
-                <label htmlFor="price"><span style={{ color: "red" }}>*</span> Item Price:</label>
+                <label htmlFor="price"> Price:</label>
                 <input
                   type="number"
                   id="price"
                   name="price"
                   onChange={onChange}
-                  value={formData.price}
-                  placeholder="Enter price"
+                  value={formData.item[0].price}
+            
                   className="form-control"
-                  required
+                readOnly
                 />
               </div>
+             
+             <div className="form-group">
+                <label htmlFor="discount"> Discount:</label>
+                <input
+                  type="number"
+                  id="discount"
+                  name="discount"
+                  onChange={onChange}
+                  value={formData.discount}
+            
+                  className="form-control"
+                
+                />
+              </div>
+              
+               <div className="form-group">
+                <label htmlFor="total"> Total Amount:</label>
+                <input
+                  type="number"
+                  id="total"
+                  name="total"
+                  onChange={onChange}
+                  value={formData.total}
+            
+                  className="form-control"
+                  readOnly
+                
+                />
+              </div>
+
             </div>
 
             <div className="crud-table-footer">
