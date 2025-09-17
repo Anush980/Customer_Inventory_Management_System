@@ -15,7 +15,7 @@
             border-bottom: 1px solid #eee;
         }
         
-        .quick-stats-heade h3 {
+        .quick-stats-header h3 {
             font-size: 1.1rem;
             color: var(--secondary);
         }

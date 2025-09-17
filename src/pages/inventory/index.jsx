@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../components/ui/Layout/Layout";
 import Pageheader from "../../components/ui/PageHeader/Pageheader";
-import Table from "../../components/ui/table/table";
 import FilterBar from "../../components/ui/Filterbar/FilterBar";
 import StatsCard from "../../components/ui/StatsCard/StatsCard";
 import CrudTable from "../../components/ui/CrudTable/CrudTable";
