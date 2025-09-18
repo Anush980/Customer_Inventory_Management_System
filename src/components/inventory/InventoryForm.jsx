@@ -14,6 +14,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
     }
   );
   const [loading, setLoading] = useState(false);
+  const [image,setImage]= useState(null);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -29,14 +30,23 @@ const InventoryForm = ({ editMode, closeWindow }) => {
       setLoading(true);
       const method =editMode ? "PUT" : "POST";
       const url =editMode ? `${process.env.REACT_APP_API_URL}/api/inventory/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/inventory`
+
+      const data = new FormData();
+      for(let key  in  formData){
+        data.append(key,formData[key]);
+      }
+      if(image){
+        data.append("image",image);
+      }
       const response = await fetch(
         url,
         {
         method,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+          // body: JSON.stringify(formData),
+          body:data
         }
       );
 
@@ -70,7 +80,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
         </div>
 
         <div className="crud-table-body">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} encType="multipart/form-data">
             <div className="form-column">
               <div className="form-group">
                 <label htmlFor="productName"><span style={{ color: "red" }}>*</span> Product Name:</label>
@@ -146,6 +156,16 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   onChange={onChange}
                   value={formData.price}
                   placeholder="Enter price"
+                  className="form-control"
+                  required
+                />
+              </div>
+               <div className="form-group">
+                <label htmlFor="image">Image:</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e)=>setImage(e.target.files[0])}
                   className="form-control"
                   required
                 />
