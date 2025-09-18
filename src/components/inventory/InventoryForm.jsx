@@ -164,10 +164,10 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                 <label htmlFor="image">Image:</label>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/jpg,image/jpeg,image/png"
                   onChange={(e)=>setImage(e.target.files[0])}
                   className="form-control"
-                  required
+                 
                 />
               </div>
             </div>
