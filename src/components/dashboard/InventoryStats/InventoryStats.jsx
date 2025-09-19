@@ -8,7 +8,7 @@ const InventoryStats = () => {
         <h3>Low Stock Items</h3>
       </div>
 
-      {/* Single container for all stats */}
+    
       <div className="inventory-stats">
         
         <div className="stat">

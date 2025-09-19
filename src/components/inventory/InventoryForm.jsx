@@ -166,8 +166,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   type="file"
                   accept="image/jpg,image/jpeg,image/png"
                   onChange={(e)=>setImage(e.target.files[0])}
-                  className="form-control"
-                 
+                  className="form-control"        
                 />
               </div>
             </div>
