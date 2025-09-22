@@ -1,7 +1,6 @@
 // Sorting options for customers
 const sortOptions = [
-  { value: "recent", label: "Recent Customer" },
-  { value: "newest", label: "New Cusomters" },
+  { value: "newest", label: "Latest Customers" },
   { value: "oldest", label: "Old Customers" },
 ];
 
