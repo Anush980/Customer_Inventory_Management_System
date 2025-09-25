@@ -1,17 +1,24 @@
 const BASE_URL= `${process.env.REACT_APP_API_URL}/api/customer`;
 
- const getCustomers = async ()=>{
-    const res = await fetch (BASE_URL);
+ export const getCustomers = async ({search="",category="",sort="newest"}={})=>{
+
+    const query= new URLSearchParams();
+
+    if(search) query.append("search",search);
+    if(category) query.append("category",category);
+    if(sort) query.append("sort",sort);
+
+    const res = await fetch (`${BASE_URL}?${query.toString()}`);
     if(!res.ok) throw new Error ("Failed to fetch Customers"); 
     return res.json();
 
 };
 
-const deleteCustomers = async (id)=>{
+ export const deleteCustomer = async (id)=>{
     const res = await fetch(`${BASE_URL}/${id}`,{
-        method:"Delete"
+        method:"DELETE"
     });
-    if(!res.ok) throw new Error ("Failed to fdelete customer");
+    if(!res.ok) throw new Error ("Failed to delete customer");
     return res.json();
 
 };
