@@ -9,7 +9,7 @@ import CustomerForm from "../../components/customer/CustomerForm/CustomerForm";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import "./customer.css";
 import { faSlack } from "@fortawesome/free-brands-svg-icons";
-import { getCustomers, deleteCustomers } from "../../api/customerApi";
+import { getCustomers, deleteCustomer } from "../../api/customerApi";
 
 const CustomerPage = () => {
   const [sort, setSort] = useState("recent");
@@ -26,11 +26,14 @@ const CustomerPage = () => {
 
   useEffect(() => {
     fetchCustomers();
-  }, []);
+  }, [searchText, sort]);
   const fetchCustomers = async () => {
     setLoading(true);
     try {
-      const data = await getCustomers();
+      const data = await getCustomers({
+        search: searchText,
+        sort,
+      });
       setCustomers(data);
     } catch (err) {
       console.error("Error", err);
@@ -47,7 +50,7 @@ const CustomerPage = () => {
   const confirmDelete = async () => {
     if (!deleteID) return;
     try {
-      await deleteCustomers(deleteID);
+      await deleteCustomer(deleteID);
       setCustomers((prev) => prev.filter((c) => c._id !== deleteID));
     } catch (err) {
       console.err("Error:", err);
@@ -61,9 +64,6 @@ const CustomerPage = () => {
     setShowForm(true);
   };
 
-  // if (loading) return <p>Loading...</p>;
-  // if (!customers.length) return <p>No customers found</p>;
-
   return (
     <Layout>
       <Pageheader
@@ -71,7 +71,7 @@ const CustomerPage = () => {
         btnTitle="Add"
         variant="customer"
       />
-       <StatsCard value="9" change='1' type="customer"/>
+      <StatsCard value="9" change="1" type="customer" />
       <FilterBar
         filters={[{ value: sort, onChange: setSort, options: sortOptions }]}
         search={{
@@ -80,15 +80,16 @@ const CustomerPage = () => {
           placeholder: "Search customers...",
         }}
       />
-
-      {customers.map((c) => (
-        <CustomerCard
-          key={c._id}
-          customer={c}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      ))}
+      <div className="customer-card-grid">
+        {customers.map((c) => (
+          <CustomerCard
+            key={c._id}
+            customer={c}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+        ))}
+      </div>
 
       {showConfirm && (
         <ConfirmCard

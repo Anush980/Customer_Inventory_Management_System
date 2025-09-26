@@ -6,9 +6,9 @@ import Button from "../../../components/ui/Button/Button";
 
 const CustomerCard = ({ customer, onEdit, onDelete }) => {
   return (
-    <div className="customer-card" key={customer._id}>
+    <div className="customer-card">
       <div className="customer-card-header">
-        <img src={logo} alt="photo" />
+        <img src={logo} alt={customer.customerName} />
 
         <div className="customer-card-info">
           <h3>{customer.customerName}</h3>
@@ -18,15 +18,15 @@ const CustomerCard = ({ customer, onEdit, onDelete }) => {
       <div className="customer-card-details">
         <p>
           <FontAwesomeIcon icon="envelope" className="icon" />
-          {customer.customerEmail}
+          {customer.customerEmail || "N/A"}
         </p>
         <p>
           <FontAwesomeIcon icon="phone" className="icon" />
-          {customer.customerPhone}
+          {customer.customerPhone || "N/A"}
         </p>
         <p>
           <FontAwesomeIcon icon="map-marker-alt" className="icon" />
-          {customer.customerAddress}
+          {customer.customerAddress || "N/A"}
         </p>
         <p className={customer.creditBalance >= 0 ? "positive" : "negative"}>
           <FontAwesomeIcon icon="money-bill" className="icon" />
