@@ -7,8 +7,7 @@ import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
 import WindowSize from "../../components/ui/WindowSize/WindowSize";
 import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import Layout from '../../components/ui/Layout/Layout'
-import InventoryStats from "../../components/dashboard/InventoryStats/InventoryStats";
-
+import InventoryStats from '../../components/inventory/InventoryStats/InventoryStats';
 const Dashboard = () => {
  const { width, height } = WindowSize();
 
