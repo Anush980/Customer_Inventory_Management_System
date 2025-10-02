@@ -81,7 +81,9 @@ const [searchText, setSearchText] = useState("");
       />
 
       
-      <InventoryTable editable={true}
+      <InventoryTable 
+      filters={{search:searchText,category,status}}
+      editable={true}
         editMode={handleEdit}
         onDelete={handleDelete} />
 

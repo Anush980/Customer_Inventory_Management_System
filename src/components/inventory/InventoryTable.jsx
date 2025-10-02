@@ -3,7 +3,7 @@ import "../ui/table/table.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const InventoryTable = ({ limit, editable = false, editMode, onDelete }) => {
+const InventoryTable = ({ limit, editable = false, editMode, onDelete,filters={} }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,7 +11,8 @@ const InventoryTable = ({ limit, editable = false, editMode, onDelete }) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${process.env.REACT_APP_API_URL}/api/inventory`)
+    const query = new URLSearchParams(filters).toString();
+    fetch(`${process.env.REACT_APP_API_URL}/api/inventory?${query}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch data");
         return res.json();
@@ -24,7 +25,7 @@ const InventoryTable = ({ limit, editable = false, editMode, onDelete }) => {
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, [filters]);//refetch whenever filters change
 
   if (loading) return <p>Loading...</p>;
   if (data.length === 0) return <p>No inventory items found.</p>;

@@ -12,7 +12,7 @@ import { faSlack } from "@fortawesome/free-brands-svg-icons";
 import { getCustomers, deleteCustomer } from "../../api/customerApi";
 
 const CustomerPage = () => {
-  const [sort, setSort] = useState("recent");
+  const [sort, setSort] = useState("latest");
   const [searchText, setSearchText] = useState("");
 
   const [customers, setCustomers] = useState([]);

@@ -1,6 +1,6 @@
 const categoryOptions=[
     {
-        value:"all",
+        value:"",
         label:"All categories"
     },
     {
@@ -14,14 +14,18 @@ const categoryOptions=[
         {
         value:"home-goods",
         label:"Home Goods"
+    },
+    {
+        value:"others",
+        label:"Others"
     }
     
 ];
 
 const statusOptions=[
     {
-        value:"all",
-        label:"All Status"
+        value:"",
+        label:"All Stock"
     },
     {
         value:"in-stock",
