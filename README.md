@@ -29,7 +29,7 @@ You can check it out [here](https://github.com/Anush980/CIMS_Backend)
 
 - **Customer Management:** Add, update, and delete customer records.  
 - **Inventory Tracking:** Monitor product quantities and stock levels.  
-- **Day Book:** Create and manage daily sales.  
+- **Day Book:** Create and manage daily sales. (in construction) 
 - **User Authentication:** Login and registration integrated with backend.
 
 ---
