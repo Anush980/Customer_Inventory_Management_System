@@ -44,6 +44,12 @@ You can check it out [here](https://github.com/Anush980/CIMS_Backend)
 ![Inventory](./src/assets/Preview/InventoryPreview.png)
 ---
 
+## 📄 License
+
+This project is open-source under the [MIT License](./LICENSE).  
+You can use, change, or share it — just give proper credit.
+
+
 ## 🚀 Installation (Frontend)
 
 1. **Clone the repository**
