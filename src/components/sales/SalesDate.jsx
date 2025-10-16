@@ -1,5 +1,5 @@
 import React from "react";
-import "./salesData.css";
+import "./salesDate.css";
 
 const SalesDate = () => {
   return (
@@ -10,7 +10,7 @@ const SalesDate = () => {
       </div>
       <div className="date-card">
         <h3>Mon</h3>
-        <p>Jestha 2</p>
+        <p>Bhaisakh 2</p>
       </div>
       <div className="date-card">
         <h3>Tue</h3>
