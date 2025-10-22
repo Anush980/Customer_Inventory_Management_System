@@ -13,7 +13,7 @@ const SalesDate = () => {
         <p>Bhaisakh</p>
       </div>
       <div className="date-card">
-        <h3>Tue</h3>
+        <h3>Tues</h3>
         <p>Ashad </p>
       </div>
       <div className="date-card active">
@@ -30,7 +30,7 @@ const SalesDate = () => {
       </div>
       <div className="date-card">
         <h3>Sat</h3>
-        <p>Bhadra 2</p>
+        <p>Bhadra </p>
       </div>
     </div>
   );
