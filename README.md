@@ -6,6 +6,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Anush980/Customer_Inventory_Management_System?style=flat-square)
 
 A **user-friendly frontend** built with **React,JS, HTML, and CSS** for managing customers and inventory.  
+
 The backend (Node.js, Express, MongoDB) is handled in a separate repository.
 
 ---
