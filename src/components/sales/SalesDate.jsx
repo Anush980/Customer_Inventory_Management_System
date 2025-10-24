@@ -6,7 +6,7 @@ const SalesDate = () => {
     <div className="sales-date">
       <div className="date-card">
         <h3>Sun</h3>
-        <p>Bhaisakh 31</p>
+        <p>Bhaisakh 1</p>
       </div>
       <div className="date-card">
         <h3>Mon</h3>
