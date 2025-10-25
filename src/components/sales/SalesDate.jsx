@@ -1,5 +1,6 @@
 import React from "react";
 import "./salesDate.css";
+import NepaliDate from "nepali-datetime";
 
 const SalesDate = () => {
   return (
