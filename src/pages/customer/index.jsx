@@ -57,7 +57,6 @@ const confirmDelete=()=>{
         variant="customer"
       />
     <CustomerStats/>
-      {/* <StatsCard value={customers.length} change={previousCount} type="customer" /> */}
       <FilterBar
         filters={[{ value: sort, onChange: setSort, options: sortOptions }]}
         search={{
