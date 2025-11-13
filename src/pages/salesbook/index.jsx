@@ -4,13 +4,14 @@ import Pageheader from '../../components/ui/PageHeader/Pageheader';
 import StatsCard from '../../components/ui/StatsCard/StatsCard';
 import './salesbookPage.css';
 import Table from "../../components/ui/table/table";
-import SalesDate from '../../components/sales/SalesDate';
+
 
 const SalesBookPage = () => {
   return (
     <Layout>
       <Pageheader title="Sales Management" btnTitle="Add" variant="sales"/>
-      <SalesDate/>
+    {/* Depreciated Feature
+      <SalesDate/> */}
       <StatsCard value="10000" change="5" type="sales"/>
       <Table limit = "5"/>
       </Layout>

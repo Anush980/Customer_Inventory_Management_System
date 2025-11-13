@@ -71,7 +71,7 @@ const [searchText, setSearchText] = useState("");
      <FilterBar
         filters={[
           { value: category, onChange: setCategory, options: categoryOptions },
-          // { value: status, onChange: setStatus, options: statusOptions },
+           { value: status, onChange: setStatus, options: statusOptions },
         ]}
         search={{
           value: searchText,

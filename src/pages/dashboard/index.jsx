@@ -8,6 +8,7 @@ import WindowSize from "../../components/ui/WindowSize/WindowSize";
 import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import Layout from '../../components/ui/Layout/Layout'
 import InventoryStats from '../../components/inventory/InventoryStats/InventoryStats';
+import CustomerStats from "../../components/customer/customerStats/CustomerStats";
 const Dashboard = () => {
  const { width, height } = WindowSize();
 
@@ -18,9 +19,9 @@ const Dashboard = () => {
          <Pageheader title="Dashboard" btnTitle="Add Sales" variant="sales" />
           
           <div className="stats">
-            <StatsCard value="&#8377; 25000" change={-12.5} type="revenue" />
-            <StatsCard value="&#8377; 5000" change={12.5} type="sales" />
-            <StatsCard value="200" change={12.5} type="customer" />
+            <StatsCard value="&#8377; 25000" change={12.5} type="revenue" />
+            <StatsCard value=" 50" change={12.5} type="sales" />
+            <CustomerStats/>
             <StatsCard value="25" change={-12.5} type="inventory" />
           </div>
 
