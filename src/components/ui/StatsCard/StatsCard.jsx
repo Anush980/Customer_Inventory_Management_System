@@ -8,11 +8,14 @@ const StatsCard = ({ value, change,type }) => {
   let title;
 let classType= type.toLowerCase();
   switch(classType){
-
     case "revenue":
       periodText = "from last month";
-      title = "Total Revenue"
+      title = "Today's Revenue"
       break;
+      case "profit":
+        periodText="from last month";
+        title="Today's Profit";
+        break;
     case "sales":
       periodText = "from yesterday";
       title="Today's Sales"
