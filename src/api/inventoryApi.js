@@ -13,7 +13,7 @@ export const getItems = async ({search="",category="",sort="newest"}={})=>{
 };
 
 //create or update item
-export const saveItem= async (item)=>{
+export const saveItemById = async (item)=>{
     const method= item._id ?"PUT":"POST";
     const url = item._id ? `${BASE_URL}/${item._id}`:BASE_URL;
 
@@ -26,7 +26,7 @@ export const saveItem= async (item)=>{
 }
 
 //delete item
-export const deleteItem = async (id)=>{
+export const deleteItemById = async (id)=>{
     const res = await fetch(`${BASE_URL}/${id}`,{
         method:"DELETE"
     });

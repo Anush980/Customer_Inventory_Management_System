@@ -23,7 +23,7 @@ export const useCustomers = ({search="",sort="newest"}={})=>{
     }
 
     //Create or update Customer
-    const saveCustomerByID= async (customer)=>{
+    const saveCustomerById= async (customer)=>{
         try{
             const saved = await saveCustomer(customer);
 
@@ -61,7 +61,7 @@ useEffect(()=>{
 },[search,sort]);
 
 return {
-    customers,loading,error,fetchCustomers,deleteCustomerById,saveCustomerByID
+    customers,loading,error,fetchCustomers,deleteCustomerById,saveCustomerById
 };
 
 }
