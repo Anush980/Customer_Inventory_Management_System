@@ -8,7 +8,12 @@ import "./inventory.css";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import InventoryTable from "../../components/inventory/InventoryTable";
-import { statusOptions,categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
+
+import { useInventory } from "../../hooks/useInventory";
+import {
+  statusOptions,
+  categoryOptions,
+} from "../../data/filterConfig/inventoryFilterConfigs";
 
 const InventoryPage = () => {
   const [editItem, setEditItem] = useState(null);
@@ -17,10 +22,17 @@ const InventoryPage = () => {
   const [deleteItem, setDeleteItem] = useState(null);
   const [snackbar, setSnackbar] = useState(null);
 
-  const [status, setStatus] = useState("");      
-const [category, setCategory] = useState("");  
-const [searchText, setSearchText] = useState(""); 
+  const [status, setStatus] = useState("");
+  const [category, setCategory] = useState("");
+  const [searchText, setSearchText] = useState("");
 
+  const { items, loading, error, deleteItemById, saveItemById, fetchItems } =
+    useInventory({
+      search: searchText,
+      category,
+      stock: status,
+      sort: "newest",
+    });
 
   const handleEdit = (row) => {
     setEditItem(row);
@@ -32,21 +44,12 @@ const [searchText, setSearchText] = useState("");
     setShowConfirm(true);
   };
 
+  //confirm delete
   const confirmDelete = async () => {
     if (!deleteItem) return;
-
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/inventory/${deleteItem._id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!res.ok) throw new Error("Failed to delete");
-      setSnackbar({ message: "Deleted successfully ", type: "success" });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+     await deleteItemById(deleteItem._id);
+     setSnackbar({message:"Deleted successfully",type:"success"});
     } catch (err) {
       console.error(err);
       setSnackbar({ message: "Deleted failed ", type: "error" });
@@ -68,10 +71,11 @@ const [searchText, setSearchText] = useState("");
         <StatsCard type="inventory" value="12" change="5" />
         <StatsCard type="allInventory" value="120" change="10" />
       </div>
-     <FilterBar
+      <FilterBar
         filters={[
           { value: category, onChange: setCategory, options: categoryOptions },
-           { value: status, onChange: setStatus, options: statusOptions },
+          { value: status, onChange: setStatus, options: statusOptions },
+         
         ]}
         search={{
           value: searchText,
@@ -80,12 +84,13 @@ const [searchText, setSearchText] = useState("");
         }}
       />
 
-      
-      <InventoryTable 
-      filters={{search:searchText,category,status}}
-      editable={true}
+      <InventoryTable
+        data={items}
+        loading={loading}
+        editable={true}
         editMode={handleEdit}
-        onDelete={handleDelete} />
+        onDelete={handleDelete}
+      />
 
       {showModal && (
         <CrudTable

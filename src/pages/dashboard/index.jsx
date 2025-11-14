@@ -36,7 +36,8 @@ const Dashboard = () => {
         Width: {width}px, Height: {height}px
       </p>
               <QuickStats />
-              <InventoryStats/>
+              <InventoryStats variant="out"/>
+               <InventoryStats variant="low"/>
               
             </div>
           </div>
