@@ -1,34 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../ui/table/table.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const InventoryTable = ({ limit, editable = false, editMode, onDelete,filters={} }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const InventoryTable = ({ data = [], loading = false, editable = false, editMode, onDelete }) => {
+  const displayData = data;
 
-  const displayData = limit ? data.slice(0, limit) : data;
-
-  useEffect(() => {
-    setLoading(true);
-    const query = new URLSearchParams(filters).toString();
-    fetch(`${process.env.REACT_APP_API_URL}/api/inventory?${query}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch data");
-        return res.json();
-      })
-      .then((items) => {
-        setData(items);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, [filters]);//refetch whenever filters change
 
   if (loading) return <p>Loading...</p>;
-  if (data.length === 0) return <p>No inventory items found.</p>;
+  if (!data || data.length === 0) return <p>No inventory items found.</p>;
 
   return (
     <div className="card">
@@ -42,12 +22,12 @@ const InventoryTable = ({ limit, editable = false, editMode, onDelete,filters={}
         <table>
           <thead>
             <tr>
-              <th key="">Image</th>
-              <th key="">Item Name</th>
-              <th key="">Category</th>
-              <th key="">SKU</th>
-              <th key="">Stock</th>
-              <th key="">Price</th>
+              <th>Image</th>
+              <th>Item Name</th>
+              <th>Category</th>
+              <th>SKU</th>
+              <th>Stock</th>
+              <th>Price</th>
               {editable && <th>Action</th>}
             </tr>
           </thead>
@@ -69,7 +49,7 @@ const InventoryTable = ({ limit, editable = false, editMode, onDelete,filters={}
                 <td>{item.itemName}</td>
                 <td>{item.category}</td>
                 <td>{item.sku || "-"}</td>
-                <td>{item.stock || "1"}</td>
+                <td>{item.stock || "0"}</td>
                 <td>{item.price}</td>
 
                 {editable && (
