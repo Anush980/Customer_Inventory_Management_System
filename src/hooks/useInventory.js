@@ -1,68 +1,73 @@
-import {useEffect, useState } from "react";
-import {getItems,saveItem,deleteItem} from '../api/inventoryApi';
+import { useEffect, useState, useCallback } from "react";
+import { getItems, saveItem, deleteItem } from "../api/inventoryApi";
 
-export const useInventory = ({search="",sort="newest",category="",stock=""}={})=>{
-    const [items,setItems]=useState([]);
-    const [loading,setLoading]=useState(false);
-    const [error,setError]=useState(null);
+export const useInventory = ({
+  search = "",
+  sort = "newest",
+  category = "",
+  stock = "",
+} = {}) => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    //fetch items
-    const fetchItems = async()=>{
-        setLoading(true);
-        setError(null);
-        try{
-            const  data = await getItems({search,category,sort});
-            setItems(data);
-        }
-        catch(err){
-            setError(err.message||"Failed to fetch Items.")
-        }
-        finally{
-            setLoading(false);
-        }
+  //FETCH ITEMS 
+  const fetchItems = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await getItems({ search, category, sort, stock });
+      setItems(data);
+    } catch (err) {
+      setError(err.message || "Failed to fetch Items.");
+    } finally {
+      setLoading(false);
     }
+  }, [search, category, sort, stock]);
 
-    //Create or update items
-    const saveItembyId= async(item)=>{
-        try{
-            const saved = await saveItem(item);
+  // --- RUN WHEN FILTERS CHANGE ---
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
 
-            //if exists, update
-            if(item._id){
-                setItems(prev=> prev.map(c=>(c._id ===saved._id ? saved :c)));
+  // --- SAVE ITEM (CREATE OR UPDATE) ---
+  const saveItembyId = async (item) => {
+    try {
+      const saved = await saveItem(item);
 
-            }
-            else{
-                //if new ,create
-                setItems(prev=>[saved,...prev]);
-            }
-            return saved;
+      setItems((prev) => {
+        // update existing
+        if (item._id) {
+          return prev.map((i) => (i._id === saved._id ? saved : i));
         }
-        catch(err){
-            setError(err.message||"Failed to save item.");
-            throw err;
-        }
-    };
+        // if new item → add to top of list
+        return [saved, ...prev];
+      });
 
-    //Delete item
-    const deleteItemById = async(id)=>{
-        try{
-await deleteItem(id);
-setItems(prev=>prev.filter(c=>c._id !==id));
-
-        }
-        catch(err){
-            setError(err.message||"Failed to delete item");
-        }
-    };
-
-    useEffect(()=>{
-        fetchItems();
-    },[search,sort,category]);
-
-    return {
-        items,loading,error,getItems,deleteItemById,saveItembyId
+      return saved;
+    } catch (err) {
+      setError(err.message || "Failed to save item.");
+      throw err;
     }
+  };
 
+  // --- DELETE ITEM ---
+  const deleteItemById = async (id) => {
+    try {
+      await deleteItem(id);
+      setItems((prev) => prev.filter((i) => i._id !== id));
+    } catch (err) {
+      setError(err.message || "Failed to delete item.");
+    }
+  };
 
-}
+  return {
+    items,
+    loading,
+    error,
+    fetchItems,
+    deleteItemById,
+    saveItembyId,
+  };
+};
