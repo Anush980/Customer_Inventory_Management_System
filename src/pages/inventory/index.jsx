@@ -14,6 +14,7 @@ import {
   statusOptions,
   categoryOptions,
 } from "../../data/filterConfig/inventoryFilterConfigs";
+import InventoryStatsCard from "../../components/inventory/InventoryStatsCard/InventoryStatsCard";
 
 const InventoryPage = () => {
   const [editItem, setEditItem] = useState(null);
@@ -48,8 +49,8 @@ const InventoryPage = () => {
   const confirmDelete = async () => {
     if (!deleteItem) return;
     try {
-     await deleteItemById(deleteItem._id);
-     setSnackbar({message:"Deleted successfully",type:"success"});
+      await deleteItemById(deleteItem._id);
+      setSnackbar({ message: "Deleted successfully", type: "success" });
     } catch (err) {
       console.error(err);
       setSnackbar({ message: "Deleted failed ", type: "error" });
@@ -68,14 +69,14 @@ const InventoryPage = () => {
       />
 
       <div className="stats-card">
-        <StatsCard type="inventory" value="12" change="5" />
-        <StatsCard type="allInventory" value="120" change="10" />
+        <InventoryStatsCard variant="total" />
+        <InventoryStatsCard variant="low" />
+        <InventoryStatsCard variant="out" />
       </div>
       <FilterBar
         filters={[
           { value: category, onChange: setCategory, options: categoryOptions },
           { value: status, onChange: setStatus, options: statusOptions },
-         
         ]}
         search={{
           value: searchText,

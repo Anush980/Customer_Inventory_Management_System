@@ -3,18 +3,22 @@ import Button from "../ui/Button/Button";
 import "../ui/CrudTable/crudTable.css";
 import Snackbar from "../ui/Snackbar/Snackbar";
 
+import { categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
+
 const InventoryForm = ({ editMode, closeWindow }) => {
-  const [formData, setFormData] = useState( editMode || {
+  const [formData, setFormData] = useState(
+    editMode || {
       itemName: "",
       category: "",
       price: "",
       sku: "",
       stock: "1",
-      restock:"5",
+      restock: "5",
     }
   );
+
   const [loading, setLoading] = useState(false);
-  const [image,setImage]= useState(null);
+  const [image, setImage] = useState(null);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -26,44 +30,41 @@ const InventoryForm = ({ editMode, closeWindow }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setLoading(true);
-      const method =editMode ? "PUT" : "POST";
-      const url =editMode ? `${process.env.REACT_APP_API_URL}/api/inventory/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/inventory`
+
+      const method = editMode ? "PUT" : "POST";
+      const url = editMode
+        ? `${process.env.REACT_APP_API_URL}/api/inventory/${editMode._id}`
+        : `${process.env.REACT_APP_API_URL}/api/inventory`;
 
       const data = new FormData();
-      for(let key  in  formData){
-        data.append(key,formData[key]);
+      for (let key in formData) {
+        data.append(key, formData[key]);
       }
-      if(image){
-        data.append("image",image);
+      if (image) {
+        data.append("image", image);
       }
-      const response = await fetch(
-        url,
-        {
+
+      const response = await fetch(url, {
         method,
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
-          // body: JSON.stringify(formData),
-          body:data
-        }
-      );
+        body: data,
+      });
 
       if (!response.ok) {
         throw new Error("Error saving item");
-        
       }
 
-      const result = await response.json();
-       console.log("Success:", result);
+      await response.json();
+
       closeWindow();
-      setTimeout(()=>{
-        window.location.reload()
-      },1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
     } catch (error) {
       console.error("Error:", error);
-      
     } finally {
       setLoading(false);
     }
@@ -82,47 +83,62 @@ const InventoryForm = ({ editMode, closeWindow }) => {
         <div className="crud-table-body">
           <form onSubmit={onSubmit} encType="multipart/form-data">
             <div className="form-column">
+
+              {/* ITEM NAME */}
               <div className="form-group">
-                <label htmlFor="productName"><span style={{ color: "red" }}>*</span> Product Name:</label>
+                <label htmlFor="itemName">
+                  <span style={{ color: "red" }}>*</span> Product Name:
+                </label>
                 <input
                   type="text"
                   id="itemName"
                   name="itemName"
                   onChange={onChange}
                   value={formData.itemName}
-                  placeholder="Enter item Name"
+                  placeholder="Enter item name"
                   required
                   className="form-control"
                 />
               </div>
 
+              {/* CATEGORY */}
               <div className="form-group">
-               
-                <label htmlFor="category"><span style={{ color: "red" }}>*</span> Category: </label>
-                <select id="category" name="category" onChange={onChange} value={formData.category} className="form-control" required>
-                    <option value="">Select Category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="home-goods">Home Goods</option>
-                    <option value="kitchen-appliances">kitchen appliances</option>
-                    <option value="others">others</option>
+                <label htmlFor="category">
+                  <span style={{ color: "red" }}>*</span> Category:
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  onChange={onChange}
+                  value={formData.category}
+                  className="form-control"
+                  required
+                >
+                  <option value="">Select Category</option>
+
+                  {categoryOptions.map((cat) => (
+                    <option key={cat.value} value={cat.value}>
+                      {cat.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
+              {/* SKU */}
               <div className="form-group">
-                <label htmlFor="sku">SKU</label>
+                <label htmlFor="sku">SKU:</label>
                 <input
                   type="text"
                   id="sku"
                   name="sku"
                   onChange={onChange}
                   value={formData.sku}
-                  placeholder="Enter Model name or SKU"
+                  placeholder="Enter SKU"
                   className="form-control"
                 />
               </div>
 
-             
-
+              {/* STOCK */}
               <div className="form-group">
                 <label htmlFor="stock">Total Stock:</label>
                 <input
@@ -130,25 +146,31 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   id="stock"
                   name="stock"
                   onChange={onChange}
-                  value={formData.stock }
-                  placeholder="Enter Total stock"
+                  value={formData.stock}
+                  placeholder="Enter total stock"
                   className="form-control"
                 />
               </div>
+
+              {/* RESTOCK LEVEL */}
               <div className="form-group">
-                <label htmlFor="restock">Reorder stock level:</label>
+                <label htmlFor="restock">Reorder Stock Level:</label>
                 <input
                   type="number"
                   id="restock"
                   name="restock"
                   onChange={onChange}
                   value={formData.restock}
-                  placeholder="Enter Reorder stock level"
+                  placeholder="Enter reorder level"
                   className="form-control"
                 />
               </div>
-               <div className="form-group">
-                <label htmlFor="price"><span style={{ color: "red" }}>*</span> Item Price:</label>
+
+              {/* PRICE */}
+              <div className="form-group">
+                <label htmlFor="price">
+                  <span style={{ color: "red" }}>*</span> Item Price:
+                </label>
                 <input
                   type="number"
                   id="price"
@@ -160,17 +182,20 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   required
                 />
               </div>
-               <div className="form-group">
+
+              {/* IMAGE */}
+              <div className="form-group">
                 <label htmlFor="image">Image:</label>
                 <input
                   type="file"
                   accept="image/jpg,image/jpeg,image/png"
-                  onChange={(e)=>setImage(e.target.files[0])}
-                  className="form-control"        
+                  onChange={(e) => setImage(e.target.files[0])}
+                  className="form-control"
                 />
               </div>
             </div>
 
+            {/* FOOTER BUTTONS */}
             <div className="crud-table-footer">
               <Button variant="text" onClick={closeWindow}>
                 Cancel
@@ -179,11 +204,10 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                 Save
               </Button>
             </div>
+
           </form>
         </div>
       </div>
-
-      
     </div>
   );
 };

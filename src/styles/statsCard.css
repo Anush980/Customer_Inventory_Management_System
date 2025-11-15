@@ -1,76 +1,87 @@
+.stat-card {
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  max-width: 300px;
+  margin-bottom: 30px;
+  /* text-wrap: nowrap; */
+}
 
-        
-        .stat-card {
-            background-color: rgb(255, 255, 255);
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-            max-width: 300px;
-            margin-bottom: 30px;
-            /* text-wrap: nowrap; */
-            
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background-color: var(--primary);
-        }
-        
-        .stat-card.sales::before {
-            background-color: var(--success);
-        }
-        
-        .stat-card.customer::before {
-            background-color: var(--info);
-        }
-        
-        .stat-card.inventory::before {
-            background-color: var(--warning);
-        }
-        
-        .stat-card h3 {
-            font-size: 0.9rem;
-            color: var(--gray);
-           
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-card .value {
-            color: rgb(28, 28, 28);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-card .change {
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .change.positive {
-            color: var(--success);
-        }
-        
-        .change.negative {
-            color: var(--danger);
-        }
-        
-        .change icon {
-            margin-right: 5px;
-        }
-        @media (max-width: 480px) {
-            .stat-card {
-                margin-bottom: 30px;
-                 max-width: 95%;
-           padding: 1rem;
-           
-            }
-        }
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--primary);
+}
+
+.stat-card.sales::before {
+  background-color: var(--success);
+}
+
+.stat-card.customer::before {
+  background-color: var(--info);
+}
+
+/*inventory*/
+.stat-card.low::before {
+  background-color: #cdbe21;
+}
+.stat-card.out::before {
+  background-color: #d9534f;
+}
+.stat-card.total::before {
+  background-color: #6c5ce7; 
+}
+.stat-card h3 {
+  font-size: 0.9rem;
+  color: var(--gray);
+
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .value {
+  color: rgb(28, 28, 28);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .change {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.change.positive {
+  color: var(--success);
+}
+
+.change.negative {
+  color: var(--danger);
+}
+.change.low-stock {
+    font-weight: 700;
+   color: #615a0d;
+}
+.change.out-of-stock {
+    font-weight: 700;
+   color: var(--danger); 
+}
+
+
+.change icon {
+  margin-right: 5px;
+}
+@media (max-width: 480px) {
+  .stat-card {
+    margin-bottom: 30px;
+    max-width: 95%;
+    padding: 1rem;
+  }
+}
