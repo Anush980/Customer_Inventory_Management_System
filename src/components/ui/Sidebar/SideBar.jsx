@@ -25,6 +25,10 @@ const SideBar = ({isOpen,closeSidebar}) => {
           <NavLink className={({isActive})=>`menu-item ${isActive? "active":""}`} to="/dashboard">
             <FontAwesomeIcon icon="tachometer-alt" className="menu-icon" /><span> Dashboard</span>
           </NavLink>
+          <NavLink className={({isActive})=>`menu-item ${isActive ? "active" :""}`} to="/pos" onClick={closeSidebar}>
+            <FontAwesomeIcon icon="cash-register" className="menu-icon" />
+            <span>Point of sale</span>
+          </NavLink>
 
           <NavLink className={({isActive})=>`menu-item ${isActive ? "active" :""}`} to="/inventory" onClick={closeSidebar}>
             <FontAwesomeIcon icon="boxes" className="menu-icon" />

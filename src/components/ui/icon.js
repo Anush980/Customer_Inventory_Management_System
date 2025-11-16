@@ -23,6 +23,9 @@ import {
   faPenToSquare,
   faPhone,
  faMapMarkerAlt,
+ faCashRegister,
+ faCreditCard,
+
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -64,6 +67,8 @@ library.add(
   faPenToSquare,
   faDollarSign,
   faBox,
+  faCashRegister,
+  faCreditCard,
 
   //brand icons
   faFacebook,

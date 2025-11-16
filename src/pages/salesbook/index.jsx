@@ -10,10 +10,8 @@ const SalesBookPage = () => {
   return (
     <Layout>
       <Pageheader title="Sales Management" btnTitle="Add" variant="sales"/>
-    {/* Depreciated Feature
-      <SalesDate/> */}
       <StatsCard value="10000" change="5" type="sales"/>
-      <Table limit = "5"/>
+      <Table limit = "5" editable="true"/>
       </Layout>
   )
 }

@@ -14,6 +14,7 @@ import SettingPage from './pages/setting';
 import ProfilePage from './pages/profile';
 import LandingPage from './pages/landing';
 import DummyTable from './components/ui/DummyTable/DummyTable';
+import Pos from './pages/pos';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
 <Route path="/sales" element={<ProtectedRoute><SalesBookPage/></ProtectedRoute>}/>
 <Route path="/settings" element={<ProtectedRoute><SettingPage/></ProtectedRoute>}/>
 <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
+<Route path="/pos" element={<ProtectedRoute><Pos/></ProtectedRoute>}/>
 
         
 
