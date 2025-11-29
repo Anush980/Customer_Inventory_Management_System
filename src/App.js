@@ -16,6 +16,7 @@ import LandingPage from './pages/landing';
 import DummyTable from './components/ui/DummyTable/DummyTable';
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Pos from './pages/pos';
+import { Navigate } from "react-router-dom";
 
 
 function App() {
@@ -28,6 +29,17 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/test" element={<DummyTable/>} />
+
+        <Route
+  path="/"
+  element={
+    localStorage.getItem("token") ? (
+      <Navigate to="/dashboard" replace />
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+/>
 
         {/* Default page */}
         <Route path="*" element={<LandingPage/>} />
