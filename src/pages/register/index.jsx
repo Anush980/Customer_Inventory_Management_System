@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,40 +17,46 @@ const Register = () => {
       const [loading,setLoading]=useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-    setError("");
-    setLoading(true);
-try{
+  e.preventDefault();
+  if (password !== confirmPassword) {
+    setError("Passwords do not match!");
+    return;
+  }
+  setError("");
+  setLoading(true);
+
+  try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    
+
     const data = await res.json();
+
     if (res.ok) {
-      setTimeout(() => setSuccess("Signup successful!"), 1000);
+      // Save token to localStorage
+      localStorage.setItem("token", data.token);
+
+      setSuccess("Signup successful!");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
       setError("");
       setTimeout(() => setFadeSuccess(true), 5000);
-      setTimeout(()=>{navigate("/dashboard")},1500);
-      
+      setTimeout(() => navigate("/dashboard"), 1500);
     } else {
       setError(data.message || "Signup failed");
-       setTimeout(() => setFadeError(true), 5000);
+      setTimeout(() => setFadeError(true), 5000);
       setFadeError(false);
-    }}
-    catch(err){
-      setError("Something went wrong !")
-      setLoading(false);
     }
-  };
+  } catch (err) {
+    setError("Something went wrong!");
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <AuthForm
       type="register"
@@ -60,6 +67,14 @@ try{
   fadeSuccess={fadeSuccess}
   loading={loading}
     >
+      <AuthInput
+        label="Name"
+        type="text"
+        placeholder="Enter your name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        
+      />
       <AuthInput
         label="Email"
         type="email"

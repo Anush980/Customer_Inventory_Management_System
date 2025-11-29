@@ -14,6 +14,7 @@ import SettingPage from './pages/setting';
 import ProfilePage from './pages/profile';
 import LandingPage from './pages/landing';
 import DummyTable from './components/ui/DummyTable/DummyTable';
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Pos from './pages/pos';
 
 

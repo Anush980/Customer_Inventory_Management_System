@@ -13,41 +13,47 @@ function Login() {
   const [loading,setLoading]=useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
+  setSuccess("");
+  setFadeError(false);
+  setFadeSuccess(false);
+
+  try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    try{
+
     const data = await res.json();
+
     if (res.ok) {
-      localStorage.setItem("token",data.token);
+      // Store the token
+      localStorage.setItem("token", data.token);
+
       setSuccess("Login successful!");
-      setFadeSuccess(false);
       setEmail("");
       setPassword("");
-      setError("");
-       setTimeout(() => setFadeSuccess(true), 5000);
-      navigate("/dashboard")
-      
+
+      // Show success message briefly
+      setTimeout(() => setFadeSuccess(true), 3000);
+
+      // Redirect to dashboard
+      navigate("/dashboard");
     } else {
       setError(data.message || "Login failed");
-      setTimeout(() => setFadeError(true), 5000);
-      setFadeError(false);
-      
+      setTimeout(() => setFadeError(true), 3000);
     }
+  } catch (err) {
+    setError("Something went wrong. Please try again.");
+  } finally {
+    setLoading(false);
   }
-  catch (err) {
-      setError("Something went wrong. Please try again.");
-  }
-    finally{
-      setLoading(false);
-    }
-  };
+};
+
 
   return (
     <AuthForm

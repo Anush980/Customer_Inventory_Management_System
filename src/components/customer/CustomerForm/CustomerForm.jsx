@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../ui/Button/Button";
 import "../../ui/CrudTable/crudTable.css";
-import Snackbar from "../../ui/Snackbar/Snackbar";
+
 
 const CustomerForm = ({ editMode, closeWindow }) => {
   const [formData, setFormData] = useState( editMode || {
@@ -27,14 +27,15 @@ const CustomerForm = ({ editMode, closeWindow }) => {
     try {
       setLoading(true);
       const method =editMode ? "PUT" : "POST";
-      const url =editMode ? `${process.env.REACT_APP_API_URL}/api/customer/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/customer`
+      const url =editMode ? `${process.env.REACT_APP_API_URL}/api/customers/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/customers`
       const response = await fetch(
         url,
         {
         method,
           headers: {
-            "Content-Type": "application/json",
-          },
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
           body: JSON.stringify(formData),
         }
       );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../ui/Button/Button";
 import "../ui/CrudTable/crudTable.css";
-import Snackbar from "../ui/Snackbar/Snackbar";
+
 
 import { categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
 
@@ -49,6 +49,9 @@ const InventoryForm = ({ editMode, closeWindow }) => {
 
       const response = await fetch(url, {
         method,
+        headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+      },
         body: data,
       });
 
