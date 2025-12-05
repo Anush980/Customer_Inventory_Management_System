@@ -5,7 +5,7 @@ import { useInventory } from "../../../hooks/useInventory";
 const InventoryStats = ({ variant = "low", limit = 5 }) => {
   const { items, loading, error } = useInventory({ stock: variant });
 
-  // Only show first `limit` items
+ 
   const displayItems = items.slice(0, limit);
 
   return (
@@ -28,7 +28,7 @@ const InventoryStats = ({ variant = "low", limit = 5 }) => {
             <div className={`stat ${variant}`} key={item._id}>
               <div className="image-wrapper">
                 <img
-                  src={item.image || "/default.jpg"}
+                  src={item.image || "images/default.jpg"}
                   alt={item.itemName}
                   width="45"
                 />

@@ -6,7 +6,8 @@ import "./salesbookPage.css";
 import SalesTable from "../../components/sales/salesTable";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
-import CrudTable from "../../components/ui/CrudTable/CrudTable";
+import SalesViewModal from "../../components/sales/SalesViewModal";
+import TopSalesCard from "../../components/sales/TopSales";
 
 import { useSales } from "../../hooks/useSales";
 
@@ -15,24 +16,22 @@ const SalesBookPage = () => {
   const [deleteSale, setDeleteSale] = useState(null);
 
   const [showView, setShowView] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [snackbar, setSnackbar] = useState(null);
-
 
   const { sales, loading, deleteSaleById } = useSales({
     sort: "newest",
   });
 
-
-  const handleView = (row) => {
-    setViewSale(row);
+  
+  const handleView = (sale) => {
+    setViewSale(sale);
     setShowView(true);
   };
 
-  
-  const handleDelete = (row) => {
-    setDeleteSale(row);
+ 
+  const handleDelete = (sale) => {
+    setDeleteSale(sale);
     setShowConfirm(true);
   };
 
@@ -54,39 +53,39 @@ const SalesBookPage = () => {
 
   return (
     <Layout>
-      <Pageheader title="Sales Management" btnTitle="Add Sale" variant="sales" />
+      <Pageheader title="Sales Management" showBtn={false} />
 
       <StatsCard value="10000" change={5} type="sales" />
 
      
-      <SalesTable
-        data={sales}
-        loading={loading}
-        editable={true}
-        onView={handleView}
-        onDelete={handleDelete}
-        showViewAll={false}
-      />
+      <div className="sales-content-wrapper" style={{ display: "flex", gap: "20px" }}>
+  <div className="sales-left" style={{ flex: 3 }}>
+    <SalesTable
+      data={sales}
+      loading={loading}
+      editable={true}
+      onView={handleView}
+      onDelete={handleDelete}
+      showViewAll={false}
+    />
+  </div>
+
+  <div className="sales-right" style={{ flex: 1 }}>
+    <TopSalesCard sales={sales} limit={5} />
+  </div>
+</div>
+
+
+
+      
+      {showView && (
+        <SalesViewModal
+          sale={viewSale}
+          onClose={() => setShowView(false)}
+        />
+      )}
 
      
-      {showView && (
-        <CrudTable
-          closeWindow={() => setShowView(false)}
-          editMode={viewSale}
-          variant="sales"
-          mode="view"
-        />
-      )}
-
-      
-      {showModal && (
-        <CrudTable
-          closeWindow={() => setShowModal(false)}
-          variant="sales"
-        />
-      )}
-
-      
       {showConfirm && (
         <ConfirmCard
           closeWindow={() => setShowConfirm(false)}

@@ -120,7 +120,7 @@ const Pos = () => {
       </button>
 
       <div className="pos-wrapper">
-        <Pageheader title="Point of Sale" btnTitle="Recent Sales" />
+        <Pageheader title="Point of Sale" showBtn={false} />
 
         <div className="pos-container">
 
