@@ -3,7 +3,7 @@ const BASE_URL= `${process.env.REACT_APP_API_URL}/api/sales`;
 //fetch sales with optional filters
 export const getSales = async ({search="",category="",sort=""}={})=>{
     const token = localStorage.getItem("token");
-    const query = URLSearchParams();
+    const query = new URLSearchParams();
      if(search) query.append("search",search);
     if(category) query.append("category",category);
     if(sort) query.append("sort",sort);

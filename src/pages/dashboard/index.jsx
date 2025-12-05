@@ -10,14 +10,24 @@ import Layout from '../../components/ui/Layout/Layout'
 import InventoryStats from '../../components/inventory/InventoryStats/InventoryStats';
 import CustomerStats from "../../components/customer/customerStats/CustomerStats";
 import InventoryStatsCard from "../../components/inventory/InventoryStatsCard/InventoryStatsCard";
+import InventoryTable from "../../components/inventory/InventoryTable";
+import { useInventory } from "../../hooks/useInventory";
+
 const Dashboard = () => {
  const { width, height } = WindowSize();
+ const { items, loading } = useInventory({
+  search: "",
+  category: "",
+  stock: "",
+  sort: "newest",
+});
+
 
 
   return (
     <>
    <Layout>
-         <Pageheader title="Dashboard" btnTitle="Add Sales" variant="sales" />
+         <Pageheader title="Dashboard"  showBtn={false} />
           
           <div className="stats">
             <StatsCard value="&#8377; 25000" change={12.5} type="revenue" />
@@ -28,8 +38,14 @@ const Dashboard = () => {
 
           <div className="data">
             <div className="data-left">
-              <Table limit = "5"/>
-              <Table variant="inventory" limit = "5"  />
+              <Table variant="sales" limit = "5"/>
+             
+<InventoryTable
+  data={items?.slice(0, 5)}  
+  loading={loading}
+  editable={false}       
+/>
+             
               <CrudTable/>
             </div>
             <div className="data-right">

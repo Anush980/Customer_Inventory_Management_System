@@ -15,7 +15,7 @@ export const useCustomers = ({search="",sort="newest"}={})=>{
             setCustomers(data);
         }
         catch(err){
-            setError(err.message || "Failed to fetch customers.");
+            setError( "No customers found.");
         }
         finally{
             setLoading(false);

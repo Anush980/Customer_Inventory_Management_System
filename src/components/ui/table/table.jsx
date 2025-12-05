@@ -12,7 +12,7 @@ const Table = ({ variant = "sales", limit, editable = false,onEdit,onDelete}) =>
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Display only limited data if needed
+
   const displayData = limit ? data.slice(0, limit) : data;
 
   useEffect(() => {

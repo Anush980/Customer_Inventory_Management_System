@@ -23,7 +23,7 @@ const InventoryTable = ({ data = [], loading = false, editable = false, editMode
           <thead>
             <tr>
               <th>Image</th>
-              <th>Item Name</th>
+              <th>Name</th>
               <th>Category</th>
               <th>SKU</th>
               <th>Stock</th>

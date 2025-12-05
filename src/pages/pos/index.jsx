@@ -5,13 +5,14 @@ import "./pos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
 import { useInventory } from "../../hooks/useInventory";
+import axios from "axios";
 
 const Pos = () => {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
 
 
-  const { items, loading, error } = useInventory({
+  const { items, loading } = useInventory({
     search,
     category: category === "all" ? "" : category,
     sort: "newest",
@@ -76,6 +77,37 @@ const Pos = () => {
   );
 
   const total = subtotal;
+  const checkoutHandler=async()=>{
+    if (cart.length===0){
+      alert("Your cart is empty");
+      return ;
+    }
+    try{
+      const saleDate={
+        items:cart.map((item)=>({
+          product:item._id,
+          quantity:item.qty,
+        })),
+        discount:0,
+        paymentType:"cash",
+        walkInCustomer:"Walk-in"
+      };
+      const token = localStorage.getItem("token");
+      await axios.post(
+       `${process.env.REACT_APP_API_URL}/api/sales`,saleDate,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+       }
+      );
+      alert("Sales completed successfully!");
+      setCart([]);
+    }
+    catch(err){
+      console.error(err);
+      alert(err,"Sales failed..")
+    }
+  };
 
   return (
     <Layout>
@@ -133,11 +165,10 @@ const Pos = () => {
             <div className="products-container">
               <div className="products-grid">
 
-                {/* Loading / Error / Empty State */}
+                
                 {loading && <p>Loading...</p>}
-                {error && <p>Error loading inventory</p>}
                 {items.length === 0 && !loading && (
-                  <p className="no-products">No products found</p>
+                  <p className="no-products">No products found.</p>
                 )}
 
                 {/* Product Cards */}
@@ -248,7 +279,7 @@ const Pos = () => {
                 </div>
               </div>
 
-              <button className="btn btn-success checkout-btn">
+              <button className="btn btn-success checkout-btn"onClick={checkoutHandler}>
                 <FontAwesomeIcon icon="credit-card"/> Checkout
               </button>
             </div>

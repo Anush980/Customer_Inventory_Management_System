@@ -5,7 +5,7 @@ import CrudTable from "../CrudTable/CrudTable";
 import Button from '../Button/Button';
 import './pageHeader.css';
 
-const Pageheader = ({ title, btnTitle, variant }) => {
+const Pageheader = ({ title, btnTitle, variant,showBtn= true}) => {
   const [crudTable, setCrudTable] = useState(false);
   
    const [loading, setLoading] = useState(false);
@@ -14,10 +14,10 @@ const Pageheader = ({ title, btnTitle, variant }) => {
   return (
     <div className="page-header">
       <h2>{title}</h2>
-      <Button variant='primary' onClick={() => setCrudTable(true)}>
+     { showBtn && <Button variant='primary' onClick={() => setCrudTable(true)}>
       <FontAwesomeIcon icon="plus" />
         <span> {btnTitle}</span>
-      </Button>
+      </Button>}
 
       {crudTable && (
         <CrudTable
