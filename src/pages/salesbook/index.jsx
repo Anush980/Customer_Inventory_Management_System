@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Layout from "../../components/ui/Layout/Layout";
 import Pageheader from "../../components/ui/PageHeader/Pageheader";
-import StatsCard from "../../components/ui/StatsCard/StatsCard";
+import TotalSalesStats from "../../components/sales/TotalSalesStats";
 import "./salesbookPage.css";
 import SalesTable from "../../components/sales/salesTable";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import SalesViewModal from "../../components/sales/SalesViewModal";
 import TopSalesCard from "../../components/sales/TopSales";
+import RevenueStats from "../../components/sales/RevenueStats";
 
 import { useSales } from "../../hooks/useSales";
 
@@ -23,19 +24,19 @@ const SalesBookPage = () => {
     sort: "newest",
   });
 
-  
+
   const handleView = (sale) => {
     setViewSale(sale);
     setShowView(true);
   };
 
- 
+
   const handleDelete = (sale) => {
     setDeleteSale(sale);
     setShowConfirm(true);
   };
 
- 
+
   const confirmDelete = async () => {
     if (!deleteSale) return;
 
@@ -54,30 +55,33 @@ const SalesBookPage = () => {
   return (
     <Layout>
       <Pageheader title="Sales Management" showBtn={false} />
+      <div className="stats-card">
+        <RevenueStats variant="daily" />
+        <TotalSalesStats variant="daily"/>
+      </div>
 
-      <StatsCard value="10000" change={5} type="sales" />
 
-     
+
       <div className="sales-content-wrapper" style={{ display: "flex", gap: "20px" }}>
-  <div className="sales-left" style={{ flex: 3 }}>
-    <SalesTable
-      data={sales}
-      loading={loading}
-      editable={true}
-      onView={handleView}
-      onDelete={handleDelete}
-      showViewAll={false}
-    />
-  </div>
+        <div className="sales-left" style={{ flex: 3 }}>
+          <SalesTable
+            data={sales}
+            loading={loading}
+            editable={true}
+            onView={handleView}
+            onDelete={handleDelete}
+            showViewAll={false}
+          />
+        </div>
 
-  <div className="sales-right" style={{ flex: 1 }}>
-    <TopSalesCard sales={sales} limit={5} />
-  </div>
-</div>
+        <div className="sales-right" style={{ flex: 1 }}>
+          <TopSalesCard sales={sales} limit={5} />
+        </div>
+      </div>
 
 
 
-      
+
       {showView && (
         <SalesViewModal
           sale={viewSale}
@@ -85,7 +89,7 @@ const SalesBookPage = () => {
         />
       )}
 
-     
+
       {showConfirm && (
         <ConfirmCard
           closeWindow={() => setShowConfirm(false)}
@@ -93,7 +97,7 @@ const SalesBookPage = () => {
         />
       )}
 
-      
+
       {snackbar && (
         <Snackbar
           message={snackbar.message}

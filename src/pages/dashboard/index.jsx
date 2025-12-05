@@ -2,9 +2,9 @@ import { React } from "react";
 import "./dashboard.css";
 import StatsCard from "../../components/ui/StatsCard/StatsCard";
 import Pageheader from "../../components/ui/PageHeader/Pageheader";
-import Table from "../../components/ui/table/table";
+// import Table from "../../components/ui/table/table";
 import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
-import WindowSize from "../../components/ui/WindowSize/WindowSize";
+// import WindowSize from "../../components/ui/WindowSize/WindowSize";
 import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import Layout from '../../components/ui/Layout/Layout'
 import InventoryStats from '../../components/inventory/InventoryStats/InventoryStats';
@@ -13,10 +13,13 @@ import InventoryStatsCard from "../../components/inventory/InventoryStatsCard/In
 import InventoryTable from "../../components/inventory/InventoryTable";
 import { useInventory } from "../../hooks/useInventory";
 import SalesTable from "../../components/sales/salesTable";
+import RevenueStats from '../../components/sales/RevenueStats';
+
 import { useSales } from "../../hooks/useSales";
+import TotalSalesStats from "../../components/sales/TotalSalesStats";
 
 const Dashboard = () => {
-  const { width, height } = WindowSize();
+  // const { width, height } = WindowSize();
   const { items, loading } = useInventory({
     search: "",
     category: "",
@@ -35,8 +38,9 @@ const Dashboard = () => {
         <Pageheader title="Dashboard" showBtn={false} />
 
         <div className="stats">
-          <StatsCard value="&#8377; 25000" change={12.5} type="revenue" />
-          <StatsCard value=" 50" change={12.5} type="sales" />
+          <RevenueStats variant="monthly"/>
+          <TotalSalesStats variant="monthly"/>
+          
           <CustomerStats />
           <InventoryStatsCard variant="low" />
         </div>
