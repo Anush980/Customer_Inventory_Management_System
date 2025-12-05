@@ -6,9 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const InventoryTable = ({ data = [], loading = false, editable = false, editMode, onDelete }) => {
   const displayData = data;
 
-
   if (loading) return <p>Loading...</p>;
-  if (!data || data.length === 0) return <p>No inventory items found.</p>;
 
   return (
     <div className="card">
@@ -26,52 +24,62 @@ const InventoryTable = ({ data = [], loading = false, editable = false, editMode
               <th>Name</th>
               <th>Category</th>
               <th>SKU</th>
+              <th>Restock</th>
               <th>Stock</th>
               <th>Price</th>
               {editable && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
-            {displayData.map((item) => (
-              <tr key={item._id}>
-                <td>
-                  <img
-                    src={item.image || "https://via.placeholder.com/50"}
-                    alt={item.itemName}
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      objectFit: "cover",
-                      borderRadius: "5px",
-                    }}
-                  />
+            {displayData.length === 0 ? (
+              <tr>
+                <td colSpan={editable ? 7 : 6} style={{ textAlign: "center", padding: "1rem" }}>
+                  No inventory items found.
                 </td>
-                <td>{item.itemName}</td>
-                <td>{item.category}</td>
-                <td>{item.sku || "-"}</td>
-                <td>{item.stock || "0"}</td>
-                <td>{item.price}</td>
-
-                {editable && (
-                  <td>
-                    <div className="action-btns">
-                      <button
-                        className="action-btn edit"
-                        onClick={() => editMode && editMode(item)}
-                      >
-                        <FontAwesomeIcon icon="pen-to-square" />
-                      </button>
-                      <button
-                        className="action-btn delete"
-                        onClick={() => onDelete && onDelete(item)}
-                      >
-                        <FontAwesomeIcon icon="trash-can" />
-                      </button>
-                    </div>
-                  </td>
-                )}
               </tr>
-            ))}
+            ) : (
+              displayData.map((item) => (
+                <tr key={item._id}>
+                  <td>
+                    <img
+                      src={item.image || "https://via.placeholder.com/50"}
+                      alt={item.itemName}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  </td>
+                  <td>{item.itemName}</td>
+                  <td>{item.category}</td>
+                  <td>{item.sku || "-"}</td>
+                  <td>{item.restock || "5"}</td>
+                  <td>{item.stock || "0"}</td>
+                  <td>{item.price}</td>
+
+                  {editable && (
+                    <td>
+                      <div className="action-btns">
+                        <button
+                          className="action-btn edit"
+                          onClick={() => editMode && editMode(item)}
+                        >
+                          <FontAwesomeIcon icon="pen-to-square" />
+                        </button>
+                        <button
+                          className="action-btn delete"
+                          onClick={() => onDelete && onDelete(item)}
+                        >
+                          <FontAwesomeIcon icon="trash-can" />
+                        </button>
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

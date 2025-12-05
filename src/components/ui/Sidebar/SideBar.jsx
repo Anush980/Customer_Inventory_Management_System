@@ -13,9 +13,11 @@ const SideBar = ({isOpen,closeSidebar}) => {
           <div className="sidebar-logo">
             <div className="title">
             <img src={WebLogo} alt="logo" />
-            <h2>StockMate</h2>
+            {/* <h2>StockMate</h2> */}
+            <h2>R.M.S</h2>
             </div>
-            <p>Manage Smarter, Not Harder</p>
+            {/* <p>Manage Smarter, Not Harder</p> */}
+            <p>Retail management system</p>
           </div>
         </div>
 

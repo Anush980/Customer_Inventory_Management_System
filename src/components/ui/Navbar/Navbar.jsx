@@ -21,8 +21,9 @@ const Navbar = ({ toggleSidebar }) => {
           <img src={WebLogo} alt="logo" />
         </div>
         <div className="search-bar">
-          <input type="text" placeholder="Search..."></input>
-          <FontAwesomeIcon icon="search" className="search-icon" />
+          Retail Management System
+          {/* <input type="text" placeholder=""></input>
+          <FontAwesomeIcon icon="search" className="search-icon" /> */}
         </div>
         <div className="navbar-left">
           <div className="user-menu">

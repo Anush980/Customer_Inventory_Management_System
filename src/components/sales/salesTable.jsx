@@ -20,8 +20,6 @@ const SalesTable = ({
   const displayData = data;
 
   if (loading) return <p>Loading sales...</p>;
-  if (!displayData || displayData.length === 0)
-    return <p>No sales found.</p>;
 
   return (
     <div className="card">
@@ -38,7 +36,7 @@ const SalesTable = ({
         <table>
           <thead>
             <tr>
-              <th>Order ID</th>
+              <th>ID</th>
               <th>Customer</th>
               <th>Date</th>
               <th>Items</th>
@@ -49,72 +47,54 @@ const SalesTable = ({
           </thead>
 
           <tbody>
-            {displayData.map((sale) => (
-              <tr key={sale._id}>
-                {/* Order ID */}
-                <td>#{sale._id.slice(-6).toUpperCase()}</td>
+  {displayData.length === 0 ? (
+    <tr>
+      <td colSpan={editable ? 7 : 6} style={{ textAlign: "center", padding: "1rem" }}>
+        No sales found.
+      </td>
+    </tr>
+  ) : (
+    displayData.map((sale) => (
+      <tr key={sale._id}>
+        <td>#{sale._id.slice(-6).toUpperCase()}</td>
+        <td>{sale.walkInCustomer || "Unknown"}</td>
+        <td>{new Date(sale.createdAt).toLocaleDateString()}</td>
+        <td>
+          {sale.items.length} item{sale.items.length > 1 ? "s" : ""}
+        </td>
+        <td>₹{sale.total}</td>
+        <td>
+          {sale.paymentType
+            ? sale.paymentType.charAt(0).toUpperCase() +
+              sale.paymentType.slice(1)
+            : "-"}
+        </td>
+        {editable && (
+          <td>
+            <div className="action-btns">
+              {onView && (
+                <button className="action-btn view" onClick={() => onView(sale)}>
+                  <FontAwesomeIcon icon={faEye} />
+                </button>
+              )}
+              {onEdit && (
+                <button className="action-btn edit" onClick={() => onEdit(sale)}>
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+              )}
+              {onDelete && (
+                <button className="action-btn delete" onClick={() => onDelete(sale)}>
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              )}
+            </div>
+          </td>
+        )}
+      </tr>
+    ))
+  )}
+</tbody>
 
-                {/* Customer */}
-                <td>{sale.walkInCustomer || "Unknown"}</td>
-
-                {/* Date */}
-                <td>
-                  {new Date(sale.createdAt).toLocaleDateString()}
-                </td>
-
-                {/* Items Count */}
-                <td>
-                  {sale.items.length} item
-                  {sale.items.length > 1 ? "s" : ""}
-                </td>
-
-                {/* Amount */}
-                <td>₹{sale.total}</td>
-
-                {/* Status = Payment Type */}
-                <td>
-                  {sale.paymentType
-                    ? sale.paymentType.charAt(0).toUpperCase() +
-                      sale.paymentType.slice(1)
-                    : "-"}
-                </td>
-
-                {/* Actions */}
-                {editable && (
-                  <td>
-                    <div className="action-btns">
-                      {onView && (
-                        <button
-                          className="action-btn view"
-                          onClick={() => onView(sale)}
-                        >
-                          <FontAwesomeIcon icon={faEye} />
-                        </button>
-                      )}
-
-                      {onEdit && (
-                        <button
-                          className="action-btn edit"
-                          onClick={() => onEdit(sale)}
-                        >
-                          <FontAwesomeIcon icon={faPenToSquare} />
-                        </button>
-                      )}
-
-                      {onDelete && (
-                        <button
-                          className="action-btn delete"
-                          onClick={() => onDelete(sale)}
-                        >
-                          <FontAwesomeIcon icon={faTrashCan} />
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
         </table>
       </div>
     </div>

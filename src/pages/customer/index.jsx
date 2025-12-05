@@ -66,6 +66,9 @@ const confirmDelete=()=>{
         }}
       />
        {loading && <div>Loading...</div>}
+       {!loading && !error && customers.length === 0 && (
+  <div className="no-customers">No customers found</div>
+)}
       {error && <div className="error">{error}</div>}
 
       <div className="customer-card-grid">
