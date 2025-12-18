@@ -1,0 +1,44 @@
+.confirm-card-wrapper {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: min(max(70px, calc(100vw * 0.25)), 100px);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+}
+.confirm-card-content {
+  box-shadow: 0 0 8px 2px rgba(213, 63, 46, 0.91);
+  background-color: rgb(238, 238, 238);
+  padding: 27px;
+  border-radius: 12px;
+}
+.confirm-card-header {
+  margin-bottom: 30px;
+  font-size: 1.3rem;
+}
+.confirm-card-text {
+  color: rgb(69, 69, 69);
+  padding-bottom: 30px;
+}
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .confirm-card-wrapper {
+    left: min(max(70px, calc(100vw * 0.25)), 50px);
+    padding: 14%;
+  }
+}
+@media (max-width: 520px) {
+  .confirm-card-wrapper {
+    left: 0;
+    padding: 8%;
+  }
+}

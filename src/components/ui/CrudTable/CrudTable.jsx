@@ -3,6 +3,7 @@ import "./crudTable.css";
 import CustomerForm from "../../customer/CustomerForm/CustomerForm";
 import InventoryForm from "../../inventory/InventoryForm";
 import SalesForm from "../../sales/SalesForm";
+import StaffForm from "../../staff/staffForm/StaffForm";
 
 
 const CrudTable = ({ variant, editMode, closeWindow }) => {
@@ -17,6 +18,9 @@ const CrudTable = ({ variant, editMode, closeWindow }) => {
       )} 
       {variant === "inventory" && (
         <InventoryForm editMode={editMode} closeWindow={closeWindow} />
+      )}
+      {variant === "staff" && (
+        <StaffForm editMode={editMode} closeWindow={closeWindow} />
       )}
     </div>
   );

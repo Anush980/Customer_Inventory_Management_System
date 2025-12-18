@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import WebLogo from "../../../assets/CIMS_logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LogoutCard from "../LogoutCard/LogoutCard";
 import "./sideBar.css";
 
 const SideBar = ({isOpen,closeSidebar}) => {
+ const [showLogout, setShowLogout] = useState(false);
+  const navigate = useNavigate();
+   const handleLogout = () => {
+    
+    localStorage.removeItem("token");
+    
+    navigate("/landingpage");
+  };
    
   return (
      
@@ -45,6 +54,10 @@ const SideBar = ({isOpen,closeSidebar}) => {
             <FontAwesomeIcon icon="book" className="menu-icon" />
             <span>Sales Book</span>
           </NavLink>
+          <NavLink className={({isActive})=>`menu-item ${isActive ? "active" :""}`} to="/staff" onClick={closeSidebar}>
+            <FontAwesomeIcon icon="users" className="menu-icon" />
+            <span>Staffs</span>
+          </NavLink>
           {/*setting starts from here*/}
           <div className="menu-title"><span>Settings</span></div>
 
@@ -57,10 +70,26 @@ const SideBar = ({isOpen,closeSidebar}) => {
             <FontAwesomeIcon icon="user" className="menu-icon" />
             <span>Profile</span>
           </NavLink>
-          <NavLink className="menu-item" to="/login" onClick={closeSidebar}>
-            <FontAwesomeIcon icon="sign-out-alt" className="menu-icon" />
-            <span>Logout</span>
-          </NavLink>
+          <NavLink
+        className="menu-item"
+        to="#"
+        onClick={(e) => {
+          e.preventDefault(); // prevent navigation
+          setShowLogout(true);
+        }}
+      >
+        <FontAwesomeIcon icon="sign-out-alt" className="menu-icon" />
+        <span>Logout</span>
+      </NavLink>
+           {showLogout && (
+        <LogoutCard
+          onConfirm={() => {
+            handleLogout();
+            setShowLogout(false);
+          }}
+          onCancel={() => setShowLogout(false)}
+        />
+      )}
         </div>
       </aside>
     
