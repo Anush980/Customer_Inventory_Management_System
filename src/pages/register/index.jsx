@@ -1,61 +1,68 @@
-
-import { React,useState } from "react";
+import { React, useState } from "react";
 import AuthForm from "../../components/auth/Form/AuthForm";
 import AuthInput from "../../components/auth/Input/authInput";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [shopName, setShopName] = useState("");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-    const navigate = useNavigate();
   const [success, setSuccess] = useState("");
-    const [fadeError, setFadeError] = useState(false);
-    const [fadeSuccess, setFadeSuccess] = useState(false);
-      const [loading,setLoading]=useState(false);
+  const [fadeError, setFadeError] = useState(false);
+  const [fadeSuccess, setFadeSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (password !== confirmPassword) {
-    setError("Passwords do not match!");
-    return;
-  }
-  setError("");
-  setLoading(true);
-
-  try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      // Save token to localStorage
-      localStorage.setItem("token", data.token);
-
-      setSuccess("Signup successful!");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setError("");
-      setTimeout(() => setFadeSuccess(true), 5000);
-      setTimeout(() => navigate("/dashboard"), 1500);
-    } else {
-      setError(data.message || "Signup failed");
-      setTimeout(() => setFadeError(true), 5000);
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
       setFadeError(false);
+      return;
     }
-  } catch (err) {
-    setError("Something went wrong!");
-  } finally {
-    setLoading(false);
-  }
-};
+
+    setLoading(true);
+    setError("");
+    setSuccess("");
+    setFadeError(false);
+    setFadeSuccess(false);
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shopName, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Save token (localStorage or sessionStorage optional here)
+        localStorage.setItem("token", data.token);
+
+        setSuccess("Signup successful!");
+        setShopName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+
+        setFadeSuccess(false); // start visible
+        setTimeout(() => setFadeSuccess(true), 3000); // fade after 3s
+
+        setTimeout(() => navigate("/dashboard"), 1500);
+      } else {
+        setError(data.message || "Signup failed");
+        setFadeError(false);
+        setTimeout(() => setFadeError(true), 3000); // fade after 3s
+      }
+    } catch (err) {
+      setError("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AuthForm
@@ -64,16 +71,15 @@ const Register = () => {
       error={error}
       success={success}
       fadeError={fadeError}
-  fadeSuccess={fadeSuccess}
-  loading={loading}
+      fadeSuccess={fadeSuccess}
+      loading={loading}
     >
       <AuthInput
-        label="Name"
+        label="Shop Name"
         type="text"
-        placeholder="Enter your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        
+        placeholder="Enter your shop name"
+        value={shopName}
+        onChange={(e) => setShopName(e.target.value)}
       />
       <AuthInput
         label="Email"
@@ -97,6 +103,7 @@ const Register = () => {
         placeholder="Confirm your password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
+        autocomplete="new-password"
       />
     </AuthForm>
   );
