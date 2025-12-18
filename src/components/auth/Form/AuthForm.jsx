@@ -2,7 +2,7 @@ import React from "react";
 import "./authform.css";
 import authConfigs from "../authConfigs";
 import AuthHeader from "../Header/authHeader";
-import RememberForgot from "../RememberForget/rememberForgot";
+import RememberForgot from "../RememberForget/RememberForgot";
 import Divider from "../Divider/divider";
 import SocialLogin from "../SocialLogin/socialLogin";
 import AuthFooter from "../Footer/authFooter";
@@ -24,7 +24,7 @@ const AuthForm = ({ type, onSubmit, children ,error,success,fadeError,fadeSucces
           {children}
             {error && <p className={`error-text ${fadeError ? "fade" : ""}`}>{error}</p>}
             {success && <p className={`success-text ${fadeSuccess ? "fade" : ""}`}>{success}</p>}
-          {type === "login" && <RememberForgot />}
+          
           {type === "register" && <Agreement />}
 
           <div className="button-wrapper"><Button variant="auth" isLoading={loading}>{config.buttonText} </Button></div>
