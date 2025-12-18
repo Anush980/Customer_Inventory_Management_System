@@ -1,0 +1,67 @@
+.staff-card {
+  width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.staff-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+.staff-card-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 12px auto;
+  border: 2px solid #007bff;
+}
+
+.staff-card-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.staff-card-info .role {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.staff-card-details p {
+  font-size: 0.85rem;
+  margin: 4px 0;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+}
+
+.staff-card-details .icon {
+  margin-right: 6px;
+  color: #007bff;
+}
+
+.staff-card-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.staff-card-actions button {
+  font-size: 0.8rem;
+}
+
