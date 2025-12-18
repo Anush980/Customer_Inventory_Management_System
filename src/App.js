@@ -13,22 +13,23 @@ import SalesBookPage from './pages/salesbook';
 import SettingPage from './pages/setting';
 import ProfilePage from './pages/profile';
 import LandingPage from './pages/landing';
-import DummyTable from './components/ui/DummyTable/DummyTable';
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import Pos from './pages/pos';
 import { Navigate } from "react-router-dom";
+import StaffPage from './pages/staff';
+import TermsPage from './pages/terms/TermsPage';
+import PolicyPage from './pages/policy/PolicyPage';
 
 
 function App() {
   
   return (
    
-      <Routes>
+    
+        <Routes>
         {/* Auth pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<Reset />} />
-        <Route path="/test" element={<DummyTable/>} />
 
         <Route
   path="/"
@@ -42,7 +43,10 @@ function App() {
 />
 
         {/* Default page */}
-        <Route path="*" element={<LandingPage/>} />
+        <Route path="/*" element={<LandingPage/>} />
+        <Route path="/terms" element={<TermsPage/>} />
+        <Route path="/policy" element={<PolicyPage/>} />
+
 {/*protected routes for testing*/}
 <Route path="/dashboard" element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
 <Route path="/inventory" element={<ProtectedRoute><Inventory/></ProtectedRoute>}/>
@@ -51,6 +55,7 @@ function App() {
 <Route path="/settings" element={<ProtectedRoute><SettingPage/></ProtectedRoute>}/>
 <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
 <Route path="/pos" element={<ProtectedRoute><Pos/></ProtectedRoute>}/>
+<Route path="/staff" element={<ProtectedRoute><StaffPage/></ProtectedRoute>}/>
 
         
 
@@ -62,6 +67,7 @@ function App() {
 
 
       </Routes>
+    
   );
 }
 
