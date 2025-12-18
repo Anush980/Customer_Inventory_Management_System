@@ -1,29 +1,18 @@
+import { getAuthHeaders } from "./authHeaders";
+
 const BASE_URL = `${process.env.REACT_APP_API_URL}/api/inventory`;
 
-const getAuthHeaders = () => {
-  const token = localStorage.getItem("token");
-  return {
-    "Authorization": `Bearer ${token}`,
-  };
-};
-
-// Fetch items
-export const getItems = async ({ search = "", category = "", sort = "newest", stock = "" } = {}) => {
-  const query = new URLSearchParams();
-  if (search) query.append("search", search);
-  if (category) query.append("category", category);
-  if (sort) query.append("sort", sort);
-  if (stock) query.append("stock", stock);
+export const getItems = async ({ search="", category="", sort="newest", stock="" } = {}) => {
+  const query = new URLSearchParams({ search, category, sort, stock });
 
   const res = await fetch(`${BASE_URL}?${query.toString()}`, {
     headers: getAuthHeaders(),
   });
 
-  if (!res.ok) throw new Error("Failed to fetch items.");
+  if (!res.ok) throw new Error("Failed to fetch items");
   return res.json();
 };
 
-// Save item
 export const saveItem = async (item) => {
   const method = item._id ? "PUT" : "POST";
   const url = item._id ? `${BASE_URL}/${item._id}` : BASE_URL;
@@ -36,21 +25,20 @@ export const saveItem = async (item) => {
 
   const res = await fetch(url, {
     method,
+    headers: getAuthHeaders(true), // FormData mode
     body: formData,
-    headers: getAuthHeaders(), 
   });
 
-  if (!res.ok) throw new Error("Failed to save item.");
+  if (!res.ok) throw new Error("Failed to save item");
   return res.json();
 };
 
-// Delete item
 export const deleteItem = async (id) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
 
-  if (!res.ok) throw new Error("Failed to delete item.");
+  if (!res.ok) throw new Error("Failed to delete item");
   return res.json();
 };
