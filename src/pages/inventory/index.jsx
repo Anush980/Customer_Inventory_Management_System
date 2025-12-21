@@ -28,13 +28,12 @@ const InventoryPage = () => {
   const [category, setCategory] = useState("");
   const [searchText, setSearchText] = useState("");
 
-  const { items, loading, deleteItemById, } =
-    useInventory({
-      search: searchText,
-      category,
-      stock: status,
-      sort: "newest",
-    });
+  const { items, loading, deleteItemById } = useInventory({
+    search: searchText,
+    category,
+    stock: status,
+    sort: "newest",
+  });
 
   const handleEdit = (row) => {
     setEditItem(row);
@@ -86,23 +85,22 @@ const InventoryPage = () => {
         }}
       />
 
-     <div className="inventory-content">
-  <div className="inventory-left">
-    <InventoryTable
-      data={items}
-      loading={loading}
-      editable={true}
-      editMode={handleEdit}
-      onDelete={handleDelete}
-    />
-  </div>
+      <div className="inventory-content">
+        <div className="inventory-left">
+          <InventoryTable
+            data={items}
+            loading={loading}
+            editable={true}
+            editMode={handleEdit}
+            onDelete={handleDelete}
+          />
+        </div>
 
-  <div className="inventory-right">
-    <InventoryStats variant="low" limit={5} />
-    <InventoryStats variant="out" limit={5} />
-  </div>
-</div>
-
+        <div className="inventory-right">
+          <InventoryStats variant="low" limit={5} />
+          <InventoryStats variant="out" limit={5} />
+        </div>
+      </div>
 
       {showModal && (
         <CrudTable

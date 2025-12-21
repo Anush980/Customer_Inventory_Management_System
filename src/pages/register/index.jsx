@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [shopName, setShopName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -30,10 +31,10 @@ const Register = () => {
     setFadeSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ shopName, email, password }),
+        body: JSON.stringify({ name,shopName, email, password }),
       });
 
       const data = await res.json();
@@ -42,7 +43,8 @@ const Register = () => {
         // Save token (localStorage or sessionStorage optional here)
         localStorage.setItem("token", data.token);
 
-        setSuccess("Signup successful!");
+        setSuccess("Signup successful! please login ");
+        setName("");
         setShopName("");
         setEmail("");
         setPassword("");
@@ -51,7 +53,7 @@ const Register = () => {
         setFadeSuccess(false); // start visible
         setTimeout(() => setFadeSuccess(true), 3000); // fade after 3s
 
-        setTimeout(() => navigate("/dashboard"), 1500);
+        setTimeout(() => navigate("/login"), 1500);
       } else {
         setError(data.message || "Signup failed");
         setFadeError(false);
@@ -74,6 +76,13 @@ const Register = () => {
       fadeSuccess={fadeSuccess}
       loading={loading}
     >
+      <AuthInput
+        label="Full Name"
+        type="text"
+        placeholder="Enter your full name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
       <AuthInput
         label="Shop Name"
         type="text"

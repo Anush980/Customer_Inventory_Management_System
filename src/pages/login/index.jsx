@@ -24,31 +24,43 @@ function Login() {
     setFadeSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+     
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
+      
+      // Add debug logging
+      console.log('Login response:', data);
+      console.log('Token received:', data.token);
 
       if (res.ok) {
         // store token in localStorage if remember, else sessionStorage
         const storage = remember ? localStorage : sessionStorage;
         storage.setItem("token", data.token);
-
+        
+        // Debug: verify token was stored
+        console.log('Token stored in:', remember ? 'localStorage' : 'sessionStorage');
+        console.log('Token value:', storage.getItem('token'));
+        
         setSuccess("Login successful!");
         setEmail("");
         setPassword("");
-
         setTimeout(() => setFadeSuccess(true), 3000);
-
-        navigate("/dashboard");
+        
+        // Navigate after a short delay to ensure state is updated
+        setTimeout(() => {
+          navigate("/dashboard", { replace: true });
+        }, 100);
       } else {
         setError(data.message || "Login failed");
         setTimeout(() => setFadeError(true), 3000);
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
@@ -81,10 +93,7 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
         autocomplete="current-password"
       />
-
-    
       <RememberForgot remember={remember} setRemember={setRemember} />
-
     </AuthForm>
   );
 }

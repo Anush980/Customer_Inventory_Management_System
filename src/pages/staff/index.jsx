@@ -6,9 +6,9 @@ import StaffCard from "../../components/staff/staffCard/StaffCard";
 import StaffForm from "../../components/staff/staffForm/StaffForm";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import StaffStats from "../../components/staff/staffStats/StaffStats";
+import StaffDetailsModal from "../../components/staff/StaffDetailModal/StaffDetailsModal";
 import { sortOptions } from "../../data/filterConfig/staffFilterConfigs";
-import StaffCreatedModal from "../../components/staff/StaffCreatedModal/StaffCreatedModal";
-import { useStaffs } from "../../hooks/useStaff";
+import { useStaffs } from "../../hooks/useStaffs";
 import "./staff.css";
 
 const StaffPage = () => {
@@ -17,22 +17,29 @@ const StaffPage = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteID, setDeleteID] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
-  const [createdStaff, setCreatedStaff] = useState(null);
 
+  const {
+    staffs,
+    loading,
+    error,
+    deleteStaffById,
+    saveStaffById,
+    changeStaffPassword,
+  } = useStaffs({ search: searchText, sort });
 
-  const { staffs, loading, error, deleteStaffById, saveStaffById, fetchStaffs } = useStaffs({
-    search: searchText,
-    sort,
-  });
-
-  // Open form to edit staff
+  // ---- Handlers ----
   const handleEdit = (staff) => {
     setSelectedStaff(staff);
     setShowForm(true);
   };
 
-  // Delete workflow
+  const handleShowDetails = (staff) => {
+    setSelectedStaff(staff);
+    setShowDetails(true);
+  };
+
   const handleDelete = (id) => {
     setDeleteID(id);
     setShowConfirm(true);
@@ -49,21 +56,36 @@ const StaffPage = () => {
     }
   };
 
-  // Called by StaffForm for create or update
- const handleFormSubmit = async (staffPayload) => {
-  try {
-    const result = await saveStaffById(staffPayload);
-
-    if (!staffPayload._id) {
-      setCreatedStaff(result.staff || result); // depends on API response
+  const handleFormSubmit = async (staffPayload) => {
+    try {
+      await saveStaffById(staffPayload);
+      setShowForm(false);
+      setSelectedStaff(null);
+    } catch (err) {
+      console.error("Failed to save staff:", err);
     }
+  };
 
-    setShowForm(false);
-  } catch (err) {
-    console.error(err);
-  }
-};
+  const handleResendEmail = async (staffId) => {
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/staff/${staffId}/resend-credentials`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
+      if (!res.ok) throw new Error("Failed to resend email");
+      alert("Login credentials resent to personal email");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to resend email");
+    }
+  };
 
   return (
     <Layout>
@@ -86,11 +108,19 @@ const StaffPage = () => {
 
       <div className="customer-card-grid">
         {staffs.map((staff) => (
-          <StaffCard key={staff._id} staff={staff} onEdit={handleEdit} onDelete={handleDelete} />
+          <StaffCard
+            key={staff._id}
+            staff={staff}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onShowDetails={handleShowDetails} // important
+          />
         ))}
       </div>
 
-      {showConfirm && <ConfirmCard closeWindow={() => setShowConfirm(false)} onConfirm={confirmDelete} />}
+      {showConfirm && (
+        <ConfirmCard closeWindow={() => setShowConfirm(false)} onConfirm={confirmDelete} />
+      )}
 
       {showForm && (
         <StaffForm
@@ -102,13 +132,15 @@ const StaffPage = () => {
           onSubmit={handleFormSubmit}
         />
       )}
-      {createdStaff && (
-  <StaffCreatedModal
-    staff={createdStaff}
-    onClose={() => setCreatedStaff(null)}
-  />
-)}
 
+      {showDetails && selectedStaff && (
+        <StaffDetailsModal
+          staff={selectedStaff}
+          onClose={() => setShowDetails(false)}
+          changeStaffPassword={changeStaffPassword} 
+          onResendEmail={handleResendEmail}
+        />
+      )}
     </Layout>
   );
 };

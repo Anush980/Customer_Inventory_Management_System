@@ -150,11 +150,7 @@ const ProfilePage = () => {
           <div className="profile-field">
             <label>Shop:</label>
             {editMode ? (
-              <input
-                type="text"
-                value={formData.shopName}
-                onChange={(e) => setFormData({ ...formData, shopName: e.target.value })}
-              />
+              <span>{profile.shopName}</span>
             ) : (
               <span>{profile.shopName}</span>
             )}
@@ -179,7 +175,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Change Password */}
-        <div className="profile-section">
+        {/* <div className="profile-section">
           <h4>Change Password</h4>
           <div className="profile-field">
             <label>New Password:</label>
@@ -194,7 +190,7 @@ const ProfilePage = () => {
           <Button variant="primary" onClick={handlePasswordUpdate} isLoading={loading}>
             Update Password
           </Button>
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

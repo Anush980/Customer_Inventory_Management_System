@@ -1,8 +1,6 @@
 import { React } from "react";
 import "./dashboard.css";
-import StatsCard from "../../components/ui/StatsCard/StatsCard";
 import Pageheader from "../../components/ui/PageHeader/Pageheader";
-// import Table from "../../components/ui/table/table";
 import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
 // import WindowSize from "../../components/ui/WindowSize/WindowSize";
 import CrudTable from "../../components/ui/CrudTable/CrudTable";
