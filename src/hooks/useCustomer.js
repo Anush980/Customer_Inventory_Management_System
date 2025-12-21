@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getCustomers, saveCustomer, deleteCustomer } from "../api/customerApi";
 
 export const useCustomers = ({ search = "", sort = "newest" } = {}) => {
@@ -6,7 +6,7 @@ export const useCustomers = ({ search = "", sort = "newest" } = {}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchCustomers = async () => {
+  const fetchCustomers = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -17,7 +17,7 @@ export const useCustomers = ({ search = "", sort = "newest" } = {}) => {
     } finally {
       setLoading(false);
     }
-  };
+  },[search, sort]);
 
   const saveCustomerById = async (customer) => {
     try {
@@ -45,7 +45,7 @@ export const useCustomers = ({ search = "", sort = "newest" } = {}) => {
 
   useEffect(() => {
     fetchCustomers();
-  }, [search, sort]);
+  }, [fetchCustomers]);
 
   return { customers, loading, error, fetchCustomers, saveCustomerById, deleteCustomerById };
 };

@@ -26,7 +26,7 @@ export const useSales = ({ search = "", sort = "", category = "" } = {}) => {
     fetchSales();
   }, [fetchSales]);
 
-  // --- SAVE SALE (CREATE OR UPDATE) ---
+  // --- SAVE SALE ---
   const saveSaleById = async (sale) => {
     try {
       const saved = await saveSale(sale);
