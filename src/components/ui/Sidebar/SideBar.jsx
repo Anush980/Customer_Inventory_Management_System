@@ -8,12 +8,18 @@ import "./sideBar.css";
 const SideBar = ({isOpen,closeSidebar}) => {
  const [showLogout, setShowLogout] = useState(false);
   const navigate = useNavigate();
+
+    // Get user info from localStorage
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const userRole = user.role; // e.g., "owner", "admin", "staff"
+
    const handleLogout = () => {
-    
+
     localStorage.removeItem("token");
-    
+    localStorage.removeItem("user");
     navigate("/landingpage");
   };
+
    
   return (
      
@@ -54,10 +60,18 @@ const SideBar = ({isOpen,closeSidebar}) => {
             <FontAwesomeIcon icon="book" className="menu-icon" />
             <span>Sales Book</span>
           </NavLink>
-          <NavLink className={({isActive})=>`menu-item ${isActive ? "active" :""}`} to="/staff" onClick={closeSidebar}>
+            {/* Only show Staffs if role is admin or owner */}
+        {(userRole === "admin" || userRole === "owner") && (
+          <NavLink
+            className={({ isActive }) => `menu-item ${isActive ? "active" : ""}`}
+            to="/staff"
+            onClick={closeSidebar}
+          >
             <FontAwesomeIcon icon="users" className="menu-icon" />
             <span>Staffs</span>
           </NavLink>
+        )}
+
           {/*setting starts from here*/}
           <div className="menu-title"><span>Settings</span></div>
 

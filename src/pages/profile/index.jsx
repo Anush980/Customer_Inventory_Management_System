@@ -14,14 +14,14 @@ const ProfilePage = () => {
     email: "",
   });
   const [newPassword, setNewPassword] = useState("");
-
+const token = localStorage.getItem("token") || sessionStorage.getItem("token");
   // Fetch profile
   const fetchProfile = async () => {
     setLoading(true);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/profile`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       const data = await res.json();

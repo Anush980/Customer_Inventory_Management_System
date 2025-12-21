@@ -7,7 +7,7 @@ import RememberForgot from "../../components/auth/RememberForget/RememberForgot"
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false); 
+  const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [fadeError, setFadeError] = useState(false);
@@ -24,34 +24,41 @@ function Login() {
     setFadeSuccess(false);
 
     try {
-     
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await res.json();
-      
-      // Add debug logging
-      console.log('Login response:', data);
-      console.log('Token received:', data.token);
+
+      // console.log('Login response:', data);
+      // console.log('Token received:', data.token);
 
       if (res.ok) {
         // store token in localStorage if remember, else sessionStorage
         const storage = remember ? localStorage : sessionStorage;
         storage.setItem("token", data.token);
-        
-        // Debug: verify token was stored
-        console.log('Token stored in:', remember ? 'localStorage' : 'sessionStorage');
-        console.log('Token value:', storage.getItem('token'));
-        
+
+        // Store the user object as JSON
+        storage.setItem("user", JSON.stringify(data.user));
+
+        console.log(
+          "Token stored in:",
+          remember ? "localStorage" : "sessionStorage"
+        );
+        console.log("Token value:", storage.getItem("token"));
+        console.log("User value:", storage.getItem("user"));
+
         setSuccess("Login successful!");
         setEmail("");
         setPassword("");
+
         setTimeout(() => setFadeSuccess(true), 3000);
-        
-        // Navigate after a short delay to ensure state is updated
+
         setTimeout(() => {
           navigate("/dashboard", { replace: true });
         }, 100);
@@ -60,7 +67,7 @@ function Login() {
         setTimeout(() => setFadeError(true), 3000);
       }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error("Login error:", err);
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
