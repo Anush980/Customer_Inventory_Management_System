@@ -2,7 +2,6 @@ import React from "react";
 import "./authform.css";
 import authConfigs from "../authConfigs";
 import AuthHeader from "../Header/authHeader";
-import RememberForgot from "../RememberForget/RememberForgot";
 import Divider from "../Divider/divider";
 import SocialLogin from "../SocialLogin/socialLogin";
 import AuthFooter from "../Footer/authFooter";

@@ -9,10 +9,11 @@ const CustomerForm = ({ editMode, closeWindow }) => {
       customerPhone: "",
       customerEmail: "",
       customerAddress: "",
-      creditBalance: "",
+      creditBalance: ""
     }
   );
   const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(null);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -22,42 +23,55 @@ const CustomerForm = ({ editMode, closeWindow }) => {
     }));
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const method =editMode ? "PUT" : "POST";
-      const url =editMode ? `${process.env.REACT_APP_API_URL}/api/customers/${editMode._id}` : `${process.env.REACT_APP_API_URL}/api/customers`
-      const response = await fetch(
-        url,
-        {
-        method,
-          headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-      },
-          body: JSON.stringify(formData),
-        }
-      );
+const onSubmit = async (e) => {
+  e.preventDefault();
 
-      if (!response.ok) {
-        throw new Error("Error saving customer");
-        
-      }
+  try {
+    setLoading(true);
 
-      const result = await response.json();
-       console.log("Success:", result);
-      closeWindow();
-      setTimeout(()=>{
-        window.location.reload()
-      },1000);
-    } catch (error) {
-      console.error("Error:", error);
-      
-    } finally {
-      setLoading(false);
+    const method = editMode ? "PUT" : "POST";
+    const url = editMode
+      ? `${process.env.REACT_APP_API_URL}/api/customers/${editMode._id}`
+      : `${process.env.REACT_APP_API_URL}/api/customers`;
+
+    const form = new FormData();
+
+    // append text fields
+    form.append("customerName", formData.customerName);
+    form.append("customerPhone", formData.customerPhone);
+    form.append("customerEmail", formData.customerEmail);
+    form.append("customerAddress", formData.customerAddress);
+    form.append("creditBalance", formData.creditBalance);
+
+    // append image only if selected
+    if (image) {
+      form.append("image", image);
     }
-  };
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: form,
+    });
+
+    if (!response.ok) {
+      throw new Error("Error saving customer");
+    }
+
+    const result = await response.json();
+    console.log("Success:", result);
+
+    closeWindow();
+    setTimeout(() => window.location.reload(), 500);
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="crud-table-wrapper">
@@ -135,6 +149,15 @@ const CustomerForm = ({ editMode, closeWindow }) => {
                   onChange={onChange}
                   value={formData.creditBalance}
                   placeholder="Enter Credit Balance"
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="image">Profile Image:</label>
+                <input
+                  type="file"
+                  accept="image/jpg,image/jpeg,image/png"
+                  onChange={(e) => setImage(e.target.files[0])}
                   className="form-control"
                 />
               </div>

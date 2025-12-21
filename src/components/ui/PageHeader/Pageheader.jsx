@@ -8,7 +8,6 @@ import './pageHeader.css';
 const Pageheader = ({ title, btnTitle, variant,showBtn= true}) => {
   const [crudTable, setCrudTable] = useState(false);
   
-   const [loading, setLoading] = useState(false);
   const [editItem, setEditItem] = useState(null);
 
   return (

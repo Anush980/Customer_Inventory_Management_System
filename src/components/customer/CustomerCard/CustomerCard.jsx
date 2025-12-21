@@ -8,7 +8,11 @@ const CustomerCard = ({ customer, onEdit, onDelete }) => {
   return (
     <div className="customer-card">
       <div className="customer-card-header">
-        <img src={logo} alt={customer.customerName} />
+        <img
+          src={customer.image || logo}
+          alt={customer.customerName}
+          className="customer-card-image"
+        />
 
         <div className="customer-card-info">
           <h3>{customer.customerName}</h3>

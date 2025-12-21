@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Button from "../ui/Button/Button";
 import "../ui/CrudTable/crudTable.css";
-import Snackbar from "../ui/Snackbar/Snackbar";
-import { faProductHunt } from "@fortawesome/free-brands-svg-icons";
 
 const SalesForm = ({ editMode, closeWindow }) => {
 

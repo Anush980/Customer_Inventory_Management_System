@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "./snackbar.css";
 
-const Snackbar = ({ message, type = "info", onClose,duration=3000 }) => {
+const Snackbar = ({ message, type = "info", onClose, duration = 3000 }) => {
   const [closing, setClosing] = useState(false);
 
+  // Auto-close after duration
   useEffect(() => {
     const timer = setTimeout(() => {
-      handleClose();
-    },duration);
+      setClosing(true);
+      const closeTimer = setTimeout(onClose, 300); // wait for slide-down animation
+      return () => clearTimeout(closeTimer);
+    }, duration);
 
     return () => clearTimeout(timer);
-  }, [duration]);
+  }, [duration, onClose]);
 
+  // Close button handler
   const handleClose = () => {
     setClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 300);
+    setTimeout(onClose, 300); // wait for slide-down animation
   };
 
   return (

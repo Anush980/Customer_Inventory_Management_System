@@ -2,24 +2,27 @@ import React, { useState } from "react";
 import "./staffDetailsModal.css";
 import Button from "../../ui/Button/Button";
 
-const StaffDetailsModal = ({ staff, onClose, onPasswordUpdate, onResendEmail }) => {
+const StaffDetailsModal = ({ staff, onClose, changeStaffPassword, onResendEmail }) => {
+  // Hooks must always be called first
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Password update
   const handlePasswordUpdate = async () => {
     if (!newPassword) return alert("Enter a password!");
     try {
       setLoading(true);
-      await onPasswordUpdate(staff._id, newPassword);
+      await changeStaffPassword(staff._id, newPassword);
       alert("Password updated successfully");
       setNewPassword("");
     } catch (err) {
-      alert("Failed to update password");
+      alert("Failed to update password: " + err.message);
     } finally {
       setLoading(false);
     }
   };
 
+  // Resend email
   const handleResendEmail = async () => {
     try {
       setLoading(true);
@@ -32,13 +35,15 @@ const StaffDetailsModal = ({ staff, onClose, onPasswordUpdate, onResendEmail }) 
     }
   };
 
+  // If no staff selected, render nothing
+  if (!staff) return null;
+
   return (
     <div className="modal-overlay">
       <div className="modal-card">
         <div className="modal-header">
           <h3>Staff Details</h3>
         </div>
-
         <div className="modal-body">
           <p><strong>Name:</strong> {staff.name}</p>
           <p><strong>Login Email:</strong> {staff.email}</p>
@@ -47,7 +52,7 @@ const StaffDetailsModal = ({ staff, onClose, onPasswordUpdate, onResendEmail }) 
           <div className="form-group">
             <label>New Password</label>
             <input
-              type="text"
+              type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new password"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../../../styles/statsCard.css';
-import { useStaffs } from '../../../hooks/useStaff';
+import { useStaffs } from '../../../hooks/useStaffs';
 
 const StaffStats = () => {
     //Fetch all staffs

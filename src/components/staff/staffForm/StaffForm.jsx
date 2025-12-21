@@ -6,7 +6,7 @@ const StaffForm = ({ editMode, closeWindow }) => {
   const [formData, setFormData] = useState(
     editMode || {
       name: "",
-      staffEmail: "",   // personal email (required)
+      staffEmail: "",
       staffPhone: "",
       staffAddress: "",
       jobTitle: "",
@@ -14,11 +14,10 @@ const StaffForm = ({ editMode, closeWindow }) => {
     }
   );
 
+  const [image, setImage] = useState(null); // new
   const [loading, setLoading] = useState(false);
 
-  // -----------------------------
   // Handle input change
-  // -----------------------------
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -27,12 +26,9 @@ const StaffForm = ({ editMode, closeWindow }) => {
     }));
   };
 
-  // -----------------------------
   // Submit form
-  // -----------------------------
   const onSubmit = async (e) => {
     e.preventDefault();
-
     if (loading) return;
     setLoading(true);
 
@@ -42,41 +38,34 @@ const StaffForm = ({ editMode, closeWindow }) => {
         ? `${process.env.REACT_APP_API_URL}/api/staff/${editMode._id}`
         : `${process.env.REACT_APP_API_URL}/api/staff`;
 
-      const payload = {
-        name: formData.name,
-        jobTitle: formData.jobTitle,
-        staffEmail: formData.staffEmail,
-        staffPhone: formData.staffPhone,
-        staffAddress: formData.staffAddress,
-        salary: formData.salary,
-
-        // only required on CREATE
-        password: editMode ? undefined : "its nothing serious",
-      };
+      // Use FormData to handle image upload
+      const form = new FormData();
+      form.append("name", formData.name);
+      form.append("staffEmail", formData.staffEmail);
+      form.append("staffPhone", formData.staffPhone || "");
+      form.append("staffAddress", formData.staffAddress || "");
+      form.append("jobTitle", formData.jobTitle || "");
+      form.append("salary", formData.salary || "");
+      if (!editMode) form.append("password", "default123"); // only for new staff
+      if (image) form.append("image", image);
 
       const response = await fetch(url, {
         method,
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(payload),
+        body: form,
       });
 
-      if (!response.ok) {
-        throw new Error("Error saving staff");
-      }
+      if (!response.ok) throw new Error("Error saving staff");
 
       const result = await response.json();
       console.log("Success:", result);
 
       closeWindow();
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    } catch (error) {
-      console.error("Error:", error);
+      setTimeout(() => window.location.reload(), 500);
+    } catch (err) {
+      console.error("Error:", err);
     } finally {
       setLoading(false);
     }
@@ -85,7 +74,6 @@ const StaffForm = ({ editMode, closeWindow }) => {
   return (
     <div className="crud-table-wrapper">
       <div className="crud-table-content">
-        {/* HEADER */}
         <div className="crud-table-header">
           <h3>{editMode ? "Edit Staff" : "Add Staff"}</h3>
           <button className="close-table" onClick={closeWindow}>
@@ -93,7 +81,6 @@ const StaffForm = ({ editMode, closeWindow }) => {
           </button>
         </div>
 
-        {/* BODY */}
         <div className="crud-table-body">
           <form onSubmit={onSubmit}>
             <div className="form-column">
@@ -167,6 +154,16 @@ const StaffForm = ({ editMode, closeWindow }) => {
                 />
               </div>
 
+              <div className="form-group">
+                <label>Profile Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  className="form-control"
+                />
+              </div>
+
               {!editMode && (
                 <small>
                   Login email & password will be generated and sent automatically.
@@ -174,17 +171,11 @@ const StaffForm = ({ editMode, closeWindow }) => {
               )}
             </div>
 
-            {/* FOOTER */}
             <div className="crud-table-footer">
               <Button variant="text" onClick={closeWindow} disabled={loading}>
                 Cancel
               </Button>
-              <Button
-                variant="primary"
-                type="submit"
-                isLoading={loading}
-                disabled={loading}
-              >
+              <Button variant="primary" type="submit" isLoading={loading} disabled={loading}>
                 {loading ? "Saving..." : "Save"}
               </Button>
             </div>
