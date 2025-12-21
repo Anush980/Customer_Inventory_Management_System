@@ -1,15 +1,15 @@
 import { Navigate } from "react-router-dom";
-import React, { useState } from "react";
 
 const ProtectedRoute = ({children}) => {
-    const [message, setMessage] = useState("");
-    const token =localStorage.getItem("token");
-
-    if(!token){
-        setMessage("Please login first");
-        return <Navigate to="/login"/>
-    }
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  
+  console.log('ProtectedRoute - token found:', !!token);
+  
+  if(!token){
+    return <Navigate to="/login" replace />
+  }
+  
   return children;
 };
 
-export default ProtectedRoute
+export default ProtectedRoute;
