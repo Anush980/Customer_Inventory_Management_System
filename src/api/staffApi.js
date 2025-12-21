@@ -36,3 +36,24 @@ export const deleteStaff = async (id) => {
   if (!res.ok) throw new Error("Failed to delete staff");
   return res.json();
 };
+// Update staff password
+export const updateStaffPassword = async (id, newPassword) => {
+  const res = await fetch(`${BASE_URL}/${id}/password`, {
+    method: "PUT",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ newPassword }),
+  });
+  if (!res.ok) throw new Error("Failed to update password");
+  return res.json();
+};
+
+// Resend staff credentials email
+export const resendStaffCredentials = async (id) => {
+  const res = await fetch(`${BASE_URL}/${id}/resend-credentials`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+  });
+  if (!res.ok) throw new Error("Failed to resend credentials");
+  return res.json();
+};
+
