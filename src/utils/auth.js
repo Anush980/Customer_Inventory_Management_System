@@ -1,3 +1,5 @@
+// auth.js
+
 // Save token (supports remember me)
 export const saveToken = (token, remember = true) => {
   if (!token) return;
@@ -8,10 +10,7 @@ export const saveToken = (token, remember = true) => {
 
 // Get token (check both)
 export const getToken = () => {
-  return (
-    localStorage.getItem("token") ||
-    sessionStorage.getItem("token")
-  );
+  return localStorage.getItem("token") || sessionStorage.getItem("token");
 };
 
 // Remove token (logout)
