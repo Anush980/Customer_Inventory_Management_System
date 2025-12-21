@@ -14,8 +14,9 @@
 
 /* Modal card itself */
 .modal-card {
+  border-radius: 8px;
   background: #fff;
-  width: 500px;           /* adjust width */
+  width: 350px;           /* adjust width */
   max-height: 90vh;       /* prevent it from going off screen */
   overflow-y: auto;       /* scroll if content is too tall */
   border-radius: 10px;
@@ -30,11 +31,29 @@
   margin: 20px auto 0 auto;
   padding: 8px 20px;
   border: none;
-  background-color: #007bff;
+  background-color: #ff0000;
   color: white;
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
+}
+.close-btn:hover{
+transform: scale(1.1);
+}
+/* Print button */
+.print-btn {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 8px 20px;
+  border: none;
+  background-color: #955412;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.print-btn:hover{
+transform: scale(1.1);
 }
 
 /* Items row */
@@ -53,5 +72,58 @@
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+/* General modal styling remains the same */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+
+
+
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #sale-printable, #sale-printable * {
+    visibility: visible;
+  }
+
+  #sale-printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 350px;
+    font-size: 12px;
+    padding: 0;
+  }
+
+  .modal-buttons {
+    display: none !important; 
+  }
+
+  .modal-backdrop, .modal-card {
+    position: static !important; 
+    box-shadow: none;
+  }
+
+  hr {
+    border: 1px dashed #000;
+    margin: 5px 0;
+  }
+
+  table.print-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table.print-table th, table.print-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 2px 0;
   }
 }

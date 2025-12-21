@@ -11,6 +11,9 @@ const Pos = () => {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
   const [customerName, setCustomerName] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [paymentType, setPaymentType] = useState("cash");
+  const [showModal, setShowModal] = useState(false); // <-- modal state
 
   const { items, loading } = useInventory({
     search,
@@ -23,26 +26,16 @@ const Pos = () => {
 
   const addToCart = (item) => {
     const exists = cart.find((x) => x._id === item._id);
-
-    // Item already in cart
     if (exists) {
       if (exists.qty < item.stock) {
-        // increase qty
         setCart(
           cart.map((x) => (x._id === item._id ? { ...x, qty: x.qty + 1 } : x))
         );
-      } else {
-        alert("Cannot add more than available stock!");
-      }
+      } else alert("Cannot add more than available stock!");
       return;
     }
-
-    // First time adding
-    if (item.stock > 0) {
-      setCart([...cart, { ...item, qty: 1 }]);
-    } else {
-      alert("Item out of stock!");
-    }
+    if (item.stock > 0) setCart([...cart, { ...item, qty: 1 }]);
+    else alert("Item out of stock!");
   };
 
   const increaseQty = (id) => {
@@ -64,42 +57,40 @@ const Pos = () => {
   };
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const total = subtotal - discount;
 
-  const total = subtotal;
-  const checkoutHandler = async () => {
+  const confirmCheckout = async () => {
     if (cart.length === 0) {
       alert("Your cart is empty");
       return;
     }
     try {
-      const saleDate = {
-        items: cart.map((item) => ({
-          product: item._id,
-          quantity: item.qty,
-        })),
-        discount: 0,
-        paymentType: "cash",
+      const saleData = {
+        items: cart.map((item) => ({ product: item._id, quantity: item.qty })),
+        discount: Number(discount),
+        paymentType,
         walkInCustomer: customerName || "Walk-in",
       };
 
       const token = localStorage.getItem("token");
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/sales`, saleDate, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/sales`, saleData, {
+        headers: { Authorization: `Bearer ${token}` },
       });
+
       alert("Sales completed successfully!");
       setCart([]);
       setCustomerName("");
+      setDiscount(0);
+      setPaymentType("cash");
+      setShowModal(false);
     } catch (err) {
       console.error(err);
-      alert(err, "Sales failed..");
+      alert("Sales failed...");
     }
   };
 
   return (
     <Layout>
-      {/* Floating "Go to Cart" button */}
       <button
         className="go-to-cart-btn"
         onClick={() => window.scrollTo({ top: 99999, behavior: "smooth" })}
@@ -112,14 +103,10 @@ const Pos = () => {
         <Pageheader title="Point of Sale" showBtn={false} />
 
         <div className="pos-container">
-          {/* ========================================
-              🛍 PRODUCT SECTION
-              ======================================== */}
+          {/* PRODUCT SECTION */}
           <div className="product-section">
             <div className="product-header">
               <h3>Products</h3>
-
-              {/* Search Bar */}
               <div className="pos-search">
                 <FontAwesomeIcon icon="search" />
                 <input
@@ -131,7 +118,6 @@ const Pos = () => {
               </div>
             </div>
 
-            {/* Category Filter */}
             <div className="product-tabs">
               <select
                 value={category}
@@ -140,7 +126,6 @@ const Pos = () => {
                 style={{ width: "180px" }}
               >
                 <option value="all">All Categories</option>
-
                 {categoryOptions.map((cat) => (
                   <option key={cat.value} value={cat.value}>
                     {cat.label}
@@ -149,15 +134,12 @@ const Pos = () => {
               </select>
             </div>
 
-            {/* Product List Grid */}
             <div className="products-container">
               <div className="products-grid">
                 {loading && <p>Loading...</p>}
-                {items.length === 0 && !loading && (
+                {!loading && items.length === 0 && (
                   <p className="no-products">No products found.</p>
                 )}
-
-                {/* Product Cards */}
                 {items.map((item) => (
                   <div className="product-card" key={item._id}>
                     <img
@@ -165,12 +147,9 @@ const Pos = () => {
                       className="product-image"
                       alt={item.itemName}
                     />
-
                     <div className="product-name">{item.itemName}</div>
                     <div className="product-category">{item.category}</div>
                     <div className="product-price">₹{item.price}</div>
-
-                    {/* Stock Display */}
                     <div
                       className={
                         item.stock === 0
@@ -184,8 +163,6 @@ const Pos = () => {
                         ? "Out of Stock"
                         : `Stock: ${item.stock}`}
                     </div>
-
-                    {/* Add to Cart Button */}
                     <button
                       className="btn btn-primary"
                       style={{ marginTop: "10px", width: "100%" }}
@@ -200,16 +177,13 @@ const Pos = () => {
             </div>
           </div>
 
-          {/* ========================================
-              🛒 CART SECTION
-              ======================================== */}
+          {/* CART SECTION */}
           <div className="cart-section">
             <div className="cart-header">
               <h3>Shopping Cart</h3>
               <span>{cart.length} items</span>
             </div>
 
-            {/* Cart Items */}
             <div className="cart-items">
               {cart.length === 0 ? (
                 <div className="empty-state">
@@ -224,28 +198,20 @@ const Pos = () => {
                       <span className="cart-item-name">{item.itemName}</span>
                       <span className="cart-item-price">₹{item.price}</span>
                     </div>
-
                     <div className="cart-item-controls">
-                      {/* Decrease */}
                       <button
                         className="qty-btn"
                         onClick={() => decreaseQty(item._id)}
                       >
                         –
                       </button>
-
-                      {/* Quantity */}
                       <span className="cart-qty">{item.qty}</span>
-
-                      {/* Increase */}
                       <button
                         className="qty-btn"
                         onClick={() => increaseQty(item._id)}
                       >
                         +
                       </button>
-
-                      {/* Remove */}
                       <button
                         className="delete-btn"
                         onClick={() =>
@@ -263,33 +229,21 @@ const Pos = () => {
               )}
             </div>
 
-            {/* Totals + Checkout */}
             <div className="cart-footer">
-              <div className="checkout-customer">
-                <label htmlFor="customerName">Customer Name (optional):</label>
-                <input
-                  type="text"
-                  id="customerName"
-                  placeholder="Enter customer name"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                />
-              </div>
               <div className="cart-totals">
                 <div className="total-line">
                   <span>Subtotal:</span>
                   <span>₹{subtotal.toFixed(2)}</span>
                 </div>
-
-                <div className="total-line final">
+                {/* <div className="total-line final">
                   <span>Total:</span>
                   <span>₹{total.toFixed(2)}</span>
-                </div>
+                </div> */}
               </div>
-              
+
               <button
                 className="btn btn-success checkout-btn"
-                onClick={checkoutHandler}
+                onClick={() => setShowModal(true)}
               >
                 <FontAwesomeIcon icon="credit-card" /> Checkout
               </button>
@@ -297,6 +251,56 @@ const Pos = () => {
           </div>
         </div>
       </div>
+
+      {/* ==========================
+          CHECKOUT MODAL
+      ========================== */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-card">
+            <h3>Checkout</h3>
+
+            <label>Customer Name (optional)</label>
+            <input
+              type="text"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+            />
+
+            <label>Discount</label>
+            <input
+              type="number"
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+              min="0"
+            />
+
+            <label>Payment Method</label>
+            <select
+              value={paymentType}
+              onChange={(e) => setPaymentType(e.target.value)}
+            >
+              <option value="cash">Cash</option>
+              <option value="credit">Credit</option>
+              <option value="online">Online</option>
+            </select>
+            <label>Discount: ₹{discount}</label>
+            <label>Total: ₹{total.toFixed(2)}</label>
+           
+            <div className="modal-buttons">
+              <button
+                className="btn btn-secondary"
+                onClick={() => setShowModal(false)}
+              >
+                Close
+              </button>
+              <button className="btn btn-success" onClick={confirmCheckout}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };
