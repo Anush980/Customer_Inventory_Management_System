@@ -10,7 +10,7 @@ import axios from "axios";
 const Pos = () => {
   const [category, setCategory] = useState("all");
   const [search, setSearch] = useState("");
-
+  const [customerName, setCustomerName] = useState("");
 
   const { items, loading } = useInventory({
     search,
@@ -21,7 +21,6 @@ const Pos = () => {
 
   const [cart, setCart] = useState([]);
 
-
   const addToCart = (item) => {
     const exists = cart.find((x) => x._id === item._id);
 
@@ -30,9 +29,7 @@ const Pos = () => {
       if (exists.qty < item.stock) {
         // increase qty
         setCart(
-          cart.map((x) =>
-            x._id === item._id ? { ...x, qty: x.qty + 1 } : x
-          )
+          cart.map((x) => (x._id === item._id ? { ...x, qty: x.qty + 1 } : x))
         );
       } else {
         alert("Cannot add more than available stock!");
@@ -48,7 +45,6 @@ const Pos = () => {
     }
   };
 
-
   const increaseQty = (id) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -59,53 +55,45 @@ const Pos = () => {
     );
   };
 
-
   const decreaseQty = (id) => {
     setCart((prev) =>
       prev.map((item) =>
-        item._id === id && item.qty > 1
-          ? { ...item, qty: item.qty - 1 }
-          : item
+        item._id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item
       )
     );
   };
 
-
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const total = subtotal;
-  const checkoutHandler=async()=>{
-    if (cart.length===0){
+  const checkoutHandler = async () => {
+    if (cart.length === 0) {
       alert("Your cart is empty");
-      return ;
+      return;
     }
-    try{
-      const saleDate={
-        items:cart.map((item)=>({
-          product:item._id,
-          quantity:item.qty,
+    try {
+      const saleDate = {
+        items: cart.map((item) => ({
+          product: item._id,
+          quantity: item.qty,
         })),
-        discount:0,
-        paymentType:"cash",
-        walkInCustomer:"Walk-in"
+        discount: 0,
+        paymentType: "cash",
+        walkInCustomer: customerName || "Walk-in",
       };
+
       const token = localStorage.getItem("token");
-      await axios.post(
-       `${process.env.REACT_APP_API_URL}/api/sales`,saleDate,{
-        headers:{
-          Authorization: `Bearer ${token}`
-        }
-       }
-      );
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/sales`, saleDate, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       alert("Sales completed successfully!");
       setCart([]);
-    }
-    catch(err){
+      setCustomerName("");
+    } catch (err) {
       console.error(err);
-      alert(err,"Sales failed..")
+      alert(err, "Sales failed..");
     }
   };
 
@@ -116,14 +104,14 @@ const Pos = () => {
         className="go-to-cart-btn"
         onClick={() => window.scrollTo({ top: 99999, behavior: "smooth" })}
       >
-        <FontAwesomeIcon icon="shopping-cart"/>View Cart ({cart.length})
+        <FontAwesomeIcon icon="shopping-cart" />
+        View Cart ({cart.length})
       </button>
 
       <div className="pos-wrapper">
         <Pageheader title="Point of Sale" showBtn={false} />
 
         <div className="pos-container">
-
           {/* ========================================
               🛍 PRODUCT SECTION
               ======================================== */}
@@ -133,7 +121,7 @@ const Pos = () => {
 
               {/* Search Bar */}
               <div className="pos-search">
-                <FontAwesomeIcon icon="search"/>
+                <FontAwesomeIcon icon="search" />
                 <input
                   type="text"
                   placeholder="Search products..."
@@ -164,8 +152,6 @@ const Pos = () => {
             {/* Product List Grid */}
             <div className="products-container">
               <div className="products-grid">
-
-                
                 {loading && <p>Loading...</p>}
                 {items.length === 0 && !loading && (
                   <p className="no-products">No products found.</p>
@@ -210,7 +196,6 @@ const Pos = () => {
                     </button>
                   </div>
                 ))}
-
               </div>
             </div>
           </div>
@@ -228,7 +213,7 @@ const Pos = () => {
             <div className="cart-items">
               {cart.length === 0 ? (
                 <div className="empty-state">
-                  <FontAwesomeIcon icon="shopping-cart"/>
+                  <FontAwesomeIcon icon="shopping-cart" />
                   <p>Your cart is empty</p>
                   <p>Add products to get started</p>
                 </div>
@@ -242,13 +227,23 @@ const Pos = () => {
 
                     <div className="cart-item-controls">
                       {/* Decrease */}
-                      <button className="qty-btn" onClick={() => decreaseQty(item._id)}>–</button>
+                      <button
+                        className="qty-btn"
+                        onClick={() => decreaseQty(item._id)}
+                      >
+                        –
+                      </button>
 
                       {/* Quantity */}
                       <span className="cart-qty">{item.qty}</span>
 
                       {/* Increase */}
-                      <button className="qty-btn" onClick={() => increaseQty(item._id)}>+</button>
+                      <button
+                        className="qty-btn"
+                        onClick={() => increaseQty(item._id)}
+                      >
+                        +
+                      </button>
 
                       {/* Remove */}
                       <button
@@ -257,7 +252,10 @@ const Pos = () => {
                           setCart(cart.filter((x) => x._id !== item._id))
                         }
                       >
-                        <FontAwesomeIcon icon="trash-can" className="remove-btn"/>
+                        <FontAwesomeIcon
+                          icon="trash-can"
+                          className="remove-btn"
+                        />
                       </button>
                     </div>
                   </div>
@@ -267,6 +265,16 @@ const Pos = () => {
 
             {/* Totals + Checkout */}
             <div className="cart-footer">
+              <div className="checkout-customer">
+                <label htmlFor="customerName">Customer Name (optional):</label>
+                <input
+                  type="text"
+                  id="customerName"
+                  placeholder="Enter customer name"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                />
+              </div>
               <div className="cart-totals">
                 <div className="total-line">
                   <span>Subtotal:</span>
@@ -278,13 +286,15 @@ const Pos = () => {
                   <span>₹{total.toFixed(2)}</span>
                 </div>
               </div>
-
-              <button className="btn btn-success checkout-btn"onClick={checkoutHandler}>
-                <FontAwesomeIcon icon="credit-card"/> Checkout
+              
+              <button
+                className="btn btn-success checkout-btn"
+                onClick={checkoutHandler}
+              >
+                <FontAwesomeIcon icon="credit-card" /> Checkout
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </Layout>
