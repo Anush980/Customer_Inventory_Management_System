@@ -13,13 +13,13 @@ const SideBar = ({ isOpen, closeSidebar }) => {
   const user = JSON.parse(localStorage.getItem("user")) || {};
   const userRole = user.role; // e.g., "owner", "admin", "staff"
 
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  sessionStorage.removeItem("token");  
-  sessionStorage.removeItem("user");  
-  navigate("/landingpage");
-};
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");  
+    sessionStorage.removeItem("user");  
+    navigate("/landingpage");
+  };
 
   return (
     <aside className={`sidebar ${isOpen ? "open" : "closed"}`}>
@@ -27,10 +27,8 @@ const handleLogout = () => {
         <div className="sidebar-logo">
           <div className="title">
             <img src={WebLogo} alt="logo" />
-            {/* <h2>StockMate</h2> */}
             <h2>O.R.M.S</h2>
           </div>
-          {/* <p>Manage Smarter, Not Harder</p> */}
           <p>Online Retail management system</p>
         </div>
       </div>
@@ -40,7 +38,8 @@ const handleLogout = () => {
           <span>Business</span>
         </div>
 
-        {/* {(userRole === "staff" || userRole === "owner") && ( */}
+        {/* Owner and Staff see all business sections */}
+        {(userRole === "owner" || userRole === "staff") && (
           <>
             <NavLink
               className={({ isActive }) =>
@@ -49,7 +48,7 @@ const handleLogout = () => {
               to="/dashboard"
             >
               <FontAwesomeIcon icon="tachometer-alt" className="menu-icon" />
-              <span> Dashboard</span>
+              <span>Dashboard</span>
             </NavLink>
             <NavLink
               className={({ isActive }) =>
@@ -93,47 +92,52 @@ const handleLogout = () => {
               <FontAwesomeIcon icon="book" className="menu-icon" />
               <span>Sales Book</span>
             </NavLink>
-          </>
-        {/* )} */}
-        {userRole === "admin" && (
-          <NavLink
-            className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
-            }
-            to="/user"
-            onClick={closeSidebar}
-          >
-            <FontAwesomeIcon icon="users" className="menu-icon" />
-            <span>User</span>
-          </NavLink>
-        )}
-        {/* Only show Staffs if role is admin or owner */}
-        {/* {userRole === "owner" && ( */}
-          <NavLink
-            className={({ isActive }) =>
-              `menu-item ${isActive ? "active" : ""}`
-            }
-            to="/staff"
-            onClick={closeSidebar}
-          >
-            <FontAwesomeIcon icon="id-badge" className="menu-icon" />
-            <span>Staffs</span>
-          </NavLink>
-        {/* )} */}
 
-        {/*setting starts from here*/}
+            {/* Only Owner sees Staffs */}
+            {userRole === "owner" && (
+              <NavLink
+                className={({ isActive }) =>
+                  `menu-item ${isActive ? "active" : ""}`
+                }
+                to="/staff"
+                onClick={closeSidebar}
+              >
+                <FontAwesomeIcon icon="id-badge" className="menu-icon" />
+                <span>Staffs</span>
+              </NavLink>
+            )}
+          </>
+        )}
+
+        {/* Admin only sees Dashboard and Users */}
+        {userRole === "admin" && (
+          <>
+            {/* <NavLink
+              className={({ isActive }) =>
+                `menu-item ${isActive ? "active" : ""}`
+              }
+              to="/dashboard"
+            >
+              <FontAwesomeIcon icon="tachometer-alt" className="menu-icon" />
+              <span>Dashboard</span>
+            </NavLink> */}
+            <NavLink
+              className={({ isActive }) =>
+                `menu-item ${isActive ? "active" : ""}`
+              }
+              to="/user"
+              onClick={closeSidebar}
+            >
+              <FontAwesomeIcon icon="users" className="menu-icon" />
+              <span>Users</span>
+            </NavLink>
+          </>
+        )}
+
+        {/* Settings - visible to all */}
         <div className="menu-title">
           <span>Settings</span>
         </div>
-
-        {/* <NavLink
-          className={({ isActive }) => `menu-item ${isActive ? "active" : ""}`}
-          to="/settings"
-          onClick={closeSidebar}
-        >
-          <FontAwesomeIcon icon="cog" className="menu-icon" />
-          <span>Settings</span>
-        </NavLink> */}
 
         <NavLink
           className={({ isActive }) => `menu-item ${isActive ? "active" : ""}`}
