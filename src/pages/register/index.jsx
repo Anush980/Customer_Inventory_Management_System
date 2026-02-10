@@ -31,33 +31,35 @@ const Register = () => {
     setFadeSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, { // ← Fixed: parentheses not backticks
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name,shopName, email, password }),
+        body: JSON.stringify({ name, shopName, email, password }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        // Save token (localStorage or sessionStorage optional here)
-        localStorage.setItem("token", data.token);
-
-        setSuccess("Signup successful! please login ");
+        // Don't store token - user needs to login
+        // If you want auto-login, clear other storage first:
+         localStorage.clear();
+         sessionStorage.clear();
+         localStorage.setItem("token", data.token);
+         localStorage.setItem("user", JSON.stringify(data.user));
+        
+        setSuccess("Signup successful! Please login");
         setName("");
         setShopName("");
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-
-        setFadeSuccess(false); // start visible
-        setTimeout(() => setFadeSuccess(true), 3000); // fade after 3s
-
+        setFadeSuccess(false);
+        setTimeout(() => setFadeSuccess(true), 3000);
         setTimeout(() => navigate("/login"), 1500);
       } else {
         setError(data.message || "Signup failed");
         setFadeError(false);
-        setTimeout(() => setFadeError(true), 3000); // fade after 3s
+        setTimeout(() => setFadeError(true), 3000);
       }
     } catch (err) {
       setError("Something went wrong!");

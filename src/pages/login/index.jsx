@@ -7,7 +7,7 @@ import RememberForgot from "../../components/auth/RememberForget/RememberForgot"
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
+  const [remember, setRemember] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [fadeError, setFadeError] = useState(false);
@@ -38,30 +38,29 @@ function Login() {
       // console.log('Login response:', data);
       // console.log('Token received:', data.token);
 
-      if (res.ok) {
-        // store token in localStorage if remember, else sessionStorage
-        const storage = remember ? localStorage : sessionStorage;
-        storage.setItem("token", data.token);
+if (res.ok) {
+  // Clear both storages first to avoid conflicts
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("user");
+  
+  // Then store in the correct location
+  const storage = remember ? localStorage : sessionStorage;
+  storage.setItem("token", data.token);
+  storage.setItem("user", JSON.stringify(data.user));
+  
+  console.log("Token stored in:", remember ? "localStorage" : "sessionStorage");
+  console.log("Token value:", storage.getItem("token"));
+  
+  setSuccess("Login successful!");
+  setEmail("");
+  setPassword("");
+  setTimeout(() => setFadeSuccess(true), 3000);
+  setTimeout(() => {
+    navigate("/dashboard", { replace: true });
+  }, 100);
 
-        // Store the user object as JSON
-        storage.setItem("user", JSON.stringify(data.user));
-
-        console.log(
-          "Token stored in:",
-          remember ? "localStorage" : "sessionStorage"
-        );
-        console.log("Token value:", storage.getItem("token"));
-        console.log("User value:", storage.getItem("user"));
-
-        setSuccess("Login successful!");
-        setEmail("");
-        setPassword("");
-
-        setTimeout(() => setFadeSuccess(true), 3000);
-
-        setTimeout(() => {
-          navigate("/dashboard", { replace: true });
-        }, 100);
       } else {
         setError(data.message || "Login failed");
         setTimeout(() => setFadeError(true), 3000);

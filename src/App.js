@@ -18,7 +18,8 @@ import { Navigate } from "react-router-dom";
 import StaffPage from './pages/staff';
 import TermsPage from './pages/terms/TermsPage';
 import PolicyPage from './pages/policy/PolicyPage';
-
+import UserPage from './pages/user';
+import AdminPage from './pages/admin';
 
 function App() {
   
@@ -56,6 +57,8 @@ function App() {
 <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
 <Route path="/pos" element={<ProtectedRoute><Pos/></ProtectedRoute>}/>
 <Route path="/staff" element={<ProtectedRoute><StaffPage/></ProtectedRoute>}/>
+<Route path="/user" element={<ProtectedRoute><UserPage/></ProtectedRoute>}/>
+<Route path="/admin" element={<ProtectedRoute><AdminPage/></ProtectedRoute>}/>
 
         
 

@@ -29,11 +29,11 @@ const AuthForm = ({ type, onSubmit, children ,error,success,fadeError,fadeSucces
           <div className="button-wrapper"><Button variant="auth" isLoading={loading}>{config.buttonText} </Button></div>
         </form>
 
-        {(type === "login" || type === "register") && (
+        {/* {(type === "login" || type === "register") && (
           <Divider label={config.dividerText} />
-        )}
+        )} */}
 
-        {(type === "login" || type === "register") && <SocialLogin />}
+        {/* {(type === "login" || type === "register") && <SocialLogin />} */}
       </div>
 
       <AuthFooter

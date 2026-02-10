@@ -12,7 +12,7 @@ import { useCustomers } from "../../hooks/useCustomer";
 import "./customer.css";
 
 const CustomerPage = () => {
-  const [sort, setSort] = useState("latest");
+  const [sort, setSort] = useState("recent");
   const [searchText, setSearchText] = useState("");
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -47,8 +47,6 @@ const confirmDelete=()=>{
       console.error("Failed to save customer.",err);
     }
   }
-
-
   return (
     <Layout>
       <Pageheader
@@ -96,6 +94,7 @@ const confirmDelete=()=>{
           onSubmit = {handleFormSubmit}
         />
       )}
+      
     </Layout>
   );
 };

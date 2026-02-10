@@ -1,39 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/ui/Layout/Layout";
 import Button from "../../components/ui/Button/Button";
-import './profilePage.css';
+import "./profilePage.css";
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    jobTitle: "",
-    shopName: "",
-    email: "",
-  });
-  const [newPassword, setNewPassword] = useState("");
-const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-  // Fetch profile
+
+  const [name, setName] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
+
+  /* ================= FETCH PROFILE ================= */
   const fetchProfile = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       const data = await res.json();
+
       if (res.ok) {
         setProfile(data);
-        setFormData({
-          name: data.name,
-          jobTitle: data.jobTitle,
-          shopName: data.shopName,
-          email: data.email,
-        });
-      } else alert(data.message || "Failed to fetch profile");
+        setName(data.name);
+        setImagePreview(data.image || "/default.jpg");
+      } else {
+        alert(data.message || "Failed to fetch profile");
+      }
     } catch (err) {
       console.error(err);
       alert("Failed to fetch profile");
@@ -42,60 +45,52 @@ const token = localStorage.getItem("token") || sessionStorage.getItem("token");
     }
   };
 
-  // Update profile info
+  /* ================= IMAGE CHANGE ================= */
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  /* ================= UPDATE PROFILE ================= */
   const handleProfileUpdate = async () => {
-    if (!formData.name || !formData.jobTitle || !formData.shopName) {
-      return alert("Please fill all fields");
-    }
+    if (!name) return alert("Name is required");
+
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          jobTitle: formData.jobTitle,
-          shopName: formData.shopName,
-        }),
-      });
+      const form = new FormData();
+      form.append("name", name);
+
+      if (imageFile) {
+        form.append("image", imageFile);
+      }
+
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/profile`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: form,
+        }
+      );
+
       const data = await res.json();
+
       if (res.ok) {
-        setProfile(data);
+        setProfile(data.user || data);
         setEditMode(false);
+        setImageFile(null);
         alert("Profile updated successfully");
-      } else alert(data.message || "Failed to update profile");
+      } else {
+        alert(data.message || "Failed to update profile");
+      }
     } catch (err) {
       console.error(err);
       alert("Failed to update profile");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Update password
-  const handlePasswordUpdate = async () => {
-    if (!newPassword) return alert("Enter a new password");
-    setLoading(true);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/profile/password`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({ newPassword }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setNewPassword("");
-        alert("Password updated successfully");
-      } else alert(data.message || "Failed to update password");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to update password");
     } finally {
       setLoading(false);
     }
@@ -112,7 +107,32 @@ const token = localStorage.getItem("token") || sessionStorage.getItem("token");
       <div className="profile-page">
         <h2>My Profile</h2>
 
-        {/* Personal Details */}
+        {/* ===== PROFILE IMAGE ===== */}
+        <div className="profile-image-section">
+          <img
+            src={imagePreview || "/default.jpg"}
+            alt="Profile"
+            className="profile-image"
+          />
+
+          <p className={`user-role role-${profile.role}`}>
+            {profile.role.toUpperCase()}
+          </p>
+
+          {editMode && (
+            <label className="change-image-btn">
+              Change Image
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleImageChange}
+              />
+            </label>
+          )}
+        </div>
+
+        {/* ===== PERSONAL DETAILS ===== */}
         <div className="profile-section">
           <h4>Personal Details</h4>
 
@@ -121,8 +141,8 @@ const token = localStorage.getItem("token") || sessionStorage.getItem("token");
             {editMode ? (
               <input
                 type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             ) : (
               <span>{profile.name}</span>
@@ -134,63 +154,51 @@ const token = localStorage.getItem("token") || sessionStorage.getItem("token");
             <span>{profile.email}</span>
           </div>
 
-          <div className="profile-field">
-            <label>Job Title:</label>
-            {editMode ? (
-              <input
-                type="text"
-                value={formData.jobTitle}
-                onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
-              />
-            ) : (
+          {profile.role !== "admin" && (
+            <div className="profile-field">
+              <label>Job Title:</label>
               <span>{profile.jobTitle}</span>
-            )}
-          </div>
+            </div>
+          )}
 
           <div className="profile-field">
             <label>Shop:</label>
-            {editMode ? (
-              <span>{profile.shopName}</span>
-            ) : (
-              <span>{profile.shopName}</span>
-            )}
+            <span>{profile.shopName}</span>
           </div>
 
+          {/* ===== ACTIONS ===== */}
           <div className="profile-actions">
             {editMode ? (
               <>
-                <Button variant="primary" onClick={handleProfileUpdate} isLoading={loading}>
+                <Button
+                  variant="primary"
+                  onClick={handleProfileUpdate}
+                  isLoading={loading}
+                >
                   Save
                 </Button>
-                <Button variant="text" onClick={() => setEditMode(false)}>
+                <Button
+                  variant="text"
+                  onClick={() => {
+                    setEditMode(false);
+                    setImageFile(null);
+                    setImagePreview(profile.image || "/default.jpg");
+                    setName(profile.name);
+                  }}
+                >
                   Cancel
                 </Button>
               </>
             ) : (
-              <Button variant="secondary" onClick={() => setEditMode(true)}>
-                Edit Details
+              <Button
+                variant="secondary"
+                onClick={() => setEditMode(true)}
+              >
+                Edit Profile
               </Button>
             )}
           </div>
         </div>
-
-        {/* Change Password */}
-        {/* <div className="profile-section">
-          <h4>Change Password</h4>
-          <div className="profile-field">
-            <label>New Password:</label>
-            <input
-              type="text"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password"
-              className="form-control"
-            />
-          </div>
-          <Button variant="primary" onClick={handlePasswordUpdate} isLoading={loading}>
-            Update Password
-          </Button>
-        </div> */}
       </div>
     </Layout>
   );

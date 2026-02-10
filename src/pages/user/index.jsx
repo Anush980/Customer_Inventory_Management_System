@@ -1,0 +1,154 @@
+import React, { useState } from "react";
+import Layout from "../../components/ui/Layout/Layout";
+import PageHeader from "../../components/ui/PageHeader/Pageheader";
+import FilterBar from "../../components/ui/Filterbar/FilterBar";
+import UserCard from "../../components/admin/usersCard/UserCard";
+import UserForm from "../../components/admin/userForm/UserForm";
+import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
+import { sortOptions } from "../../data/filterConfig/userFilterConfigs";
+import { useUsers } from "../../hooks/useUser"; 
+import "./user.css";
+import AdminCard from "../../components/ui/StatsCard/AdminCard";
+
+const UserPage = () => {
+  const [sort, setSort] = useState("recent");
+  const [searchText, setSearchText] = useState("");
+
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [deleteID, setDeleteID] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [viewOnly, setViewOnly] = useState(false); 
+
+  const {
+    users,
+    loading,
+    error,
+    deleteUserById,
+    saveUserById,
+    toggleBlock,
+  } = useUsers({ search: searchText, sort });
+
+  // Delete user
+  const handleDelete = (id) => {
+    setDeleteID(id);
+    setShowConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteID) return;
+    try {
+      await deleteUserById(deleteID); // hook updates state
+    } catch (err) {
+      console.error("Failed to delete user", err);
+    } finally {
+      setShowConfirm(false);
+    }
+  };
+    const totalUsers = users.length;
+  const totalOwners = users.filter(c => c.role === "owner").length;
+  const totalStaffs = users.filter(c => c.role === "staff").length;
+  const totalAdmins = users.filter(c => c.role === "admin").length;
+
+
+  // Edit user
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setViewOnly(false);
+    setShowForm(true);
+  };
+
+  // View user (read-only)
+  const handleView = (user) => {
+    setSelectedUser(user);
+    setViewOnly(true);
+    setShowForm(true);
+  };
+
+  // Block / Unblock user
+  const handleBlockToggle = async (user) => {
+    // Prevent admin from blocking themselves
+    if (user.role === "admin" && user._id === localStorage.getItem("userId")) {
+      alert("You cannot block yourself!");
+      return;
+    }
+
+    try {
+      await toggleBlock(user); // hook updates state internally
+    } catch (err) {
+      console.error("Failed to block/unblock user", err);
+    }
+  };
+
+  // Handle add/edit form submission
+  const handleFormSubmit = async (user) => {
+    try {
+      await saveUserById(user); // hook updates state internally
+      setShowForm(false);
+    } catch (err) {
+      console.error("Failed to save user", err);
+    }
+  };
+
+  return (
+    <Layout>
+      <PageHeader
+        title="User Management"
+         showBtn={false}
+        btnTitle="Add User"
+        variant="users"
+      />
+
+<div className="stats-container" style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+  <AdminCard title="Total Users" variant="user" count={totalUsers}/>
+  <AdminCard title="Total Owners" variant="owner" count={totalOwners}/>
+  <AdminCard title="Total Staffs" variant="staff" count={totalStaffs}  />
+  <AdminCard title="Total Admins" variant="admin" count={totalAdmins} />
+</div>
+
+      <FilterBar
+        filters={[{ value: sort, onChange: setSort, options: sortOptions }]}
+        search={{
+          value: searchText,
+          onChange: setSearchText,
+          placeholder: "Search users...",
+        }}
+      />
+
+      {loading && <div>Loading...</div>}
+      {!loading && !error && users.length === 0 && <div className="no-users">No users found</div>}
+      {error && <div className="error">{error}</div>}
+
+      <div className="user-card-grid">
+        {users.map((u) => (
+          <UserCard
+            key={u._id}
+            user={u}
+            onView={handleView}
+            onEdit={handleEdit}
+            onToggleBlock={handleBlockToggle}
+            onDelete={handleDelete}
+          />
+        ))}
+      </div>
+
+      {showConfirm && (
+        <ConfirmCard
+          closeWindow={() => setShowConfirm(false)}
+          onConfirm={confirmDelete}
+        />
+      )}
+
+      {showForm && (
+        <UserForm
+          editMode={selectedUser}
+          closeWindow={() => setShowForm(false)}
+          onSubmitForm={handleFormSubmit}
+          viewOnly={viewOnly}
+        />
+      )}
+    </Layout>
+  );
+};
+
+export default UserPage;

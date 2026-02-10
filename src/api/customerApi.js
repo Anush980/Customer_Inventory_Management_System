@@ -2,7 +2,7 @@ import { getAuthHeaders } from "./authHeaders";
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}/api/customers`;
 
-export const getCustomers = async ({ search="", sort="newest" } = {}) => {
+export const getCustomers = async ({ search="", sort="recentp" } = {}) => {
   const query = new URLSearchParams({ search, sort });
 
   const res = await fetch(`${BASE_URL}?${query.toString()}`, {

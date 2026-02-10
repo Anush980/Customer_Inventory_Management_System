@@ -3,7 +3,7 @@ import { getItems, saveItem, deleteItem } from "../api/inventoryApi";
 
 export const useInventory = ({
   search = "",
-  sort = "newest",
+  sort = "recent",
   category = "",
   stock = "",
 } = {}) => {
