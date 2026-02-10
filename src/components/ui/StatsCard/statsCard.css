@@ -7,7 +7,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
-            max-width: 300px;
+            min-width: 200px;
             margin-bottom: 30px;
             /* text-wrap: nowrap; */
             
@@ -34,6 +34,24 @@
         .stat-card.inventory::before {
             background-color: var(--warning);
         }
+
+
+.stat-card.user::before {
+    background-color: #4caf50; /* Green - Users */
+}
+
+.stat-card.admin::before {
+    background-color: #f44336; /* Red - Admins */
+}
+
+.stat-card.owner::before {
+    background-color: #2196f3; /* Blue - Owners */
+}
+
+.stat-card.staff::before {
+    background-color: #ff9800; /* Orange - Staff */
+}
+
         
         .stat-card h3 {
             font-size: 0.9rem;

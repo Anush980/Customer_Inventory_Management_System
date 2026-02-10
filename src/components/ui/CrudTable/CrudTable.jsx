@@ -4,6 +4,7 @@ import CustomerForm from "../../customer/CustomerForm/CustomerForm";
 import InventoryForm from "../../inventory/InventoryForm";
 import SalesForm from "../../sales/SalesForm";
 import StaffForm from "../../staff/staffForm/StaffForm";
+import UserForm from "../../admin/userForm/UserForm";
 
 
 const CrudTable = ({ variant, editMode, closeWindow }) => {
@@ -21,6 +22,9 @@ const CrudTable = ({ variant, editMode, closeWindow }) => {
       )}
       {variant === "staff" && (
         <StaffForm editMode={editMode} closeWindow={closeWindow} />
+      )}
+      {variant === "users" && (
+        <UserForm editMode={editMode} closeWindow={closeWindow} />
       )}
     </div>
   );

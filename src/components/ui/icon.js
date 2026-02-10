@@ -25,6 +25,12 @@ import {
  faMapMarkerAlt,
  faCashRegister,
  faCreditCard,
+ faIdBadge,
+ faEye,
+ faEdit,
+ faUserAltSlash,
+ faUserClock,
+ faUserCheck
 
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -45,6 +51,7 @@ import {
 
 library.add(
   //solid icons
+  faIdBadge,
   faChartLine,
   faMoneyBill,
   faEnvelope,
@@ -69,6 +76,12 @@ library.add(
   faBox,
   faCashRegister,
   faCreditCard,
+  faEye,
+  faEdit,
+  faUserAltSlash,
+  faUserClock,
+  faUserCheck,
+
 
   //brand icons
   faFacebook,

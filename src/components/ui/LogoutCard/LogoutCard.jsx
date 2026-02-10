@@ -20,7 +20,7 @@ const LogoutCard = ({closeWindow,onConfirm}) => {
             Cancel
           </Button>
           <Button variant="danger" onClick={onConfirm} isLoading={loading}>
-            OK
+            Confirm
           </Button>
         </div>
       </div>
