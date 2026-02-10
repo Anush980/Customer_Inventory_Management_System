@@ -1,0 +1,175 @@
+.user-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+.action-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.user-card-header {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.user-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  border: 3px solid white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info-card {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+
+.user-role {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.role-owner {
+  background-color: rgba(155, 89, 182, 0.1);
+  color: #9b59b6;
+}
+
+.role-manager {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.role-staff {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.role-customer {
+  background-color: rgba(243, 156, 18, 0.1);
+  color: #f39c12;
+}
+.role-admin {
+  background-color: rgba(243, 18, 18, 0.1);
+  color: #f31212;
+}
+
+.user-card-body {
+  padding: 1.5rem;
+}
+
+.user-details {
+  margin-bottom: 1rem;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  font-weight: 500;
+  width: 100px;
+  color: #555;
+}
+
+.detail-value {
+  flex: 1;
+}
+
+.user-status {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.status-active {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: var(--success);
+}
+
+.status-suspended {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+}
+
+.status-pending {
+  background-color: rgba(243, 156, 18, 0.1);
+  color: var(--warning);
+}
+
+.user-card-footer {
+  padding: 1rem 1.5rem;
+  background-color: #eeeeee;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.action-btn.view {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.action-btn.edit {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.action-btn.suspend {
+  color: var(--warning);
+  border-color: var(--warning);
+}
+
+.action-btn.delete {
+  color: var(--danger);
+  border-color: var(--danger);
+}
