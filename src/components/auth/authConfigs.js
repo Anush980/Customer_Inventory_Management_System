@@ -18,12 +18,26 @@ register:{
     switchLink: { text: "Sign in", to: "/login" }
 },
 
-reset:{
-    title:"Reset Password",
-    subTitle:"Create a new password",
-    buttonText: "Create Account",
+forgotPassword:{
+    title:"Forgot Password",
+    subTitle:"Enter your email",
+    buttonText: "Send OTP",
     footerText: "Remember your password?",
     switchLink: { text: "Sign in", to: "/login" }
+},
+verifyOtp:{
+    title:"Verify OTP",
+    subTitle:"Enter your OTP",
+    buttonText: "Verify",
+    //  footerText: "Resend OTP",
+    //  switchLink: { text: "Reset", to: "/login" }
+},
+resetPassword:{
+    title:"Change your Password",
+    subTitle:"Create a new password",
+    buttonText: "Change Password",
+     footerText: "Remember your password?",
+     switchLink: { text: "Sign in", to: "/login" }
 }
 }
 export default authConfigs;

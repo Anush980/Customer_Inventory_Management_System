@@ -65,8 +65,9 @@ const Dashboard = () => {
               Width: {width}px, Height: {height}px
             </p> */}
             <QuickStats />
-            <InventoryStats variant="out" />
             <InventoryStats variant="low" />
+            <InventoryStats variant="out" />
+            {/* <QuickStats /> */}
 
           </div>
         </div>

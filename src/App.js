@@ -3,7 +3,7 @@ import './App.css';
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
-import Reset from './pages/reset';
+import Reset from './pages/resetPassword';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./components/ui/icon";
 import Inventory from './pages/inventory';
@@ -20,6 +20,9 @@ import TermsPage from './pages/terms/TermsPage';
 import PolicyPage from './pages/policy/PolicyPage';
 import UserPage from './pages/user';
 import AdminPage from './pages/admin';
+import ForgotPassword from './pages/forgotPassword';
+import VerifyOtp from './pages/verifyOtp';
+import ResetPassword from './pages/resetPassword';
 
 function App() {
   
@@ -30,7 +33,9 @@ function App() {
         {/* Auth pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/reset" element={<Reset />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route
   path="/"

@@ -14,7 +14,7 @@ function RememberForgot({ remember, setRemember }) {
         />
         <label htmlFor="remember">Remember me</label>
       </div>
-      <Link className="forgot-password" to="/reset">Forgot password?</Link>
+      <Link className="forgot-password" to="/forgot-password">Forgot password?</Link>
     </div>
   );
 }

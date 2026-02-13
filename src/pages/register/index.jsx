@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import AuthForm from "../../components/auth/Form/AuthForm";
-import AuthInput from "../../components/auth/Input/authInput";
+import AuthInput from '../../components/auth/Input/authInput';
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -16,10 +16,33 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Password validation function
+  const validatePassword = (password) => {
+    const errors = [];
+
+    if (password.length < 8) errors.push("At least 8 characters");
+    if (!/[A-Z]/.test(password)) errors.push("1 uppercase letter required");
+    if (!/[a-z]/.test(password)) errors.push("1 lowercase letter required");
+    if (!/[0-9]/.test(password)) errors.push("1 number required");
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) errors.push("1 special character required");
+    if (/\s/.test(password)) errors.push("Password cannot contain spaces");
+    if (password === email) errors.push("Password cannot be the same as your email");
+
+    return errors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
+      setFadeError(false);
+      return;
+    }
+
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      setError(passwordErrors.join(", "));
       setFadeError(false);
       return;
     }
@@ -31,7 +54,7 @@ const Register = () => {
     setFadeSuccess(false);
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, { // ← Fixed: parentheses not backticks
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, shopName, email, password }),
@@ -40,13 +63,11 @@ const Register = () => {
       const data = await res.json();
 
       if (res.ok) {
-        // Don't store token - user needs to login
-        // If you want auto-login, clear other storage first:
-         localStorage.clear();
-         sessionStorage.clear();
-         localStorage.setItem("token", data.token);
-         localStorage.setItem("user", JSON.stringify(data.user));
-        
+        localStorage.clear();
+        sessionStorage.clear();
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
         setSuccess("Signup successful! Please login");
         setName("");
         setShopName("");
@@ -107,6 +128,7 @@ const Register = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         autocomplete="new-password"
+        onCopy={(e) => e.preventDefault()} 
       />
       <AuthInput
         label="Confirm Password"
@@ -115,6 +137,7 @@ const Register = () => {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         autocomplete="new-password"
+        onPaste={(e) => e.preventDefault()} 
       />
     </AuthForm>
   );

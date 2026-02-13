@@ -24,7 +24,7 @@ const InventoryTable = ({ data = [], loading = false, editable = false, editMode
               <th>Name</th>
               <th>Category</th>
               <th>SKU</th>
-              <th>Restock</th>
+              {/* <th>Restock</th> */}
               <th>Stock</th>
               <th>Price</th>
               {editable && <th>Action</th>}
@@ -55,7 +55,7 @@ const InventoryTable = ({ data = [], loading = false, editable = false, editMode
                   <td>{item.itemName}</td>
                   <td>{item.category}</td>
                   <td>{item.sku || "-"}</td>
-                  <td>{item.restock || "5"}</td>
+                  {/* <td>{item.restock || "5"}</td> */}
                   <td>{item.stock || "0"}</td>
                   <td>{item.price}</td>
 
