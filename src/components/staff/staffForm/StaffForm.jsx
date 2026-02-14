@@ -158,7 +158,7 @@ const validateForm = () => {
                   value={formData.staffPhone}
                   onChange={onChange}
                   className="form-control"
-                   max="10"
+                   
                 />
               </div>
 

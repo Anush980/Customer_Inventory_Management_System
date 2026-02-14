@@ -131,7 +131,7 @@ const validateForm = () => {
                   placeholder="Enter Phone Number"
                   required
                   className="form-control"
-                   max="10"
+                  
                 />
               </div>
 
