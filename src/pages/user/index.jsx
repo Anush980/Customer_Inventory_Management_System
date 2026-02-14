@@ -7,13 +7,13 @@ import UserForm from "../../components/admin/userForm/UserForm";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import AdminCard from "../../components/ui/StatsCard/AdminCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
-import { sortOptions,categoryOptions } from "../../data/filterConfig/userFilterConfigs";
+ import { sortOptions } from "../../data/filterConfig/userFilterConfigs";
 import { useUsers } from "../../hooks/useUser"; 
 import "./user.css";
 
 const UserPage = () => {
   const [sort, setSort] = useState("recent");
-  const [category, setCategory] = useState("");
+  // const [category, setCategory] = useState("");
   const [searchText, setSearchText] = useState("");
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -32,7 +32,7 @@ const UserPage = () => {
     deleteUserById,
     saveUserById,
     toggleBlock,
-  } = useUsers({ search: searchText, sort,category });
+  } = useUsers({ search: searchText, sort });
 
   // Delete user
   const handleDelete = (id) => {
