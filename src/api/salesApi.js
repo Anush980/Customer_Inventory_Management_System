@@ -2,14 +2,17 @@ import { getAuthHeaders } from "./authHeaders";
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}/api/sales`;
 
-export const getSales = async ({ search="", category="", sort="" } = {}) => {
+export const getSales = async ({ search = "", category = "", sort = "" } = {}) => {
   const query = new URLSearchParams({ search, category, sort });
-
-  const res = await fetch(`${BASE_URL}?${query.toString()}`, {
+  const res = await fetch(`${BASE_URL}?${query.toString()}`, {  // FIXED: () not backticks
     headers: getAuthHeaders(),
   });
 
-  if (!res.ok) throw new Error("Failed to fetch sales");
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to fetch sales");
+  }
+
   return res.json();
 };
 
@@ -19,20 +22,31 @@ export const saveSale = async (sale) => {
 
   const res = await fetch(url, {
     method,
-    headers: getAuthHeaders(),
+    headers: {
+      ...getAuthHeaders(),
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(sale),
   });
 
-  if (!res.ok) throw new Error("Failed to save sale");
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to save sale");
+  }
+
   return res.json();
 };
 
 export const deleteSale = async (id) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
+  const res = await fetch(`${BASE_URL}/${id}`, {  // FIXED: () not backticks
     method: "DELETE",
     headers: getAuthHeaders(),
   });
 
-  if (!res.ok) throw new Error("Failed to delete sale");
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to delete sale");
+  }
+
   return res.json();
 };

@@ -1,16 +1,15 @@
 const categoryOptions = [
   { value: "", label: "All Categories" },
-  { value: "laptops-computers", label: "Computers" },
-  { value: "computer-acces", label: "Computer Accessories" },
-  { value: "pc-components", label: "PC Components" },
-  { value: "networking", label: "Networking Devices" },
-  { value: "mobiles", label: "Mobiles" },
-  { value: "audio", label: "Audio Devices" },
+  { value: "electronics", label: "Electronics" },
+  { value: "mobiles", label: "Mobiles & Accessories" },
+  { value: "computers", label: "Computer & Parts" },
+  { value: "home", label: "Home Appliances" },
   { value: "gaming", label: "Gaming" },
-  { value: "home-appliances", label: "Home Appliances" },
-  { value: "office-electronics", label: "Office" },
+  { value: "office", label: "Office Electronics" },
+  { value: "audio", label: "Audio & Music" },
   { value: "others", label: "Others" }
 ];
+
 
 const statusOptions = [
   {

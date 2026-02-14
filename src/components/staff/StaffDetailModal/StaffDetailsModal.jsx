@@ -65,9 +65,9 @@ const StaffDetailsModal = ({ staff, onClose, changeStaffPassword, onResendEmail 
             <Button variant="primary" onClick={handlePasswordUpdate} isLoading={loading}>
               Update Password
             </Button>
-            <Button variant="secondary" onClick={handleResendEmail} isLoading={loading}>
+            {/* <Button variant="secondary" onClick={handleResendEmail} isLoading={loading}>
               Resend Email
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../ui/Button/Button";
 import "../../ui/CrudTable/crudTable.css";
+import Snackbar from "../../ui/Snackbar/Snackbar";
 
 const StaffForm = ({ editMode, closeWindow }) => {
   const [formData, setFormData] = useState(
@@ -16,6 +17,8 @@ const StaffForm = ({ editMode, closeWindow }) => {
 
   const [image, setImage] = useState(null); // new
   const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState(null);
+
 
   // Handle input change
   const onChange = (e) => {
@@ -27,49 +30,84 @@ const StaffForm = ({ editMode, closeWindow }) => {
   };
 
   // Submit form
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (loading) return;
-    setLoading(true);
+ const onSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+  if (loading) return;
+  setLoading(true);
 
-    try {
-      const method = editMode ? "PUT" : "POST";
-      const url = editMode
-        ? `${process.env.REACT_APP_API_URL}/api/staff/${editMode._id}`
-        : `${process.env.REACT_APP_API_URL}/api/staff`;
+  try {
+    const method = editMode ? "PUT" : "POST";
+    const url = editMode
+      ? `${process.env.REACT_APP_API_URL}/api/staff/${editMode._id}`
+      : `${process.env.REACT_APP_API_URL}/api/staff`;
 
-      // Use FormData to handle image upload
-      const form = new FormData();
-      form.append("name", formData.name);
-      form.append("staffEmail", formData.staffEmail);
-      form.append("staffPhone", formData.staffPhone || "");
-      form.append("staffAddress", formData.staffAddress || "");
-      form.append("jobTitle", formData.jobTitle || "");
-      form.append("salary", formData.salary || "");
-      if (!editMode) form.append("password", "default123"); // only for new staff
-      if (image) form.append("image", image);
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("staffEmail", formData.staffEmail);
+    form.append("staffPhone", formData.staffPhone || "");
+    form.append("staffAddress", formData.staffAddress || "");
+    form.append("jobTitle", formData.jobTitle || "");
+    form.append("salary", formData.salary || "");
+    if (!editMode) form.append("password", "default123");
+    if (image) form.append("image", image);
 
-      const response = await fetch(url, {
-        method,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: form,
-      });
+    const response = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: form,
+    });
 
-      if (!response.ok) throw new Error("Error saving staff");
+    // Parse server response
+    const result = await response.json();
 
-      const result = await response.json();
-      console.log("Success:", result);
-
-      closeWindow();
-      setTimeout(() => window.location.reload(), 500);
-    } catch (err) {
-      console.error("Error:", err);
-    } finally {
-      setLoading(false);
+    if (!response.ok) {
+      // Show specific server message if available
+      throw new Error(result.message || "Error saving staff");
     }
-  };
+
+    console.log("Success:", result);
+    closeWindow();
+    setTimeout(() => window.location.reload(), 500);
+  } catch (err) {
+    console.error("Error:", err);
+    setSnackbar({ message: err.message, type: "error" });
+  } finally {
+    setLoading(false);
+  }
+};
+const validateForm = () => {
+  // Name
+  if (!formData.name.trim()) {
+    setSnackbar({ message: "Name is required", type: "error" });
+    return false;
+  }
+
+  // Email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!formData.staffEmail || !emailRegex.test(formData.staffEmail)) {
+    setSnackbar({ message: "Valid email is required", type: "error" });
+    return false;
+  }
+
+  // Phone (numbers only, 10 digits)
+  const phoneRegex = /^[0-9]{10}$/;
+  if (formData.staffPhone && !phoneRegex.test(formData.staffPhone)) {
+    setSnackbar({ message: "Phone must be 10 digits", type: "error" });
+    return false;
+  }
+
+  // Salary (positive number)
+  if (formData.salary && Number(formData.salary) < 0) {
+    setSnackbar({ message: "Salary must be positive", type: "error" });
+    return false;
+  }
+
+  return true; // all valid
+};
+
 
   return (
     <div className="crud-table-wrapper">
@@ -86,7 +124,7 @@ const StaffForm = ({ editMode, closeWindow }) => {
             <div className="form-column">
 
               <div className="form-group">
-                <label>Staff Name *</label>
+                <label><span style={{ color: "red" }}>*</span>Staff Name</label>
                 <input
                   type="text"
                   name="name"
@@ -94,11 +132,12 @@ const StaffForm = ({ editMode, closeWindow }) => {
                   onChange={onChange}
                   required
                   className="form-control"
+                  maxLength="30"
                 />
               </div>
 
               <div className="form-group">
-                <label>Personal Email *</label>
+                <label><span style={{ color: "red" }}>*</span>Personal Email</label>
                 <input
                   type="email"
                   name="staffEmail"
@@ -107,28 +146,31 @@ const StaffForm = ({ editMode, closeWindow }) => {
                   required
                   disabled={!!editMode}
                   className="form-control"
+                   maxLength="30"
                 />
               </div>
 
               <div className="form-group">
-                <label>Phone</label>
+                <label><span style={{ color: "red" }}>*</span>Phone</label>
                 <input
                   type="text"
                   name="staffPhone"
                   value={formData.staffPhone}
                   onChange={onChange}
                   className="form-control"
+                   max="10"
                 />
               </div>
 
               <div className="form-group">
-                <label>Address</label>
+                <label><span style={{ color: "red" }}>*</span>Address</label>
                 <input
                   type="text"
                   name="staffAddress"
                   value={formData.staffAddress}
                   onChange={onChange}
                   className="form-control"
+                   maxLength="30"
                 />
               </div>
 
@@ -140,6 +182,7 @@ const StaffForm = ({ editMode, closeWindow }) => {
                   value={formData.jobTitle}
                   onChange={onChange}
                   className="form-control"
+                   maxLength="20"
                 />
               </div>
 
@@ -151,6 +194,7 @@ const StaffForm = ({ editMode, closeWindow }) => {
                   value={formData.salary}
                   onChange={onChange}
                   className="form-control"
+                   max="1000000"
                 />
               </div>
 
@@ -182,8 +226,20 @@ const StaffForm = ({ editMode, closeWindow }) => {
           </form>
         </div>
       </div>
+      {snackbar && (
+      <Snackbar
+        message={snackbar.message}
+        type={snackbar.type}
+        onClose={() => setSnackbar(null)}
+      />
+    )}
     </div>
+    
   );
+ 
+
 };
+
+
 
 export default StaffForm;

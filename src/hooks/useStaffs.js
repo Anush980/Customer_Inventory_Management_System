@@ -6,6 +6,7 @@ export const useStaffs = ({ search = "", sort = "newest" } = {}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // --- FETCH STAFFS ---
   const fetchStaffs = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -17,33 +18,53 @@ export const useStaffs = ({ search = "", sort = "newest" } = {}) => {
     } finally {
       setLoading(false);
     }
-  },[search,sort]);
+  }, [search, sort]);
 
+  // --- SAVE STAFF ---
   const saveStaffById = async (staff) => {
-    const saved = await saveStaff(staff);
-    setStaffs((prev) =>
-      staff._id ? prev.map((s) => (s._id === saved._id ? saved : s)) : [saved, ...prev]
-    );
-    return saved;
+    try {
+      const saved = await saveStaff(staff);
+
+      setStaffs((prev) =>
+        staff._id ? prev.map((s) => (s._id === saved._id ? saved : s)) : [saved, ...prev]
+      );
+
+      // Return for snackbar
+      return { message: staff._id ? "Staff updated successfully" : "Staff added successfully", type: "success" };
+    } catch (err) {
+      setError(err.message);
+      return { message: err.message || "Failed to save staff", type: "error" };
+    }
   };
 
+  // --- DELETE STAFF ---
   const deleteStaffById = async (id) => {
-    await deleteStaff(id);
-    setStaffs((prev) => prev.filter((s) => s._id !== id));
+    try {
+      await deleteStaff(id);
+      setStaffs((prev) => prev.filter((s) => s._id !== id));
+      return { message: "Staff deleted successfully", type: "success" };
+    } catch (err) {
+      setError(err.message);
+      return { message: err.message || "Failed to delete staff", type: "error" };
+    }
   };
 
-
+  // --- CHANGE STAFF PASSWORD ---
   const changeStaffPassword = async (id, newPassword) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/staff/${id}/password`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify({ newPassword }),
-    });
-    if (!res.ok) throw new Error("Failed to update password");
-    return res.json();
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/staff/${id}/password`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ newPassword }),
+      });
+      if (!res.ok) throw new Error("Failed to update password");
+      return { message: "Password updated successfully", type: "success" };
+    } catch (err) {
+      return { message: err.message || "Failed to update password", type: "error" };
+    }
   };
 
   useEffect(() => {
@@ -57,6 +78,6 @@ export const useStaffs = ({ search = "", sort = "newest" } = {}) => {
     fetchStaffs,
     saveStaffById,
     deleteStaffById,
-    changeStaffPassword, 
+    changeStaffPassword,
   };
 };

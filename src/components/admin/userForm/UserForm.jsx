@@ -144,14 +144,15 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
               )}
 
               {/* Role */}
-              <div className="form-group">
+              
+              {/* <div className="form-group">
                 <label>Role:</label>
                 <select name="role" value={formData.role} onChange={onChange}>
                   <option value="admin">Admin</option>
                   <option value="owner">Owner</option>
                   <option value="staff">Staff</option>
                 </select>
-              </div>
+              </div> */}
 
               {/* Phone */}
               <div className="form-group">
@@ -187,6 +188,7 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
                     onChange={onChange}
                     placeholder="Shop Name"
                     required
+                    disabled
                   />
                 </div>
               )}
@@ -203,6 +205,7 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
                       onChange={onChange}
                       placeholder="Staff Email"
                       required
+                      disabled
                     />
                   </div>
 
@@ -214,6 +217,7 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
                       value={formData.jobTitle}
                       onChange={onChange}
                       placeholder="Job Title"
+                      
                     />
                   </div>
 
@@ -225,6 +229,7 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
                       value={formData.salary}
                       onChange={onChange}
                       placeholder="Salary"
+                      disabled
                     />
                   </div>
 
@@ -255,6 +260,7 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
               )}
 
               {/* Blocked */}
+              {formData.role !== "admin" && (
               <div className="form-group">
                 <label>Blocked:</label>
                 <input
@@ -264,16 +270,16 @@ const UserForm = ({ editMode, closeWindow, onSubmitForm }) => {
                   onChange={onChange}
                 />
               </div>
-
+              )}
               {/* Profile Image */}
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>Profile Image:</label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setImage(e.target.files[0])}
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="crud-table-footer">

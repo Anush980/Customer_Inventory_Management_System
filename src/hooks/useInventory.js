@@ -11,7 +11,7 @@ export const useInventory = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  //FETCH ITEMS 
+  // --- FETCH ITEMS ---
   const fetchItems = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -20,45 +20,46 @@ export const useInventory = ({
       const data = await getItems({ search, category, sort, stock });
       setItems(data);
     } catch (err) {
-      setError(err.message || "Failed to fetch Items.");
+      setError(err.message || "Failed to fetch items.");
     } finally {
       setLoading(false);
     }
   }, [search, category, sort, stock]);
 
-  // --- RUN WHEN FILTERS CHANGE ---
   useEffect(() => {
     fetchItems();
   }, [fetchItems]);
 
   // --- SAVE ITEM (CREATE OR UPDATE) ---
-  const saveItembyId = async (item) => {
+  const saveItemById = async (item) => {
     try {
-      const saved = await saveItem(item);
-
+      const saved = await saveItem(item); // backend should return { message, type, item }
+      
       setItems((prev) => {
-        // update existing
         if (item._id) {
-          return prev.map((i) => (i._id === saved._id ? saved : i));
+          return prev.map((i) => (i._id === saved.item._id ? saved.item : i));
         }
-        // if new item → add to top of list
-        return [saved, ...prev];
+        return [saved.item, ...prev];
       });
 
-      return saved;
+      // return message and type for snackbar
+      return { message: saved.message || "Item saved successfully", type: saved.type || "success" };
     } catch (err) {
-      setError(err.message || "Failed to save item.");
-      throw err;
+      const msg = err.response?.data?.message || err.message || "Failed to save item";
+      throw { message: msg, type: "error" };
     }
   };
 
   // --- DELETE ITEM ---
   const deleteItemById = async (id) => {
     try {
-      await deleteItem(id);
+      const res = await deleteItem(id); // backend returns { message, type }
       setItems((prev) => prev.filter((i) => i._id !== id));
+
+      return { message: res.message || "Item deleted successfully", type: res.type || "success" };
     } catch (err) {
-      setError(err.message || "Failed to delete item.");
+      const msg = err.response?.data?.message || err.message || "Failed to delete item";
+      throw { message: msg, type: "error" };
     }
   };
 
@@ -67,7 +68,7 @@ export const useInventory = ({
     loading,
     error,
     fetchItems,
+    saveItemById,
     deleteItemById,
-    saveItembyId,
   };
 };

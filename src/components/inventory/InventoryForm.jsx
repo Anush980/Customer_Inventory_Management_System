@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Button from "../ui/Button/Button";
 import "../ui/CrudTable/crudTable.css";
-
+import Snackbar from "../ui/Snackbar/Snackbar";
 
 import { categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
 
 const InventoryForm = ({ editMode, closeWindow }) => {
+  const [snackbar, setSnackbar] = useState(null);
   const [formData, setFormData] = useState(
     editMode || {
       itemName: "",
@@ -14,7 +15,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
       sku: "",
       stock: "1",
       restock: "5",
-    }
+    },
   );
 
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    if (!validateForm()) return;
     try {
       setLoading(true);
 
@@ -50,8 +51,8 @@ const InventoryForm = ({ editMode, closeWindow }) => {
       const response = await fetch(url, {
         method,
         headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`,
-      },
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         body: data,
       });
 
@@ -65,14 +66,51 @@ const InventoryForm = ({ editMode, closeWindow }) => {
       setTimeout(() => {
         window.location.reload();
       }, 1000);
-
     } catch (error) {
       console.error("Error:", error);
     } finally {
       setLoading(false);
     }
   };
+  const validateForm = () => {
+    const MAX_PRICE = 1000000;
+    if (!formData.itemName.trim()) {
+      setSnackbar({ message: "Product name is required", type: "error" });
+      return false;
+    }
 
+    if (!formData.category) {
+      setSnackbar({ message: "Category is required", type: "error" });
+      return false;
+    }
+
+    if (!formData.price || Number(formData.price) <= 0) {
+      setSnackbar({ message: "Price must be greater than 0", type: "error" });
+      return false;
+    }
+    if (Number(formData.price) > MAX_PRICE) {
+      setSnackbar({
+        message: `Price cannot exceed ₹${MAX_PRICE}`,
+        type: "error",
+      });
+      return false;
+    }
+
+    if (formData.stock && Number(formData.stock) < 0) {
+      setSnackbar({ message: "Stock cannot be negative", type: "error" });
+      return false;
+    }
+
+    if (formData.restock && Number(formData.restock) < 0) {
+      setSnackbar({
+        message: "Reorder level cannot be negative",
+        type: "error",
+      });
+      return false;
+    }
+
+    return true; // all validations passed
+  };
   return (
     <div className="crud-table-wrapper">
       <div className="crud-table-content">
@@ -86,7 +124,6 @@ const InventoryForm = ({ editMode, closeWindow }) => {
         <div className="crud-table-body">
           <form onSubmit={onSubmit} encType="multipart/form-data">
             <div className="form-column">
-
               {/* ITEM NAME */}
               <div className="form-group">
                 <label htmlFor="itemName">
@@ -101,6 +138,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   placeholder="Enter item name"
                   required
                   className="form-control"
+                  maxLength="20"
                 />
               </div>
 
@@ -138,6 +176,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   value={formData.sku}
                   placeholder="Enter SKU"
                   className="form-control"
+                  maxLength="20"
                 />
               </div>
 
@@ -152,6 +191,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   value={formData.stock}
                   placeholder="Enter total stock"
                   className="form-control"
+                  max="100000"
                 />
               </div>
 
@@ -166,6 +206,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   value={formData.restock}
                   placeholder="Enter reorder level"
                   className="form-control"
+                  max="100000"
                 />
               </div>
 
@@ -182,6 +223,9 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                   value={formData.price}
                   placeholder="Enter price"
                   className="form-control"
+                  min="0.01" // minimum price
+                  max="1000000" // maximum price = 10 lakh
+                  step="0.01"
                   required
                 />
               </div>
@@ -207,10 +251,16 @@ const InventoryForm = ({ editMode, closeWindow }) => {
                 Save
               </Button>
             </div>
-
           </form>
         </div>
       </div>
+      {snackbar && (
+        <Snackbar
+          message={snackbar.message}
+          type={snackbar.type}
+          onClose={() => setSnackbar(null)}
+        />
+      )}
     </div>
   );
 };

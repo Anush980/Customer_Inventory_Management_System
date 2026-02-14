@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import Layout from "../../components/ui/Layout/Layout";
 import Pageheader from "../../components/ui/PageHeader/Pageheader";
 import FilterBar from "../../components/ui/Filterbar/FilterBar";
-import StatsCard from "../../components/ui/StatsCard/StatsCard";
-import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import "./inventory.css";
+import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import InventoryTable from "../../components/inventory/InventoryTable";
-
-import { useInventory } from "../../hooks/useInventory";
-import {
-  statusOptions,
-  categoryOptions,
-} from "../../data/filterConfig/inventoryFilterConfigs";
 import InventoryStatsCard from "../../components/inventory/InventoryStatsCard/InventoryStatsCard";
 import InventoryStats from "../../components/inventory/InventoryStats/InventoryStats";
+
+import { useInventory } from "../../hooks/useInventory";
+import { statusOptions, categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
 
 const InventoryPage = () => {
   const [editItem, setEditItem] = useState(null);
@@ -45,15 +41,15 @@ const InventoryPage = () => {
     setShowConfirm(true);
   };
 
-  //confirm delete
+  // Confirm delete with snackbar support
   const confirmDelete = async () => {
     if (!deleteItem) return;
+
     try {
-      await deleteItemById(deleteItem._id);
-      setSnackbar({ message: "Deleted successfully", type: "success" });
+      const res = await deleteItemById(deleteItem._id); // returns { message, type }
+      setSnackbar({ message: res.message, type: res.type });
     } catch (err) {
-      console.error(err);
-      setSnackbar({ message: "Deleted failed ", type: "error" });
+      setSnackbar({ message: err.message || "Delete failed", type: err.type || "error" });
     } finally {
       setShowConfirm(false);
       setDeleteItem(null);
@@ -73,6 +69,7 @@ const InventoryPage = () => {
         <InventoryStatsCard variant="low" />
         <InventoryStatsCard variant="out" />
       </div>
+
       <FilterBar
         filters={[
           { value: category, onChange: setCategory, options: categoryOptions },
@@ -116,6 +113,7 @@ const InventoryPage = () => {
           onConfirm={confirmDelete}
         />
       )}
+
       {snackbar && (
         <Snackbar
           message={snackbar.message}

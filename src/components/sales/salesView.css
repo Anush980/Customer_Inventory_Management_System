@@ -1,81 +1,5 @@
 /* Full screen dark overlay */
 .modal-backdrop {
-  position: fixed;        /* stay on top of everything */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
-  display: flex;          /* center modal */
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;          /* on top of all content */
-}
-
-/* Modal card itself */
-.modal-card {
-  border-radius: 8px;
-  background: #fff;
-  width: 350px;           /* adjust width */
-  max-height: 90vh;       /* prevent it from going off screen */
-  overflow-y: auto;       /* scroll if content is too tall */
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  animation: scaleIn 0.2s ease-in-out;
-}
-
-/* Close button */
-.close-btn {
-  display: block;
-  margin: 20px auto 0 auto;
-  padding: 8px 20px;
-  border: none;
-  background-color: #ff0000;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.close-btn:hover{
-transform: scale(1.1);
-}
-/* Print button */
-.print-btn {
-  display: block;
-  margin: 20px auto 0 auto;
-  padding: 8px 20px;
-  border: none;
-  background-color: #955412;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.print-btn:hover{
-transform: scale(1.1);
-}
-
-/* Items row */
-.sale-item-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-
-/* Simple scale animation */
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-/* General modal styling remains the same */
-.modal-backdrop {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.5);
@@ -83,34 +7,79 @@ transform: scale(1.1);
   z-index: 1000;
 }
 
+/* Modal card */
+.modal-card {
+  border-radius: 10px;
+  background: #fff;
+  width: 350px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.2s ease-in-out;
+}
 
+/* Buttons */
+.close-btn, .print-btn {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
+.close-btn { background-color: #ff0000; }
+.close-btn:hover { transform: scale(1.1); }
 
+.print-btn { background-color: #955412; }
+.print-btn:hover { transform: scale(1.1); }
+
+/* Animation */
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Sale item row */
+.sale-item-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+/* ======================
+   Print Styles
+====================== */
 @media print {
   body * {
-    visibility: hidden;
+    visibility: hidden; /* hide everything */
   }
 
   #sale-printable, #sale-printable * {
-    visibility: visible;
+    visibility: visible; /* only show sale-printable */
   }
 
   #sale-printable {
     position: absolute;
-    left: 0;
     top: 0;
-    width: 350px;
+    left: 0;
+    width: 100%; /* use full page width */
     font-size: 12px;
     padding: 0;
   }
 
   .modal-buttons {
-    display: none !important; 
+    display: none !important; /* hide modal buttons */
   }
 
   .modal-backdrop, .modal-card {
-    position: static !important; 
+    position: static !important;
     box-shadow: none;
+    max-height: none;
+    overflow: visible;
   }
 
   hr {
@@ -122,8 +91,10 @@ transform: scale(1.1);
     width: 100%;
     border-collapse: collapse;
   }
+
   table.print-table th, table.print-table td {
     border-bottom: 1px solid #ddd;
-    padding: 2px 0;
+    padding: 2px 4px;
+    font-size: 12px;
   }
 }

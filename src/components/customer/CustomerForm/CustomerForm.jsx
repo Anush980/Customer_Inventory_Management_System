@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Button from "../../ui/Button/Button";
 import "../../ui/CrudTable/crudTable.css";
-
+import Snackbar from "../../ui/Snackbar/Snackbar";
 
 const CustomerForm = ({ editMode, closeWindow }) => {
+  const [snackbar, setSnackbar] = useState(null);
   const [formData, setFormData] = useState( editMode || {
       customerName: "",
       customerPhone: "",
@@ -25,7 +26,7 @@ const CustomerForm = ({ editMode, closeWindow }) => {
 
 const onSubmit = async (e) => {
   e.preventDefault();
-
+if (!validateForm()) return;
   try {
     setLoading(true);
 
@@ -72,6 +73,24 @@ const onSubmit = async (e) => {
   }
 };
 
+const validateForm = () => {
+  // Name
+  if (!formData.customerName.trim()) {
+    setSnackbar({ message: "Name is required", type: "error" });
+    return false;
+  }
+
+
+
+  // Phone (numbers only, 10 digits)
+  const phoneRegex = /^[0-9]{10}$/;
+  if (formData.customerPhone && !phoneRegex.test(formData.customerPhone)) {
+    setSnackbar({ message: "Phone must be 10 digits", type: "error" });
+    return false;
+  }
+
+  return true; 
+};
 
   return (
     <div className="crud-table-wrapper">
@@ -87,7 +106,7 @@ const onSubmit = async (e) => {
           <form onSubmit={onSubmit}>
             <div className="form-column">
               <div className="form-group">
-                <label htmlFor="customerName">Customer Name:</label>
+                <label htmlFor="customerName"><span style={{ color: "red" }}>*</span>Customer Name:</label>
                 <input
                   type="text"
                   id="customerName"
@@ -97,11 +116,12 @@ const onSubmit = async (e) => {
                   placeholder="Enter Customer Name"
                   required
                   className="form-control"
+                  maxLength="30"
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="customerPhone">Phone Number:</label>
+                <label htmlFor="customerPhone"><span style={{ color: "red" }}>*</span>Phone Number:</label>
                 <input
                   type="number"
                   id="customerPhone"
@@ -111,6 +131,7 @@ const onSubmit = async (e) => {
                   placeholder="Enter Phone Number"
                   required
                   className="form-control"
+                   max="10"
                 />
               </div>
 
@@ -124,11 +145,12 @@ const onSubmit = async (e) => {
                   value={formData.customerEmail}
                   placeholder="Enter Customer Email"
                   className="form-control"
+                   maxLength="30"
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="customerAddress">Customer Address:</label>
+                <label htmlFor="customerAddress"><span style={{ color: "red" }}>*</span>Customer Address:</label>
                 <input
                   type="text"
                   id="customerAddress"
@@ -137,6 +159,7 @@ const onSubmit = async (e) => {
                   value={formData.customerAddress}
                   placeholder="Enter Customer Address"
                   className="form-control"
+                   maxLength="20"
                 />
               </div>
 
@@ -150,6 +173,7 @@ const onSubmit = async (e) => {
                   value={formData.creditBalance}
                   placeholder="Enter Credit Balance"
                   className="form-control"
+                   max="1000000"
                 />
               </div>
               <div className="form-group">
@@ -175,7 +199,13 @@ const onSubmit = async (e) => {
         </div>
       </div>
 
-      
+      {snackbar && (
+      <Snackbar
+        message={snackbar.message}
+        type={snackbar.type}
+        onClose={() => setSnackbar(null)}
+      />
+    )}
     </div>
   );
 };

@@ -10,17 +10,18 @@ export const useSales = ({ search = "", sort = "", category = "" } = {}) => {
   const fetchSales = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     try {
       const data = await getSales({ search, sort, category });
       setSales(data);
+      return { message: "Sales fetched successfully", type: "success" };
     } catch (err) {
-      setError(err.message || "Failed to fetch sales.");
+      const msg = err.message || "Failed to fetch sales.";
+      setError(msg);
+      return { message: msg, type: "error" };
     } finally {
       setLoading(false);
     }
   }, [search, sort, category]);
-
 
   useEffect(() => {
     fetchSales();
@@ -28,32 +29,50 @@ export const useSales = ({ search = "", sort = "", category = "" } = {}) => {
 
   // --- SAVE SALE ---
   const saveSaleById = async (sale) => {
+    setLoading(true);
+    setError(null);
     try {
-      const saved = await saveSale(sale);
+      const res = await saveSale(sale); // backend returns { message, type, sale }
 
-      setSales((prev) => {
-        if (sale._id) {
-          // update existing
-          return prev.map((s) => (s._id === saved._id ? saved : s));
-        }
-        // new sale → add to top
-        return [saved, ...prev];
-      });
+      if (res.type === "success") {
+        setSales((prev) => {
+          if (sale._id) {
+            // update existing sale
+            return prev.map((s) => (s._id === res.sale._id ? res.sale : s));
+          }
+          // add new sale at top
+          return [res.sale, ...prev];
+        });
+      }
 
-      return saved;
+      return { message: res.message || "Sale saved", type: res.type || "success" };
     } catch (err) {
-      setError(err.message || "Failed to save sale.");
-      throw err;
+      const msg = err.message || "Failed to save sale.";
+      setError(msg);
+      return { message: msg, type: "error" };
+    } finally {
+      setLoading(false);
     }
   };
 
   // --- DELETE SALE ---
   const deleteSaleById = async (id) => {
+    setLoading(true);
+    setError(null);
     try {
-      await deleteSale(id);
-      setSales((prev) => prev.filter((s) => s._id !== id));
+      const res = await deleteSale(id); // backend returns { message, type }
+
+      if (res.type === "success") {
+        setSales((prev) => prev.filter((s) => s._id !== id));
+      }
+
+      return { message: res.message || "Sale deleted", type: res.type || "success" };
     } catch (err) {
-      setError(err.message || "Failed to delete sale.");
+      const msg = err.message || "Failed to delete sale.";
+      setError(msg);
+      return { message: msg, type: "error" };
+    } finally {
+      setLoading(false);
     }
   };
 

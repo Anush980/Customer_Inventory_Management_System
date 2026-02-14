@@ -21,7 +21,7 @@ const LandingPage = () => {
               Management
             </h2>
             <p>
-              StockMate helps you manage customers, inventory, sales from one
+              Online Retail Management System helps you manage customers, inventory, sales from one
               powerful platform. Save time and manage your business in smart
               way.
             </p>

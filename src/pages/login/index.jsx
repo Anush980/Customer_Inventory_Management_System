@@ -58,7 +58,12 @@ if (res.ok) {
   setPassword("");
   setTimeout(() => setFadeSuccess(true), 3000);
   setTimeout(() => {
-    navigate("/dashboard", { replace: true });
+    if (data.user.role === "admin") {
+  navigate("/user", { replace: true });
+} else {
+  navigate("/dashboard", { replace: true });
+}
+
   }, 100);
 
       } else {

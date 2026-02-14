@@ -13,7 +13,7 @@ const LandingFooter = () => {
     <footer id="footer">
       <div className="footer-content">
         <div className="footer-column">
-          <h3>StockMate</h3>
+          <h3>ORMS</h3>
           <p>Manage Smarter, Not Harder!</p>
 
           <div className="social-links">
@@ -52,7 +52,7 @@ const LandingFooter = () => {
         </div>
       </div>
       <div className="copyright">
-        <p>&#128260; StockMate. An Open source project</p>
+        <p> Online retail management system. An Open source project</p>
       </div>
     </footer>
   );

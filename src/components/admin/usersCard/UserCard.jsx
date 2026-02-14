@@ -15,11 +15,20 @@ const statusLabels = {
   pending: "Pending",
 };
 
-const UserCard = ({ user, onView, onEdit, onToggleBlock, onDelete }) => {
+const UserCard = ({ user, currentUser, onEdit, onToggleBlock, onDelete }) => {
   const roleClass = `role-${user.role}`;
   const statusClass = `status-${user.isBlocked ? "blocked" : "active"}`;
 
-  const isAdmin = user.role === "admin";
+  // Determine permissions
+  const isSelf = user._id === currentUser._id;
+  const isTargetAdmin = user.role === "admin";
+  const isCurrentSuperAdmin = currentUser.superAdmin === true;
+  const isCurrentAdmin = currentUser.role === "admin";
+
+  // Can block logic
+  const canToggleBlock =
+    !isSelf && // cannot block self
+    (isCurrentSuperAdmin || (isCurrentAdmin && !isTargetAdmin)); // superadmin can block anyone, admin can block non-admins
 
   return (
     <div className="user-card">
@@ -40,16 +49,12 @@ const UserCard = ({ user, onView, onEdit, onToggleBlock, onDelete }) => {
         <div className="user-details">
           <div className="detail-row">
             <div className="detail-label">Phone:</div>
-            <div className="detail-value">
-              {user.staffPhone || user.phone || "N/A"}
-            </div>
+            <div className="detail-value">{user.staffPhone || user.phone || "N/A"}</div>
           </div>
 
           <div className="detail-row">
             <div className="detail-label">Email:</div>
-            <div className="detail-value">
-              {user.staffEmail || user.email || "N/A"}
-            </div>
+            <div className="detail-value">{user.staffEmail || user.email || "N/A"}</div>
           </div>
 
           <div className="detail-row">
@@ -59,9 +64,7 @@ const UserCard = ({ user, onView, onEdit, onToggleBlock, onDelete }) => {
 
           <div className="detail-row">
             <div className="detail-label">Joined:</div>
-            <div className="detail-value">
-              {user.createdAt?.split("T")[0] || "N/A"}
-            </div>
+            <div className="detail-value">{user.createdAt?.split("T")[0] || "N/A"}</div>
           </div>
         </div>
 
@@ -72,11 +75,6 @@ const UserCard = ({ user, onView, onEdit, onToggleBlock, onDelete }) => {
 
       {/* ---------- FOOTER ---------- */}
       <div className="user-card-footer">
-        {/* View */}
-        {/* <div className="action-btn view" onClick={() => onView(user)}>
-          <FontAwesomeIcon icon="eye" className="icon" />
-        </div> */}
-
         {/* Edit */}
         <div className="action-btn edit" onClick={() => onEdit(user)}>
           <FontAwesomeIcon icon="edit" className="icon" />
@@ -84,27 +82,34 @@ const UserCard = ({ user, onView, onEdit, onToggleBlock, onDelete }) => {
 
         {/* Block / Unblock */}
         <div
-          className={`action-btn block ${
-            isAdmin ? "disabled" : user.isBlocked ? "unblock" : "block"
-          }`}
-          title={isAdmin ? "Admin cannot be blocked" : ""}
+          className={`action-btn block ${canToggleBlock ? (user.isBlocked ? "unblock" : "block") : "disabled"} ${"disabled"}`}
+          title={
+            !canToggleBlock
+              ? isSelf
+                ? "You cannot block yourself"
+                : "Only admins or superadmins can block this user"
+              : user.isBlocked
+              ? "Unblock user"
+              : "Block user"
+          }
           onClick={() => {
-            if (!isAdmin) onToggleBlock(user);
+            if (canToggleBlock) onToggleBlock(user);
           }}
         >
           {user.isBlocked ? (
-            <FontAwesomeIcon icon="user-check" className="icon" />
-          ) : (
             <FontAwesomeIcon icon="user-slash" className="icon" />
+            
+          ) : (
+            <FontAwesomeIcon icon="user-check" className="icon" />
           )}
         </div>
 
         {/* Delete */}
         <div
-          className={`action-btn delete ${isAdmin ? "disabled" : ""}`}
-          title={isAdmin ? "Admin cannot be deleted" : ""}
+          className={`action-btn delete ${isTargetAdmin ? "disabled" : ""}`}
+          title={isTargetAdmin ? "Admin cannot be deleted" : ""}
           onClick={() => {
-            if (!isAdmin) onDelete(user._id);
+            if (!isTargetAdmin) onDelete(user._id);
           }}
         >
           <FontAwesomeIcon icon="trash-can" className="icon" />

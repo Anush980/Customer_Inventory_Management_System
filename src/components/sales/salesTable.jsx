@@ -24,7 +24,7 @@ const SalesTable = ({
   return (
     <div className="card">
       <div className="card-header">
-        <h3>Sales</h3>
+        <h3>Recent Sales</h3>
         {showViewAll && (
           <Link to="/sales" className="viewbtn">
             View All

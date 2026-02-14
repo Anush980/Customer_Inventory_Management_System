@@ -3,27 +3,37 @@ import { getAuthHeaders } from "./authHeaders";
 const BASE_URL = `${process.env.REACT_APP_API_URL}/api/admin`;
 
 // --- Fetch all users ---
-export const getAllUsers = async ({ search = "", sort = "recent" } = {}) => {
-  const query = new URLSearchParams({ search, sort });
-  const res = await fetch(`${BASE_URL}/users?${query.toString()}`, {
+export const getAllUsers = async ({ search = "", sort = "recent", category = "" } = {}) => {
+  const query = new URLSearchParams({ search, sort, category });
+  const res = await fetch(`${BASE_URL}/users?${query.toString()}`, {  
     headers: getAuthHeaders(),
   });
-  if (!res.ok) throw new Error("Failed to fetch users");
-  return res.json();
+  
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to fetch users");
+  }
+  
+  return res.json(); 
 };
 
 // --- Fetch a single user ---
 export const getUserDetails = async (userId) => {
-  const res = await fetch(`${BASE_URL}/users/${userId}`, {
+  const res = await fetch(`${BASE_URL}/users/${userId}`, {  
     headers: getAuthHeaders(),
   });
-  if (!res.ok) throw new Error("Failed to fetch user details");
+  
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to fetch user details");
+  }
+  
   return res.json();
 };
 
 // --- Update staff permissions ---
 export const updateStaffPermissions = async (staffId, permissions) => {
-  const res = await fetch(`${BASE_URL}/staff/${staffId}/permissions`, {
+  const res = await fetch(`${BASE_URL}/staff/${staffId}/permissions`, {  
     method: "PATCH",
     headers: {
       ...getAuthHeaders(),
@@ -31,17 +41,27 @@ export const updateStaffPermissions = async (staffId, permissions) => {
     },
     body: JSON.stringify(permissions),
   });
-  if (!res.ok) throw new Error("Failed to update staff permissions");
+  
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to update staff permissions");
+  }
+  
   return res.json();
 };
 
 // --- Block/unblock user ---
 export const toggleBlockUser = async (userId) => {
-  const res = await fetch(`${BASE_URL}/users/${userId}/block`, {
-    method: "PATCH",
+  const res = await fetch(`${BASE_URL}/users/${userId}/toggle-block`, {  
+    method: "POST",  
     headers: getAuthHeaders(),
   });
-  if (!res.ok) throw new Error("Failed to toggle block user");
+  
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to toggle block user");
+  }
+  
   return res.json();
 };
 
@@ -56,25 +76,47 @@ export const saveUser = async (user) => {
   formData.append("role", user.role);
 
   // Password: include only for new users
-  if (!user._id) {
-    formData.append("password", user.password || "stockmate@123");
+  if (!user._id && user.password) {
+    formData.append("password", user.password);
+  } else if (!user._id) {
+    formData.append("password", "stockmate@123");  // Default password
   }
 
   // Phone handling
-  if (user.role === "staff") formData.append("staffPhone", user.staffPhone || "");
-  else formData.append("phone", user.phone || "");
+  if (user.role === "staff") {
+    formData.append("staffPhone", user.staffPhone || "");
+    formData.append("staffEmail", user.staffEmail || "");
+    formData.append("staffAddress", user.staffAddress || "");
+    if (user.salary !== undefined) formData.append("salary", user.salary);
+    if (user.jobTitle) formData.append("jobTitle", user.jobTitle);
+  } else {
+    formData.append("phone", user.phone || "");
+  }
 
   // Shop name for owners/staff
-  if (user.role !== "admin") formData.append("shopName", user.shopName || "");
+  if (user.role !== "admin") {
+    formData.append("shopName", user.shopName || "");
+  }
 
   // Permissions: serialize object
-  formData.append("permissions", JSON.stringify(user.permissions || {}));
+  if (user.permissions) {
+    formData.append("permissions", JSON.stringify(user.permissions));
+  }
 
-  // Blocked
-  formData.append("isBlocked", user.isBlocked ? "true" : "false");
+  // Blocked status
+  if (user.isBlocked !== undefined) {
+    formData.append("isBlocked", user.isBlocked ? "true" : "false");
+  }
+
+  // Super admin (for admins only)
+  if (user.superAdmin !== undefined) {
+    formData.append("superAdmin", user.superAdmin ? "true" : "false");
+  }
 
   // Image
-  if (user.image instanceof File) formData.append("image", user.image);
+  if (user.image instanceof File) {
+    formData.append("image", user.image);
+  }
 
   const res = await fetch(url, {
     method,
@@ -86,21 +128,24 @@ export const saveUser = async (user) => {
   });
 
   if (!res.ok) {
-    const error = await res.json();
+    const error = await res.json().catch(() => ({}));
     throw new Error(error.message || "Failed to save user");
   }
 
   return res.json(); // returns { message, user }
 };
 
-
-
 // --- Delete user ---
 export const deleteUser = async (userId) => {
-  const res = await fetch(`${BASE_URL}/users/${userId}`, {
+  const res = await fetch(`${BASE_URL}/users/${userId}`, {  
     method: "DELETE",
     headers: getAuthHeaders(),
   });
-  if (!res.ok) throw new Error("Failed to delete user");
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to delete user");
+  }
+
   return res.json();
 };

@@ -37,20 +37,23 @@ const SalesBookPage = () => {
   };
 
 
-  const confirmDelete = async () => {
-    if (!deleteSale) return;
+const confirmDelete = async () => {
+  if (!deleteSale) return;
 
-    try {
-      await deleteSaleById(deleteSale._id);
-      setSnackbar({ message: "Sale deleted successfully", type: "success" });
-    } catch (err) {
-      console.error(err);
-      setSnackbar({ message: "Delete failed", type: "error" });
-    } finally {
-      setShowConfirm(false);
-      setDeleteSale(null);
-    }
-  };
+  try {
+    // deleteSaleById now returns { message, type }
+    const res = await deleteSaleById(deleteSale._id);
+    setSnackbar({ message: res.message, type: res.type });
+  } catch (err) {
+    console.error(err);
+    // fallback if something unexpected happens
+    setSnackbar({ message: "Delete failed", type: "error" });
+  } finally {
+    setShowConfirm(false);
+    setDeleteSale(null);
+  }
+};
+
 
   return (
     <Layout>

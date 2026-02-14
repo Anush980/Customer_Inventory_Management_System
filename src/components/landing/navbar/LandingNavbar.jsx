@@ -31,7 +31,7 @@ const LandingNavbar = () => {
           <img src={logo} alt="photo" />
           <div className="logo-title">
             <h1>
-              <a href="/">StockMate</a>
+              <a href="/">ORMS</a>
             </h1>
             <p>Manage Smarter, Not harder</p>
           </div>

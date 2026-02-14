@@ -7,6 +7,7 @@ import StaffForm from "../../components/staff/staffForm/StaffForm";
 import ConfirmCard from "../../components/ui/ConfirmCard/ConfirmCard";
 import StaffStats from "../../components/staff/staffStats/StaffStats";
 import StaffDetailsModal from "../../components/staff/StaffDetailModal/StaffDetailsModal";
+import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import { sortOptions } from "../../data/filterConfig/staffFilterConfigs";
 import { useStaffs } from "../../hooks/useStaffs";
 import "./staff.css";
@@ -19,15 +20,12 @@ const StaffPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [snackbar, setSnackbar] = useState(null);
 
-  const {
-    staffs,
-    loading,
-    error,
-    deleteStaffById,
-    saveStaffById,
-    changeStaffPassword,
-  } = useStaffs({ search: searchText, sort });
+  const { staffs, loading, error, deleteStaffById, saveStaffById, changeStaffPassword } = useStaffs({
+    search: searchText,
+    sort,
+  });
 
   // ---- Handlers ----
   const handleEdit = (staff) => {
@@ -48,22 +46,30 @@ const StaffPage = () => {
   const confirmDelete = async () => {
     if (!deleteID) return;
     try {
-      await deleteStaffById(deleteID);
+      const res = await deleteStaffById(deleteID);
+      setSnackbar(res); // show snackbar
+    } catch (err) {
+      setSnackbar({ message: "Failed to delete staff", type: "error" });
+    } finally {
       setDeleteID(null);
       setShowConfirm(false);
-    } catch (err) {
-      console.error("Failed to delete staff", err);
     }
   };
 
   const handleFormSubmit = async (staffPayload) => {
     try {
-      await saveStaffById(staffPayload);
+      const res = await saveStaffById(staffPayload);
+      setSnackbar(res); // show snackbar
       setShowForm(false);
       setSelectedStaff(null);
     } catch (err) {
-      console.error("Failed to save staff:", err);
+      setSnackbar({ message: "Failed to save staff", type: "error" });
     }
+  };
+
+  const handleChangePassword = async (staffId, newPassword) => {
+    const res = await changeStaffPassword(staffId, newPassword);
+    setSnackbar(res);
   };
 
   const handleResendEmail = async (staffId) => {
@@ -80,10 +86,10 @@ const StaffPage = () => {
       );
 
       if (!res.ok) throw new Error("Failed to resend email");
-      alert("Login credentials resent to personal email");
+      setSnackbar({ message: "Login credentials resent to personal email", type: "success" });
     } catch (err) {
       console.error(err);
-      alert("Failed to resend email");
+      setSnackbar({ message: "Failed to resend email", type: "error" });
     }
   };
 
@@ -113,7 +119,7 @@ const StaffPage = () => {
             staff={staff}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            onShowDetails={handleShowDetails} // important
+            onShowDetails={handleShowDetails}
           />
         ))}
       </div>
@@ -137,8 +143,16 @@ const StaffPage = () => {
         <StaffDetailsModal
           staff={selectedStaff}
           onClose={() => setShowDetails(false)}
-          changeStaffPassword={changeStaffPassword} 
+          changeStaffPassword={handleChangePassword} 
           onResendEmail={handleResendEmail}
+        />
+      )}
+
+      {snackbar && (
+        <Snackbar
+          message={snackbar.message}
+          type={snackbar.type}
+          onClose={() => setSnackbar(null)}
         />
       )}
     </Layout>

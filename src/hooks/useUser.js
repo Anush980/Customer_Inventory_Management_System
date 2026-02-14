@@ -8,25 +8,26 @@ import {
   deleteUser   
 } from "../api/adminApi";
 
-export const useUsers = ({ search = "", sort = "recent" } = {}) => {
+export const useUsers = ({ search = "", sort = "recent",category="" } = {}) => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Fetch all users
-  const fetchUsers = useCallback(async () => {
+ const fetchUsers = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getAllUsers({ search, sort });
+      // Pass category to API
+      const data = await getAllUsers({ search, sort, category });
       setUsers(data.users || []);
     } catch (err) {
       setError(err.message || "Failed to fetch users");
     } finally {
       setLoading(false);
     }
-  }, [search, sort]);
+  }, [search, sort, category]);
 
   // Fetch single user details
   const fetchUserDetails = async (userId) => {
@@ -103,7 +104,8 @@ const saveUserById = async (user) => {
     }
   };
 
-  // Toggle block / unblock
+ 
+// Toggle block / unblock user
 const toggleBlock = async (user) => {
   if (user.role === "admin" && user._id === localStorage.getItem("userId")) {
     alert("You cannot block yourself!");
@@ -112,11 +114,24 @@ const toggleBlock = async (user) => {
 
   setLoading(true);
   setError(null);
+
   try {
-    const updated = await toggleBlockUser(user._id);
-    setUsers(prev => prev.map(u => (u._id === updated._id ? updated : u)));
-    if (selectedUser && selectedUser._id === updated._id) setSelectedUser(updated);
-    return updated;
+    const res = await toggleBlockUser(user._id);
+
+    // Merge updated fields from backend with existing user
+    const updatedUser = { ...user, ...res.user };  
+
+    setUsers(prev =>
+      prev.map(u =>
+        u._id === updatedUser._id ? updatedUser : u
+      )
+    );
+
+    if (selectedUser && selectedUser._id === updatedUser._id) {
+      setSelectedUser(updatedUser);
+    }
+
+    return updatedUser;
   } catch (err) {
     setError(err.message || "Failed to block/unblock user");
     throw err;
@@ -124,6 +139,8 @@ const toggleBlock = async (user) => {
     setLoading(false);
   }
 };
+
+
 
 
   useEffect(() => {

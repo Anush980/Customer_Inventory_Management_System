@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/ui/Layout/Layout";
 import Button from "../../components/ui/Button/Button";
+import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import "./profilePage.css";
 
 const ProfilePage = () => {
@@ -11,6 +12,7 @@ const ProfilePage = () => {
   const [name, setName] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const [snackbar, setSnackbar] = useState(null);
 
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
@@ -35,11 +37,11 @@ const ProfilePage = () => {
         setName(data.name);
         setImagePreview(data.image || "/default.jpg");
       } else {
-        alert(data.message || "Failed to fetch profile");
+        setSnackbar({ message: data.message || "Failed to fetch profile", type: "error" });
       }
     } catch (err) {
       console.error(err);
-      alert("Failed to fetch profile");
+      setSnackbar({ message: "Failed to fetch profile", type: "error" });
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,10 @@ const ProfilePage = () => {
 
   /* ================= UPDATE PROFILE ================= */
   const handleProfileUpdate = async () => {
-    if (!name) return alert("Name is required");
+    if (!name) {
+      setSnackbar({ message: "Name is required", type: "error" });
+      return;
+    }
 
     setLoading(true);
     try {
@@ -84,13 +89,13 @@ const ProfilePage = () => {
         setProfile(data.user || data);
         setEditMode(false);
         setImageFile(null);
-        alert("Profile updated successfully");
+        setSnackbar({ message: "Profile updated successfully", type: "success" });
       } else {
-        alert(data.message || "Failed to update profile");
+        setSnackbar({ message: data.message || "Failed to update profile", type: "error" });
       }
     } catch (err) {
       console.error(err);
-      alert("Failed to update profile");
+      setSnackbar({ message: "Failed to update profile", type: "error" });
     } finally {
       setLoading(false);
     }
@@ -143,6 +148,7 @@ const ProfilePage = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                maxLength="30"
               />
             ) : (
               <span>{profile.name}</span>
@@ -199,6 +205,15 @@ const ProfilePage = () => {
             )}
           </div>
         </div>
+
+        {/* ===== SNACKBAR ===== */}
+        {snackbar && (
+          <Snackbar
+            message={snackbar.message}
+            type={snackbar.type}
+            onClose={() => setSnackbar(null)}
+          />
+        )}
       </div>
     </Layout>
   );

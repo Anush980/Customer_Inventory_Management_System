@@ -4,6 +4,7 @@ import Pageheader from "../../components/ui/PageHeader/Pageheader";
 import "./pos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { categoryOptions } from "../../data/filterConfig/inventoryFilterConfigs";
+import Snackbar from "../../components/ui/Snackbar/Snackbar";
 import { useInventory } from "../../hooks/useInventory";
 import axios from "axios";
 
@@ -13,7 +14,8 @@ const Pos = () => {
   const [customerName, setCustomerName] = useState("");
   const [discount, setDiscount] = useState(0);
   const [paymentType, setPaymentType] = useState("cash");
-  const [showModal, setShowModal] = useState(false); // <-- modal state
+  const [showModal, setShowModal] = useState(false);
+  const [snackbar, setSnackbar] = useState(null);
 
   const { items, loading } = useInventory({
     search,
@@ -29,13 +31,22 @@ const Pos = () => {
     if (exists) {
       if (exists.qty < item.stock) {
         setCart(
-          cart.map((x) => (x._id === item._id ? { ...x, qty: x.qty + 1 } : x))
+          cart.map((x) => (x._id === item._id ? { ...x, qty: x.qty + 1 } : x)),
         );
-      } else alert("Cannot add more than available stock!");
+      } else {
+        setSnackbar({
+          message: "Cannot add more than available stock!",
+          type: "error",
+        });
+      }
+
       return;
     }
     if (item.stock > 0) setCart([...cart, { ...item, qty: 1 }]);
-    else alert("Item out of stock!");
+    else{
+      setSnackbar({ message: "Item out of stock!", type: "error" });
+    } 
+    
   };
 
   const increaseQty = (id) => {
@@ -43,16 +54,16 @@ const Pos = () => {
       prev.map((item) =>
         item._id === id && item.qty < item.stock
           ? { ...item, qty: item.qty + 1 }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
   const decreaseQty = (id) => {
     setCart((prev) =>
       prev.map((item) =>
-        item._id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item
-      )
+        item._id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item,
+      ),
     );
   };
 
@@ -61,7 +72,7 @@ const Pos = () => {
 
   const confirmCheckout = async () => {
     if (cart.length === 0) {
-      alert("Your cart is empty");
+      setSnackbar({ message: "Your cart is empty", type: "error" });
       return;
     }
     try {
@@ -76,8 +87,11 @@ const Pos = () => {
       await axios.post(`${process.env.REACT_APP_API_URL}/api/sales`, saleData, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      setSnackbar({
+        message: "Sales completed successfully!",
+        type: "success",
+      });
 
-      alert("Sales completed successfully!");
       setCart([]);
       setCustomerName("");
       setDiscount(0);
@@ -85,7 +99,7 @@ const Pos = () => {
       setShowModal(false);
     } catch (err) {
       console.error(err);
-      alert("Sales failed...");
+      setSnackbar({ message: "Sales failed...", type: "error" });;
     }
   };
 
@@ -155,8 +169,8 @@ const Pos = () => {
                         item.stock === 0
                           ? "product-stock out"
                           : item.stock < 5
-                          ? "product-stock low"
-                          : "product-stock"
+                            ? "product-stock low"
+                            : "product-stock"
                       }
                     >
                       {item.stock === 0
@@ -286,7 +300,7 @@ const Pos = () => {
             </select>
             <label>Discount: ₹{discount}</label>
             <label>Total: ₹{total.toFixed(2)}</label>
-           
+
             <div className="modal-buttons">
               <button
                 className="btn btn-secondary"
@@ -300,6 +314,13 @@ const Pos = () => {
             </div>
           </div>
         </div>
+      )}
+      {snackbar && (
+        <Snackbar
+          message={snackbar.message}
+          type={snackbar.type}
+          onClose={() => setSnackbar(null)}
+        />
       )}
     </Layout>
   );
