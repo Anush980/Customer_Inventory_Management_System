@@ -1,5 +1,5 @@
 .navbar-wrapper {
-width: calc(100vw - clamp(70px, 25vw, 100px));
+width: calc(87.5vw - clamp(70px, 25vw, 10px));
   position: fixed;
   top: 0;
 

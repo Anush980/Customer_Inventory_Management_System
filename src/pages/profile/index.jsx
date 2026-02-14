@@ -108,7 +108,7 @@ const ProfilePage = () => {
   if (loading || !profile) return <Layout>Loading...</Layout>;
 
   return (
-    <Layout>
+    <Layout hideNavbar>
       <div className="profile-page">
         <h2>My Profile</h2>
 
