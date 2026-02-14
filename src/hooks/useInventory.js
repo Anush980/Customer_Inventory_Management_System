@@ -46,7 +46,7 @@ export const useInventory = ({
       return { message: saved.message || "Item saved successfully", type: saved.type || "success" };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Failed to save item";
-      // throw { message: msg, type: "error" };
+      throw { message: msg, type: "error" };
     }
   };
 
@@ -59,7 +59,7 @@ export const useInventory = ({
       return { message: res.message || "Item deleted successfully", type: res.type || "success" };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Failed to delete item";
-      // throw { message: msg, type: "error" };
+      throw { message: msg, type: "error" };
     }
   };
 

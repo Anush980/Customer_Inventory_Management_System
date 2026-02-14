@@ -1,7 +1,7 @@
 import { React } from "react";
 import "./dashboard.css";
 import Pageheader from "../../components/ui/PageHeader/Pageheader";
-import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
+// import QuickStats from "../../components/dashboard/QuickStats/QuickStats";
 // import WindowSize from "../../components/ui/WindowSize/WindowSize";
 import CrudTable from "../../components/ui/CrudTable/CrudTable";
 import Layout from '../../components/ui/Layout/Layout'
