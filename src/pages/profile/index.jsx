@@ -10,6 +10,9 @@ const ProfilePage = () => {
   const [editMode, setEditMode] = useState(false);
 
   const [name, setName] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [snackbar, setSnackbar] = useState(null);
@@ -35,6 +38,7 @@ const ProfilePage = () => {
       if (res.ok) {
         setProfile(data);
         setName(data.name);
+        setNewPassword(data.newPassword);
         setImagePreview(data.image || "/default.jpg");
       } else {
         setSnackbar({ message: data.message || "Failed to fetch profile", type: "error" });
@@ -55,6 +59,43 @@ const ProfilePage = () => {
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
+  const handlePasswordUpdate = async () => {
+  if (newPassword !== confirmPassword) {
+    setSnackbar({ message: "Passwords do not match", type: "error" });
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/profile/password`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setSnackbar({ message: data.message, type: "success" });
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } else {
+      setSnackbar({ message: data.message, type: "error" });
+    }
+  } catch (err) {
+    setSnackbar({ message: "Failed to update password", type: "error" });
+  }
+};
+
 
   /* ================= UPDATE PROFILE ================= */
   const handleProfileUpdate = async () => {
@@ -159,7 +200,7 @@ const ProfilePage = () => {
             <label>Email:</label>
             <span>{profile.email}</span>
           </div>
-
+     
           {profile.role !== "admin" && (
             <div className="profile-field">
               <label>Job Title:</label>
@@ -171,11 +212,59 @@ const ProfilePage = () => {
             <label>Shop:</label>
             <span>{profile.shopName}</span>
           </div>
+          {/* ===== PASSWORD SECTION ===== */}
+<div className="profile-section password-section">
+  <h4>Change Password</h4>
+
+  {editMode ? (
+    <>
+      <div className="profile-field">
+        <label>Current Password</label>
+        <input
+          type="password"
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+        />
+      </div>
+
+      <div className="profile-field">
+        <label>New Password</label>
+        <input
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+      </div>
+
+      <div className="profile-field">
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </div>
+
+      <Button
+        variant="danger"
+        onClick={handlePasswordUpdate}
+      >
+        Update Password
+      </Button>
+    </>
+  ) : (
+    <p className="password-placeholder">
+      ••••••••
+    </p>
+  )}
+</div>
+
 
           {/* ===== ACTIONS ===== */}
           <div className="profile-actions">
             {editMode ? (
               <>
+
                 <Button
                   variant="primary"
                   onClick={handleProfileUpdate}
