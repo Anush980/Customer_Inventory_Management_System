@@ -5,7 +5,7 @@ import { useSales } from '../../hooks/useSales';
 
 const RevenueStats = ({ variant = "daily" }) => {
   const { sales = [] } = useSales();
-  const now = new Date();
+ const now = useMemo(() => new Date(), []);
 
   // Total revenue
   const totalRevenue = useMemo(() => {

@@ -1,7 +1,7 @@
 .sidebar {
   left: 0;
   top: 0;
-  width: calc(100vw * 0.25); 
+ width: clamp(100px, 25vw, 240px);
   min-width: 70px;           
   max-width: 240px;         
   flex-shrink: 0;

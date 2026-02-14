@@ -28,7 +28,7 @@ const LandingNavbar = () => {
               />
             </svg>
           </div>
-          <img src={logo} alt="photo" />
+          <img src={logo} alt="logo here" />
           <div className="logo-title">
             <h1>
               <a href="/">ORMS</a>
@@ -39,7 +39,7 @@ const LandingNavbar = () => {
 
         <ul className={`nav-links ${isOpen? "open": ""}`}>
           <li>
-            <a href="#">Home</a>
+            <a href="/landingpage">Home</a>
           </li>
           <li>
             <a href="#features">Features</a>

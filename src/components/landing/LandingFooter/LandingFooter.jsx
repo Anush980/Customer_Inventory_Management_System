@@ -6,7 +6,7 @@ import {
   faGithub,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
-import { faGlobe, faGlobeAsia } from "@fortawesome/free-solid-svg-icons";
+import { faGlobeAsia } from "@fortawesome/free-solid-svg-icons";
 
 const LandingFooter = () => {
   return (

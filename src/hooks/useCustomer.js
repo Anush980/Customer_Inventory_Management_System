@@ -39,7 +39,10 @@ export const useCustomers = ({ search = "", sort = "newest" } = {}) => {
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Failed to save customer";
       setError(msg);
-      throw { message: msg, type: "error" };
+     const errorObj = new Error(msg);
+errorObj.type = "error";
+throw errorObj;
+
     }
   };
 
@@ -52,7 +55,10 @@ export const useCustomers = ({ search = "", sort = "newest" } = {}) => {
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Failed to delete customer";
       setError(msg);
-      throw { message: msg, type: "error" };
+      const errorObj = new Error(msg);
+errorObj.type = "error";
+throw errorObj;
+
     }
   };
 
