@@ -2,11 +2,11 @@
   display: flex;
   position: fixed;
   top: 0;
-  left: min(max(70px, calc(100vw * 0.25)), 100px);
+  margin-left: min(max(70px, calc(100vw * 0.25)), 100px);
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  ppPpppppz-index: 1000;
+  z-index: 990;
   justify-content: center;
   margin: 0 auto;
   align-items: center;
