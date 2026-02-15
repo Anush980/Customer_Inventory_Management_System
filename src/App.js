@@ -23,10 +23,13 @@ import AdminPage from "./pages/admin";
 import ForgotPassword from "./pages/forgotPassword";
 import VerifyOtp from "./pages/verifyOtp";
 import ResetPassword from "./pages/resetPassword";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   return (
-    <Routes>
+    <>
+      <SpeedInsights />
+      <Routes>
       {/* Auth pages */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -141,7 +144,8 @@ function App() {
       {/* <Route path="/dashboard" element={<Dashboard/>}/> */}
       {/*Inventory page*/}
       {/* <Route path="/inventory" element={<Inventory/>}/> */}
-    </Routes>
+      </Routes>
+    </>
   );
 }
 
