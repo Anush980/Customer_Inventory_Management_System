@@ -167,7 +167,7 @@ const InventoryForm = ({ editMode, closeWindow }) => {
 
               {/* SKU */}
               <div className="form-group">
-                <label htmlFor="sku">SKU:</label>
+                <label htmlFor="sku"><span style={{ color: "red" }}>*</span> SKU:</label>
                 <input
                   type="text"
                   id="sku"

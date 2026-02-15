@@ -282,12 +282,24 @@ const Pos = () => {
             />
 
             <label>Discount</label>
-            <input
-              type="number"
-              value={discount}
-              onChange={(e) => setDiscount(e.target.value)}
-              min="0"
-            />
+           <input
+  type="number"
+  value={discount}
+  onChange={(e) => {
+    const value = Number(e.target.value);
+    if (value > subtotal) {
+      setSnackbar({ message: "Discount cannot be greater than subtotal", type: "error" });
+      setDiscount(subtotal); 
+    } else if (value < 0) {
+      setDiscount(0);
+    } else {
+      setDiscount(value);
+    }
+  }}
+  min="0"
+  max={subtotal}
+/>
+
 
             <label>Payment Method</label>
             <select
